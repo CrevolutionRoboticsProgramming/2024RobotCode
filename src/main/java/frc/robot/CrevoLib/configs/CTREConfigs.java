@@ -3,7 +3,6 @@ package frc.robot.CrevoLib.configs;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 
-import frc.robot.Constants;
 import frc.robot.Drivetrain.DrivetrainConfig.DriveConstants;
 
 public final class CTREConfigs {
