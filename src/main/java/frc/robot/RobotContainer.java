@@ -45,7 +45,8 @@ public class RobotContainer {
 
 
   /* Subsystems */
-  private final Drivetrain mSwerveDrivetrain = new Drivetrain();
+  public static final Drivetrain mSwerveDrivetrain = new Drivetrain();
+
   public RobotContainer() {
     //TODO: May need to change the - sign in front of "driver.getRawAxis()"
     mSwerveDrivetrain.setDefaultCommand(

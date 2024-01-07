@@ -58,6 +58,22 @@ public class Drivetrain extends SubsystemBase {
         }
     }   
 
+    public void driveRobotRelative(ChassisSpeeds speeds){
+        drive(new Translation2d(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond), 
+            speeds.omegaRadiansPerSecond, false, false);
+    }
+
+    public ChassisSpeeds getRobotRelativeSpeeds(){
+        return DriveConstants.swerveKinematics.toChassisSpeeds(mSwerveMods[0].getState(),
+                                                               mSwerveMods[1].getState(),
+                                                               mSwerveMods[2].getState(),
+                                                               mSwerveMods[3].getState());
+    }
+
+    public void stopSwerve() {
+        Translation2d stop = new Translation2d(0, 0);
+        drive(stop, 0, true, true);
+    }
 
     //USE FOR AUTONOMOUS COMMANDS
     public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -91,6 +107,18 @@ public class Drivetrain extends SubsystemBase {
     public void setPose(Pose2d pose) {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
+
+    public void resetPose(Pose2d pose) {
+        swerveOdometry.resetPosition(
+            this.getHeading(),
+            new SwerveModulePosition[] {
+                mSwerveMods[0].getPosition(),
+                mSwerveMods[1].getPosition(),
+                mSwerveMods[2].getPosition(),
+                mSwerveMods[3].getPosition()
+            },
+            pose);
+      }
 
     public Rotation2d getHeading(){
         return getPose().getRotation();
