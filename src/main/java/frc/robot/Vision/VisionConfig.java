@@ -14,22 +14,20 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VisionConfig{
-    public class CamConstants{
-        // Camera 1
-        //public static String camera1 = new PhotonCamera("cam1");
-        
+    public class ShooterCamsConfig {
+        public static final String shooterCam1Name = "Cam2";
+        public static final String shooterCam2Name = "Cam3";
 
-        // Camera 2
-        public static PhotonCamera camera2 = new PhotonCamera("cam2");
+        //Robot to Cam 1 constants
+        public static final Translation3d shooterCam1Translation = new Translation3d(0,0,0);
+        public static final Rotation3d shooterCam1Rotation = new Rotation3d(0,0,0);
 
-        // Ints in parameters are camera location and rotation, change depending on where cam is
-        public static Transform3d robotToCam2 = new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
-
-        // Camera 3
-        public static PhotonCamera camera3 = new PhotonCamera("cam3");
-
-        // Ints in parameters are camera location and rotation, change depending on where cam is
-        public static Transform3d robotToCam3 = new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0, 0, 0));
+        //Robot to Cam 2 constants
+        public static final Translation3d shooterCam2Translation = new Translation3d(0,0,0);
+        public static final Rotation3d shooterCam2Rotation = new Rotation3d(0,0,0);
+    }
+    public class DriverCamConfig {
+        public static final String driverCamName = "Cam1";
     }
     
 }
