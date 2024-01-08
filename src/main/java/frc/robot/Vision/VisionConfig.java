@@ -13,7 +13,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class CameraConfig{
+public class VisionConfig{
     public class CamConstants{
         // Camera 1
         //public static String camera1 = new PhotonCamera("cam1");

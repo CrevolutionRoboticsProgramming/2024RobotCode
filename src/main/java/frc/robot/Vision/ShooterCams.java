@@ -8,7 +8,7 @@ import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Vision.CameraConfig.*;
+import frc.robot.Vision.VisionConfig.*;
 
 public class ShooterCams extends SubsystemBase {
     // Declare AprilTagFieldLayout outside the try block
