@@ -1,5 +1,6 @@
 package frc.robot.Autos;
 
+import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,9 +10,11 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,7 +29,7 @@ import frc.robot.Drivetrain.DrivetrainConfig;
 
 /* MASTER AUTON CLASS */
 public class AutonMaster {
-
+    private static Field2d mGameField;
     private static SendableChooser<Command> mAutonChooser = new SendableChooser<>();
 
     public AutonMaster() { 
@@ -57,6 +60,7 @@ public class AutonMaster {
         );
 
        configureAutoChooser(); 
+       configurePathPlannerLogging();
     }
     
     private void configureAutoChooser() { 
@@ -66,6 +70,23 @@ public class AutonMaster {
 
     public static SendableChooser<Command> getAutonSelector() {
         return mAutonChooser;
+    }
+
+    private void configurePathPlannerLogging() {
+        mGameField = new Field2d();
+        SmartDashboard.putData("Field", mGameField);
+        
+        PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {
+            mGameField.setRobotPose(pose);
+        });
+
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+            mGameField.getObject("target pose").setPose(pose);
+        });
+
+        PathPlannerLogging.setLogActivePathCallback((poses) -> {
+            mGameField.getObject("path").setPoses(poses);
+        });
     }
 
     /* Named Commands are like the new "Event Map" */
