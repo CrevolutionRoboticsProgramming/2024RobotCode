@@ -53,14 +53,11 @@ public class AutonMaster {
                     }
                     return false;
                 },
-            RobotContainer.mSwerveDrivetrain // Reference to this subsystem to set requirements
+            RobotContainer.mSwerveDrivetrain 
         );
 
        configureAutoChooser(); 
     }
-    
-    //TODO: need to update some values in here such as driveBaseRadius and maxModuleSpeed
-    //TODO: No clue why new AutoBuilder does't build
     
     private void configureAutoChooser() { 
         mAutonChooser = AutoBuilder.buildAutoChooser();
