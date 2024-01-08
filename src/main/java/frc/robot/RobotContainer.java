@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 
@@ -82,7 +83,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return null;
+    return AutonMaster.getAutonSelector().getSelected();
   }
 }
