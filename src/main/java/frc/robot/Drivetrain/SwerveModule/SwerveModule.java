@@ -33,14 +33,14 @@ public class SwerveModule {
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConfig.angleOffset;
 
-        mAngleCancoder = new CANcoder(moduleConfig.cancoderID);
+        mAngleCancoder = new CANcoder(moduleConfig.cancoderID, "Canivore");
         mAngleCancoder.getConfigurator().apply(Robot.ctreConfigs.cancoderConfig);
 
-        mAngleMotor = new TalonFX(moduleConfig.angleMotorID);
+        mAngleMotor = new TalonFX(moduleConfig.angleMotorID, "Canivore");
         mAngleMotor.getConfigurator().apply(Robot.ctreConfigs.angleMotorConfig);
         resetToAbsolute();
 
-        mDriveMotor = new TalonFX(moduleConfig.driveMotorID);
+        mDriveMotor = new TalonFX(moduleConfig.driveMotorID, "Canivore");
         mDriveMotor.getConfigurator().apply(Robot.ctreConfigs.driveMotorConfig);
         mDriveMotor.getConfigurator().setPosition(0.0);
     }
