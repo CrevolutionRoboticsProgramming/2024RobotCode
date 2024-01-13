@@ -48,25 +48,11 @@ public class ShooterCams extends SubsystemBase {
 
         PhotonPoseEstimator poseEst3 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, shooterCam2, robotToCam2);
 
-        //Aiming at Target (do we declare all this in config file?)
-        //TODO: Tune camera height + angle and target height constants
-        final double cameraHeight_M = Units.inchesToMeters(0); //camera height
-        final double targetHeight_M = Units.feetToMeters(0); //target height
-        
-        //Camera angle
-        final double cameraPitch_R = Units.degreesToRadians(0);
+        //Aiming at Target
+        //PID  Controllers
+        PIDController forwardController = new PIDController(ShooterCamsConfig.linearP, 0, ShooterCamsConfig.linearD);
 
-        //desired distance from robot to target
-        final double targetRange_M = Units.feetToMeters(0);
-
-        //TODO: tune PID constants
-        final double linearP = 0; //P term constant
-        final double linearD = 0; //D term constant
-        PIDController forwardController = new PIDController(linearP, 0, linearD);
-
-        final double angularP = 0; //angle P term constant
-        final double angularD = 0; //angle D term constant
-        PIDController turnController = new PIDController(angularP, 0, angularD);
+        PIDController turnController = new PIDController(ShooterCamsConfig.angularP, 0, ShooterCamsConfig.angularD);
 
         XboxController xbox = new XboxController(0);
         PS5Controller ps5 = new PS5Controller(0);
