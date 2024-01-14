@@ -7,9 +7,16 @@ import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.PS5Controller;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Vision.VisionConfig.*;
@@ -39,8 +46,18 @@ public class ShooterCams extends SubsystemBase {
 
         // Pose estimator
         PhotonPoseEstimator poseEst2 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, shooterCam1, robotToCam1);
-
         PhotonPoseEstimator poseEst3 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, shooterCam2, robotToCam2);
 
-    }
+        //Aiming at Target
+        //PID  Controllers
+        PIDController forwardController = new PIDController(ShooterCamsConfig.linearP, 0, ShooterCamsConfig.linearD);
+
+        PIDController turnController = new PIDController(ShooterCamsConfig.angularP, 0, ShooterCamsConfig.angularD);
+
+        XboxController xbox = new XboxController(0);
+        PS5Controller ps5 = new PS5Controller(0);
+
+        //TODO: Add Drive motors
+        //DifferentialDrive drive = new DifferentialDrive(null, null);
+        }
 }
