@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -14,6 +15,9 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,7 +34,7 @@ import frc.robot.Drivetrain.DrivetrainConfig;
 /* MASTER AUTON CLASS */
 public class AutonMaster {
     private static Field2d mGameField;
-    private static SendableChooser<Command> mAutonChooser = new SendableChooser<>();
+    private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
     public AutonMaster() { 
 
@@ -58,18 +62,28 @@ public class AutonMaster {
                 },
             RobotContainer.mSwerveDrivetrain 
         );
+       
 
-       configureAutoChooser(); 
+       ShuffleboardTab autonTab = Shuffleboard.getTab("AutonChoser");
+       autonChooser.setDefaultOption("CurveNoRotationAuto", curveNoRotationAuto());
+       autonChooser.addOption("CurveWithRotationAuto", curveWithRotationAuto());
+
+       SmartDashboard.putData("Auto Chooser",autonChooser);
+       autonTab.add(autonChooser);
        configurePathPlannerLogging();
     }
     
-    private void configureAutoChooser() { 
-        mAutonChooser = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData(mAutonChooser);
-    }
 
     public static SendableChooser<Command> getAutonSelector() {
-        return mAutonChooser;
+        return autonChooser;
+    }
+
+    public Command curveNoRotationAuto() {
+        return new PathPlannerAuto("CurveNoRotationAuto");
+    }
+
+    public Command curveWithRotationAuto() {
+        return new PathPlannerAuto("CurveWithRotationAuto");
     }
 
     private void configurePathPlannerLogging() {
