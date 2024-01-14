@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Vision.VisionConfig.*;
 
 public class ShooterCams extends SubsystemBase {
@@ -48,16 +49,31 @@ public class ShooterCams extends SubsystemBase {
         PhotonPoseEstimator poseEst2 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, shooterCam1, robotToCam1);
         PhotonPoseEstimator poseEst3 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, shooterCam2, robotToCam2);
 
-        //Aiming at Target
+        
+        }
+    //Aiming at Target
         //PID  Controllers
-        PIDController forwardController = new PIDController(ShooterCamsConfig.linearP, 0, ShooterCamsConfig.linearD);
+        static PIDController forwardController = new PIDController(ShooterCamsConfig.linearP, 0, ShooterCamsConfig.linearD);
 
-        PIDController turnController = new PIDController(ShooterCamsConfig.angularP, 0, ShooterCamsConfig.angularD);
-
-        XboxController xbox = new XboxController(0);
-        PS5Controller ps5 = new PS5Controller(0);
+        static PIDController turnController = new PIDController(ShooterCamsConfig.angularP, 0, ShooterCamsConfig.angularD);
 
         //TODO: Add Drive motors
         //DifferentialDrive drive = new DifferentialDrive(null, null);
+        public void targetaim(){
+
+            RobotContainer roboCon = new RobotContainer();
+            double rotationSpeed = roboCon.rotationAxis;
+            
+            //get last camera result
+            var result = shooterCam1.getLatestResult();
+
+            if (result.hasTargets()) {
+                // calculate angular turn power
+                // -1.0 required to ensure positive PID controller effort
+                rotationSpeed = -turnController.calculate(result.getBestTarget().getYaw(), 0);
+            } else {
+                // if we have no targets, stay still
+                rotationSpeed = 0;
+            }
         }
 }
