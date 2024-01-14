@@ -14,6 +14,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -65,7 +66,6 @@ public class AutonMaster {
     
     private void configureAutoChooser() { 
         mAutonChooser = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData(mAutonChooser);
     }
 
     public static SendableChooser<Command> getAutonSelector() {

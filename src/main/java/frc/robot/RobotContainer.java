@@ -8,6 +8,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -26,6 +30,7 @@ import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 public class RobotContainer {
   /* Joysticks */
   private final Joystick driver = new Joystick(0);
+
 
   /* Driver Controls */
   //TODO: UNCOMMENT THE PS5 CODE IF THAT IS THE DRIVE CONTROLLER
@@ -48,6 +53,9 @@ public class RobotContainer {
   /* Subsystems */
   public static final Drivetrain mSwerveDrivetrain = new Drivetrain();
 
+  /* Auton Chooser */
+  public static SendableChooser<Command> mAutonChooser;
+
   public RobotContainer() {
     //TODO: May need to change the - sign in front of "driver.getRawAxis()"
     mSwerveDrivetrain.setDefaultCommand(
@@ -62,6 +70,11 @@ public class RobotContainer {
 
 
     configureBindings();
+
+    mAutonChooser = AutonMaster.getAutonSelector();
+    ShuffleboardTab autonTab = Shuffleboard.getTab("Auton Chooser");
+    autonTab.add(mAutonChooser);
+    SmartDashboard.putData(mAutonChooser);
   }
 
   /**
@@ -83,7 +96,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return AutonMaster.getAutonSelector().getSelected();
+    return mAutonChooser.getSelected();
   }
 }
   
