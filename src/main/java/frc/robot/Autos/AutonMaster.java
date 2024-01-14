@@ -15,7 +15,9 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -60,12 +62,14 @@ public class AutonMaster {
                 },
             RobotContainer.mSwerveDrivetrain 
         );
+       
 
+       ShuffleboardTab autonTab = Shuffleboard.getTab("AutonChoser");
        autonChooser.setDefaultOption("CurveNoRotationAuto", curveNoRotationAuto());
        autonChooser.addOption("CurveWithRotationAuto", curveWithRotationAuto());
 
-    //    SmartDashboard.putData("Auto Chooser",autonChooser);
-
+       SmartDashboard.putData("Auto Chooser",autonChooser);
+       autonTab.add(autonChooser);
        configurePathPlannerLogging();
     }
     

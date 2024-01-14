@@ -71,10 +71,7 @@ public class RobotContainer {
 
     configureBindings();
 
-    mAutonChooser = AutonMaster.getAutonSelector();
-    ShuffleboardTab autonTab = Shuffleboard.getTab("Auton Chooser");
-    autonTab.add(mAutonChooser);
-    SmartDashboard.putData(mAutonChooser);
+   
   }
 
   /**
@@ -96,7 +93,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return mAutonChooser.getSelected();
+    return AutonMaster.getAutonSelector().getSelected();
   }
 }
   
