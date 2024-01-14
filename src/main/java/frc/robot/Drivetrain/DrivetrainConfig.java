@@ -21,8 +21,8 @@ public class DrivetrainConfig {
 
         /* Drivetrain Constants */
         //TODO: Change Robot Frame's Width and Length Depending on Frame Size Design makes
-        public static final double trackWidth = Units.inchesToMeters(30);
-        public static final double wheelBase = Units.inchesToMeters(30);
+        public static final double trackWidth = Units.inchesToMeters(26.25);
+        public static final double wheelBase = Units.inchesToMeters(26.25);
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
@@ -96,7 +96,7 @@ public class DrivetrainConfig {
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 3;
             public static final int canCoderID = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(82.05);
             public static final SwerveModuleConfig config = 
                 new SwerveModuleConfig(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -106,7 +106,7 @@ public class DrivetrainConfig {
             public static final int driveMotorID = 10;
             public static final int angleMotorID = 12;
             public static final int canCoderID = 11;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(8.18);
             public static final SwerveModuleConfig config = 
                 new SwerveModuleConfig(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -116,7 +116,7 @@ public class DrivetrainConfig {
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 6;
             public static final int canCoderID = 5;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-45.18);
             public static final SwerveModuleConfig config = 
                 new SwerveModuleConfig(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -126,7 +126,7 @@ public class DrivetrainConfig {
             public static final int driveMotorID = 7;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 8;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-12.48);
             public static final SwerveModuleConfig config = 
                 new SwerveModuleConfig(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }

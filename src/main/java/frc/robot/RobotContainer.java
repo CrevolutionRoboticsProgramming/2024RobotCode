@@ -29,20 +29,20 @@ public class RobotContainer {
 
   /* Driver Controls */
   //TODO: UNCOMMENT THE PS5 CODE IF THAT IS THE DRIVE CONTROLLER
-  private final int translationAxis = XboxController.Axis.kLeftY.value;
-  private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
+  // private final int translationAxis = XboxController.Axis.kLeftY.value;
+  // private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  // private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
+  // private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  // private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
 
   //PS5 Code:
-  // private final int translationAxis = PS5Controller.Axis.kLeftY.value;
-  // private final int strafeAxis = PS5Controller.Axis.kLeftX.value;
-  // private final int rotationAxis = PS5Controller.Axis.kRightX.value;
+  private final int translationAxis = PS5Controller.Axis.kLeftY.value;
+  private final int strafeAxis = PS5Controller.Axis.kLeftX.value;
+  private final int rotationAxis = PS5Controller.Axis.kRightX.value;
 
-  // private final JoystickButton zeroGyro = new JoystickButton(driver, PS5Controller.Button.kTriangle.value);
-  // private final JoystickButton robotCentric = new JoystickButton(driver, PS5Controller.Button.kCross.value);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, PS5Controller.Button.kTriangle.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, PS5Controller.Button.kCross.value);
 
 
   /* Subsystems */
