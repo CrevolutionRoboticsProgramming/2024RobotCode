@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
+import frc.robot.Vision.ShooterCams;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -42,16 +43,20 @@ public class RobotContainer {
   // private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
 
   //PS5 Code:
-  private final int translationAxis = PS5Controller.Axis.kLeftY.value;
+  public static final int translationAxis = PS5Controller.Axis.kLeftY.value;
   private final int strafeAxis = PS5Controller.Axis.kLeftX.value;
-  private final int rotationAxis = PS5Controller.Axis.kRightX.value;
+  public static final int rotationAxis = PS5Controller.Axis.kRightX.value;
 
   private final JoystickButton zeroGyro = new JoystickButton(driver, PS5Controller.Button.kTriangle.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, PS5Controller.Button.kCross.value);
 
+  /*Vision Controls*/
+  private final JoystickButton aimtarget = new JoystickButton(driver, PS5Controller.Button.kCircle.value);
+  //private final JoystickButton aimtarget = new JoystickButton(driver, XboxController.Button.kA.value);
 
   /* Subsystems */
   public static final Drivetrain mSwerveDrivetrain = new Drivetrain();
+  public static final ShooterCams shooterCams = new ShooterCams();
 
   /* Auton Chooser */
   public static SendableChooser<Command> mAutonChooser;
@@ -85,6 +90,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
+    aimtarget.onTrue(new InstantCommand(() -> shooterCams.targetaim()));
   }
 
   /**
