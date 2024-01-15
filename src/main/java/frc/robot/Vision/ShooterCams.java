@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonUtils;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -61,8 +62,8 @@ public class ShooterCams extends SubsystemBase {
         //DifferentialDrive drive = new DifferentialDrive(null, null);
         public void targetaim(){
 
-            RobotContainer roboCon = new RobotContainer();
-            double rotationSpeed = roboCon.rotationAxis;
+            double rotationSpeed = RobotContainer.rotationAxis;
+            double forwardSpeed = RobotContainer.translationAxis;
             
             //get last camera result
             var result = shooterCam1.getLatestResult();
@@ -71,9 +72,20 @@ public class ShooterCams extends SubsystemBase {
                 // calculate angular turn power
                 // -1.0 required to ensure positive PID controller effort
                 rotationSpeed = -turnController.calculate(result.getBestTarget().getYaw(), 0);
+                // calculate range
+                double range = 
+                    PhotonUtils.calculateDistanceToTargetMeters(
+                        ShooterCamsConfig.cameraHeight_M, 
+                        ShooterCamsConfig.targetHeight_M, 
+                        ShooterCamsConfig.cameraPitch_R, 
+                        Units.degreesToRadians(result.getBestTarget().getPitch()));
+                //give range to PID controller, move towards target
+                // -1.0 required to ensure positive PID controller effort _increases_ range
+                forwardSpeed = -turnController.calculate(range, ShooterCamsConfig.targetRange_M);
             } else {
                 // if we have no targets, stay still
-                rotationSpeed = 0;
+                rotationSpeed = 0.0;
+                forwardSpeed = 0.0;
             }
         }
 }

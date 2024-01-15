@@ -20,7 +20,7 @@ public class VisionConfig{
         //Aiming Constants
         //TODO: Tune camera height + angle and target height constants
         public static final double cameraHeight_M = Units.inchesToMeters(0); //camera height
-        final double targetHeight_M = Units.feetToMeters(0); //target height
+        public static final double targetHeight_M = Units.feetToMeters(0); //target height
         
         //Camera angle
         public static final double cameraPitch_R = Units.degreesToRadians(0);
