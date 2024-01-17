@@ -21,7 +21,9 @@ public class AimAtTarget extends Command{
     private PhotonCamera shooterCam1 = ShooterCams.shooterCam1;
     private Drivetrain drivetrain;
     private Supplier<Pose2d> poseEst;
-    private Transform3d targetGoal = new Transform3d(new Translation3d(0.0, 0.0, 0.0), new Rotation3d(0.0, 0.0, 0.0));
+    private Transform3d targetGoal =
+     new Transform3d(new Translation3d(0.0, 0.0, Units.inchesToMeters(53)),
+     new Rotation3d(0.0, 0.0, 0.0));
     
     //PID  Controllers
     static ProfiledPIDController xController = new ProfiledPIDController(ShooterCamsConfig.linearP, 0, ShooterCamsConfig.linearD, ShooterCamsConfig.xConstraints);
@@ -88,9 +90,8 @@ public class AimAtTarget extends Command{
             if (omegaController.atGoal()){
                 omegaSpeed = 0;
             }
-            Translation2d xySpeeds = new Translation2d(xSpeed, ySpeed);
 
-            drivetrain.drive(xySpeeds, omegaSpeed, true, true);
+            drivetrain.drive(new Translation2d(xSpeed, ySpeed), omegaSpeed, true, true);
                 
         } else {
             // if we have no targets, don't move
