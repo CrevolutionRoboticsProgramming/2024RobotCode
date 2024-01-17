@@ -9,6 +9,7 @@ import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -27,10 +28,6 @@ public class ShooterCams extends SubsystemBase {
     //Define our PhotonCameras
     public static PhotonCamera shooterCam1 = new PhotonCamera(ShooterCamsConfig.shooterCam1Name);
     public static PhotonCamera shooterCam2 = new PhotonCamera(ShooterCamsConfig.shooterCam2Name);
-
-    //Robot to Cam: 
-    public static Transform3d robotToCam1 = new Transform3d(ShooterCamsConfig.shooterCam1Translation, ShooterCamsConfig.shooterCam1Rotation);
-    public static Transform3d robotToCam2 = new Transform3d(ShooterCamsConfig.shooterCam2Translation, ShooterCamsConfig.shooterCam2Rotation);
     
     
     // Declare AprilTagFieldLayout outside the try block
@@ -47,45 +44,8 @@ public class ShooterCams extends SubsystemBase {
         }
 
         // Pose estimator
-        PhotonPoseEstimator poseEst2 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, shooterCam1, robotToCam1);
-        PhotonPoseEstimator poseEst3 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, shooterCam2, robotToCam2);
-
+        PhotonPoseEstimator photonPose1 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, shooterCam1, ShooterCamsConfig.robotToCam1);
+        PhotonPoseEstimator photonPose2 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, shooterCam2, ShooterCamsConfig.robotToCam2);
         
-        }
-    //Aiming at Target
-        //PID  Controllers
-        static PIDController forwardController = new PIDController(ShooterCamsConfig.linearP, 0, ShooterCamsConfig.linearD);
-
-        static PIDController turnController = new PIDController(ShooterCamsConfig.angularP, 0, ShooterCamsConfig.angularD);
-
-        //TODO: Add Drive motors
-        //DifferentialDrive drive = new DifferentialDrive(null, null);
-        public void targetaim(){
-
-            double rotationSpeed = RobotContainer.rotationAxis;
-            double forwardSpeed = RobotContainer.translationAxis;
-            
-            //get last camera result
-            var result = shooterCam1.getLatestResult();
-
-            if (result.hasTargets()) {
-                // calculate angular turn power
-                // -1.0 required to ensure positive PID controller effort
-                rotationSpeed = -turnController.calculate(result.getBestTarget().getYaw(), 0);
-                // calculate range
-                double range = 
-                    PhotonUtils.calculateDistanceToTargetMeters(
-                        ShooterCamsConfig.cameraHeight_M, 
-                        ShooterCamsConfig.targetHeight_M, 
-                        ShooterCamsConfig.cameraPitch_R, 
-                        Units.degreesToRadians(result.getBestTarget().getPitch()));
-                //give range to PID controller, move towards target
-                // -1.0 required to ensure positive PID controller effort _increases_ range
-                forwardSpeed = -turnController.calculate(range, ShooterCamsConfig.targetRange_M);
-            } else {
-                // if we have no targets, stay still
-                rotationSpeed = 0.0;
-                forwardSpeed = 0.0;
-            }
         }
 }

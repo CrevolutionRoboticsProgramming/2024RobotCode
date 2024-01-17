@@ -5,6 +5,8 @@
 package frc.robot;
 
 
+import org.photonvision.PhotonPoseEstimator;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
@@ -21,6 +23,7 @@ import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 import frc.robot.Vision.ShooterCams;
+import frc.robot.Vision.VisionCommands.AimAtTarget;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -44,7 +47,7 @@ public class RobotContainer {
 
   //PS5 Code:
   public static final int translationAxis = PS5Controller.Axis.kLeftY.value;
-  private final int strafeAxis = PS5Controller.Axis.kLeftX.value;
+  public static final int strafeAxis = PS5Controller.Axis.kLeftX.value;
   public static final int rotationAxis = PS5Controller.Axis.kRightX.value;
 
   private final JoystickButton zeroGyro = new JoystickButton(driver, PS5Controller.Button.kTriangle.value);
@@ -56,7 +59,6 @@ public class RobotContainer {
 
   /* Subsystems */
   public static final Drivetrain mSwerveDrivetrain = new Drivetrain();
-  public static final ShooterCams shooterCams = new ShooterCams();
 
   /* Auton Chooser */
   public static SendableChooser<Command> mAutonChooser;
@@ -90,7 +92,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.onTrue(new InstantCommand(() -> shooterCams.targetaim()));
+    aimtarget.whileTrue(new AimAtTarget(null, null, mSwerveDrivetrain));
   }
 
   /**
