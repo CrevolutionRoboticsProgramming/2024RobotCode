@@ -22,10 +22,10 @@ public class VisionConfig{
         public static final Transform3d robotToCam2 = cam2ToRobot.inverse();
 
         //Aiming Constants
-        //TODO: Set max velocity and acceleration to TrapezoidProfile.Constraints
-        public static final TrapezoidProfile.Constraints xConstraints = new TrapezoidProfile.Constraints(0, 0);
-        public static final TrapezoidProfile.Constraints yConstraints = new TrapezoidProfile.Constraints(0, 0);
-        public static final TrapezoidProfile.Constraints omegaConstraints =   new TrapezoidProfile.Constraints(0, 0);
+        //TODO: Set max velocity and acceleration to TrapezoidProfile.Constraints (currently set: default example code values)
+        public static final TrapezoidProfile.Constraints xConstraints = new TrapezoidProfile.Constraints(3, 2);
+        public static final TrapezoidProfile.Constraints yConstraints = new TrapezoidProfile.Constraints(3, 2);
+        public static final TrapezoidProfile.Constraints omegaConstraints =   new TrapezoidProfile.Constraints(8, 8);
 
         
         public static final double linearP = DriveConstants.driveKP; //P term constant

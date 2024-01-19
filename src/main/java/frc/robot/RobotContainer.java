@@ -22,8 +22,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
+import frc.robot.Shooter.Shooter;
 import frc.robot.Vision.ShooterCams;
-import frc.robot.Vision.VisionCommands.AimAtTarget;
+import frc.robot.Vision.VisionCommands.ChaseTarget;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -92,7 +93,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.whileTrue(new AimAtTarget(null, null, mSwerveDrivetrain));
+    aimtarget.whileTrue(new ChaseTarget(ShooterCams.shooterCam1, mSwerveDrivetrain::getPose, mSwerveDrivetrain));
   }
 
   /**

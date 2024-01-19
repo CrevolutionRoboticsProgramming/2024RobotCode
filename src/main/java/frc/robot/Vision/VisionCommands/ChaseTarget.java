@@ -16,7 +16,7 @@ import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Vision.ShooterCams;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 
-public class AimAtTarget extends Command{
+public class ChaseTarget extends Command{
     
     private PhotonCamera shooterCam1 = ShooterCams.shooterCam1;
     private Drivetrain drivetrain;
@@ -30,7 +30,7 @@ public class AimAtTarget extends Command{
     static ProfiledPIDController yController = new ProfiledPIDController(ShooterCamsConfig.linearP, 0, ShooterCamsConfig.linearD, ShooterCamsConfig.yConstraints);
     static ProfiledPIDController omegaController = new ProfiledPIDController(ShooterCamsConfig.angularP, 0, ShooterCamsConfig.angularD, ShooterCamsConfig.omegaConstraints);
 
-    public AimAtTarget(
+    public ChaseTarget(
         PhotonCamera shooterCam1,
         Supplier<Pose2d> poseEst,
         Drivetrain drivetrain){
@@ -45,6 +45,15 @@ public class AimAtTarget extends Command{
 
             addRequirements(drivetrain);
         }
+
+    @Override
+    public void initialize() {
+        //reset all poses
+        var robotPose = poseEst.get();
+        omegaController.reset(robotPose.getRotation().getRadians());
+        xController.reset(robotPose.getX());
+        yController.reset(robotPose.getY());
+    }
 
     @Override
     public void execute(){
@@ -97,5 +106,10 @@ public class AimAtTarget extends Command{
             // if we have no targets, don't move
             drivetrain.stopSwerve();
         }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        drivetrain.stopSwerve();
     }
 }
