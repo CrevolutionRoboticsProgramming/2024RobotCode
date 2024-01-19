@@ -5,6 +5,8 @@
 package frc.robot;
 
 
+import org.photonvision.PhotonPoseEstimator;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
@@ -20,7 +22,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
+import frc.robot.Shooter.Shooter;
 import frc.robot.Vision.ShooterCams;
+import frc.robot.Vision.VisionCommands.ChaseTarget;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -35,28 +39,27 @@ public class RobotContainer {
 
   /* Driver Controls */
   //TODO: UNCOMMENT THE PS5 CODE IF THAT IS THE DRIVE CONTROLLER
-  // private final int translationAxis = XboxController.Axis.kLeftY.value;
-  // private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  // private final int rotationAxis = XboxController.Axis.kRightX.value;
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  // private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  // private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
 
   //PS5 Code:
-  public static final int translationAxis = PS5Controller.Axis.kLeftY.value;
-  private final int strafeAxis = PS5Controller.Axis.kLeftX.value;
-  public static final int rotationAxis = PS5Controller.Axis.kRightX.value;
+  // public static final int translationAxis = PS5Controller.Axis.kLeftY.value;
+  // public static final int strafeAxis = PS5Controller.Axis.kLeftX.value;
+  // public static final int rotationAxis = PS5Controller.Axis.kRightX.value;
 
-  private final JoystickButton zeroGyro = new JoystickButton(driver, PS5Controller.Button.kTriangle.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, PS5Controller.Button.kCross.value);
+  // private final JoystickButton zeroGyro = new JoystickButton(driver, PS5Controller.Button.kTriangle.value);
+  // private final JoystickButton robotCentric = new JoystickButton(driver, PS5Controller.Button.kCross.value);
 
   /*Vision Controls*/
-  private final JoystickButton aimtarget = new JoystickButton(driver, PS5Controller.Button.kCircle.value);
-  //private final JoystickButton aimtarget = new JoystickButton(driver, XboxController.Button.kA.value);
+  //private final JoystickButton aimtarget = new JoystickButton(driver, PS5Controller.Button.kCircle.value);
+  private final JoystickButton aimtarget = new JoystickButton(driver, XboxController.Button.kA.value);
 
   /* Subsystems */
   public static final Drivetrain mSwerveDrivetrain = new Drivetrain();
-  public static final ShooterCams shooterCams = new ShooterCams();
 
   /* Auton Chooser */
   public static SendableChooser<Command> mAutonChooser;
@@ -90,7 +93,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.onTrue(new InstantCommand(() -> shooterCams.targetaim()));
+    aimtarget.whileTrue(new ChaseTarget(ShooterCams.shooterCam1, mSwerveDrivetrain::getPose, mSwerveDrivetrain));
   }
 
   /**
