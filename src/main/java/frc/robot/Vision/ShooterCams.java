@@ -31,7 +31,7 @@ public class ShooterCams extends SubsystemBase {
     
     
     // Declare AprilTagFieldLayout outside the try block
-    private final AprilTagFieldLayout aprilTagField;
+    public static AprilTagFieldLayout aprilTagField;
 
     public ShooterCams() {
         // Initialize AprilTagFieldLayout in the constructor
@@ -42,10 +42,5 @@ public class ShooterCams extends SubsystemBase {
             // Handle the exception appropriately, e.g., log or throw a runtime exception
             throw new RuntimeException("Failed to load AprilTagFieldLayout", e);
         }
-
-        // Pose estimator
-        PhotonPoseEstimator photonPose1 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, shooterCam1, ShooterCamsConfig.robotToCam1);
-        PhotonPoseEstimator photonPose2 = new PhotonPoseEstimator(aprilTagField, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, shooterCam2, ShooterCamsConfig.robotToCam2);
-        
         }
 }
