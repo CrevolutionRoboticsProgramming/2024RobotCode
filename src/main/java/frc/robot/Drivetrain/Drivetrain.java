@@ -1,5 +1,7 @@
 package frc.robot.Drivetrain;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
@@ -22,7 +24,7 @@ public class Drivetrain extends SubsystemBase {
     public Pigeon2 gyro;
 
     public Drivetrain() { 
-        gyro = new Pigeon2(DriveConstants.pigeonID);
+        gyro = new Pigeon2(DriveConstants.pigeonID, "Canivore");
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
@@ -147,7 +149,7 @@ public class Drivetrain extends SubsystemBase {
         //Logging to SmartDashboard
         //TODO: Add AdvantageKit/ AdvantageScope Support
         swerveOdometry.update(getGyroYaw(), getModulePositions());
-
+        Logger.recordOutput("Pose 2d", getPose());
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
