@@ -24,7 +24,7 @@ public class Drivetrain extends SubsystemBase {
     public Pigeon2 gyro;
 
     public Drivetrain() { 
-        gyro = new Pigeon2(DriveConstants.pigeonID, "Canivore");
+        gyro = new Pigeon2(DriveConstants.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
@@ -61,16 +61,16 @@ public class Drivetrain extends SubsystemBase {
     }   
 
     public void driveRobotRelative(ChassisSpeeds speeds){
-        drive(new Translation2d(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond), 
-            speeds.omegaRadiansPerSecond, false, false);
+        SwerveModuleState[] states = DriveConstants.swerveKinematics.toSwerveModuleStates(speeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.maxSpeed);
+        setModuleStates(states);
     }
 
+
     public ChassisSpeeds getRobotRelativeSpeeds(){
-        return DriveConstants.swerveKinematics.toChassisSpeeds(mSwerveMods[0].getState(),
-                                                               mSwerveMods[1].getState(),
-                                                               mSwerveMods[2].getState(),
-                                                               mSwerveMods[3].getState());
+        return DriveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
+
 
     public void stopSwerve() {
         Translation2d stop = new Translation2d(0, 0);
@@ -149,7 +149,7 @@ public class Drivetrain extends SubsystemBase {
         //Logging to SmartDashboard
         //TODO: Add AdvantageKit/ AdvantageScope Support
         swerveOdometry.update(getGyroYaw(), getModulePositions());
-        Logger.recordOutput("Pose 2d", getPose());
+        
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
