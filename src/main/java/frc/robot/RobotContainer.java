@@ -46,6 +46,8 @@ public class RobotContainer {
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
 
+  AutonMaster mAutonMaster = new AutonMaster();
+
   //PS5 Code:
   // public static final int translationAxis = PS5Controller.Axis.kLeftY.value;
   // public static final int strafeAxis = PS5Controller.Axis.kLeftX.value;
@@ -76,9 +78,15 @@ public class RobotContainer {
             )
         );
 
+    
+    mAutonChooser = mAutonMaster.getAutonSelector();
+    
+    ShuffleboardTab autonTab = Shuffleboard.getTab("Auton Chooser");
+    autonTab.add(mAutonChooser);
+    SmartDashboard.putData(mAutonChooser);
 
+    
     configureBindings();
-
    
   }
 
@@ -102,7 +110,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return AutonMaster.getAutonSelector().getSelected();
+    return mAutonChooser.getSelected();
   }
 }
   

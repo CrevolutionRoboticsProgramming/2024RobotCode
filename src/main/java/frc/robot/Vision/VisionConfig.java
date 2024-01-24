@@ -14,7 +14,7 @@ public class VisionConfig{
         public static final String shooterCam2Name = "Cam2";
 
         //Robot to Cam 1 constants
-        public static final Transform3d cam1ToRobot = new Transform3d(new Translation3d(0.0, 0.0, 0.0), new Rotation3d());
+        public static final Transform3d cam1ToRobot = new Transform3d(new Translation3d(Units.inchesToMeters(11.25), Units.inchesToMeters(1.25), 0.0), new Rotation3d());
         public static final Transform3d robotToCam1 = cam1ToRobot.inverse();
 
         //Robot to Cam 2 constants
