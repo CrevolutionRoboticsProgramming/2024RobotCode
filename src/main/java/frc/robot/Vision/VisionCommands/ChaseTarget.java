@@ -13,7 +13,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Drivetrain.Drivetrain;
-import frc.robot.Vision.ShooterCams;
+import frc.robot.Vision.Vision.ShooterCams;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 
 public class ChaseTarget extends Command{
