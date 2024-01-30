@@ -23,7 +23,7 @@ import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 import frc.robot.Shooter.Shooter;
-import frc.robot.Vision.ShooterCams;
+import frc.robot.Vision.Vision;
 import frc.robot.Vision.VisionCommands.ChaseTarget;
 
 /**
@@ -101,7 +101,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.whileTrue(new ChaseTarget(ShooterCams.shooterCam1, mSwerveDrivetrain::getPose, mSwerveDrivetrain));
+    aimtarget.whileTrue(new ChaseTarget(Vision.ShooterCams.shooterCam1, mSwerveDrivetrain::getPose, mSwerveDrivetrain));
   }
 
   /**
