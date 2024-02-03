@@ -41,4 +41,9 @@ public class Conversions {
         double wheelRotations = wheelMeters / circumference;
         return wheelRotations;
     }
+
+    public static double feetToMeters(double d) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'feetToMeters'");
+    }
 }
