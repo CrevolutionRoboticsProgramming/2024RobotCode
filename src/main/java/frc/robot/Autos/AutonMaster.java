@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainConfig;
 
 /* MASTER AUTON CLASS */
@@ -39,6 +40,7 @@ public class AutonMaster {
     public AutonMaster() { 
 
         configureNamedCommands();
+        
 
         //Configuring AutoBuilder
         AutoBuilder.configureHolonomic(
@@ -63,26 +65,24 @@ public class AutonMaster {
             RobotContainer.mSwerveDrivetrain 
         );
        
-
-       ShuffleboardTab autonTab = Shuffleboard.getTab("AutonChoser");
-       autonChooser.setDefaultOption("CurveNoRotationAuto", curveNoRotationAuto());
-       autonChooser.addOption("CurveWithRotationAuto", curveWithRotationAuto());
-
-       SmartDashboard.putData("Auto Chooser",autonChooser);
-       autonTab.add(autonChooser);
+        
+        autonChooser.setDefaultOption("CurveNoRotationAuto", AutoBuilder.buildAuto("CurveNoRotationAuto"));
+        autonChooser.addOption("CurveWithRotationAuto", AutoBuilder.buildAuto("CurveWithRotationAuto"));
+       
        configurePathPlannerLogging();
     }
     
 
-    public static SendableChooser<Command> getAutonSelector() {
+    public SendableChooser<Command> getAutonSelector() {
+        
         return autonChooser;
     }
 
-    public Command curveNoRotationAuto() {
+    public static Command curveNoRotationAuto() {
         return new PathPlannerAuto("CurveNoRotationAuto");
     }
 
-    public Command curveWithRotationAuto() {
+    public static Command curveWithRotationAuto() {
         return new PathPlannerAuto("CurveWithRotationAuto");
     }
 
