@@ -24,8 +24,8 @@ import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 import frc.robot.Elevator.Elevator;
-import frc.robot.Elevator.commands.ElevatorDown;
-import frc.robot.Elevator.commands.ElevatorUp;
+import frc.robot.Elevator.commands.ElevatorTrap;
+import frc.robot.Elevator.commands.RunElevator;
 import frc.robot.Shooter.Shooter;
 import frc.robot.Vision.Vision;
 import frc.robot.Vision.VisionCommands.ChaseTarget;
@@ -63,11 +63,12 @@ public class RobotContainer {
   /*Vision Controls*/
   //private final JoystickButton aimtarget = new JoystickButton(driver, PS5Controller.Button.kCircle.value);
   private final JoystickButton aimtarget = new JoystickButton(driver, XboxController.Button.kA.value);
-  private final JoystickButton elevatorButton = new JoystickButton(driver, XboxController.Button.kY.value);
+  private final JoystickButton elevatorButton = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton trapButton = new JoystickButton(driver, XboxController.Button.kX.value);
 
   /* Subsystems */
   public static final Drivetrain mSwerveDrivetrain = new Drivetrain();
-  public static final Elevator m_elevator = new Elevator();
+  public static final Elevator elevator = new Elevator();
 
   /* Auton Chooser */
   public static SendableChooser<Command> mAutonChooser;
@@ -108,8 +109,9 @@ public class RobotContainer {
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
     aimtarget.whileTrue(new ChaseTarget(Vision.ShooterCams.shooterCam1, mSwerveDrivetrain::getPose, mSwerveDrivetrain));
-    elevatorButton.whileTrue(new ElevatorUp(m_elevator));
-    elevatorButton.whileFalse(new ElevatorDown(m_elevator));
+
+    elevatorButton.onTrue(new RunElevator(elevator, null));
+    trapButton.onTrue(new ElevatorTrap(elevator));
   }
 
   /**

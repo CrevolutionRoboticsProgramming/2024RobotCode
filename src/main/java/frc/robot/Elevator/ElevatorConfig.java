@@ -29,8 +29,8 @@ public class ElevatorConfig {
     public static final int kLowerLimitSwitchPort = 53;
     public static final int kUpperLimitSwitchPort = 54;
 
-    public static final double kMaxVelocityDown = -0.5;
-    public static final double kMaxVelocityUp = 0.5;
+    //kMaxVelocity and kMaxAcceleration are currently not being used
+    public static final double kMaxVelocity = 0.5;
     public static final double kMaxAcceleration = 0.6;
 
     public static final double kSeekVoltage = 2;
