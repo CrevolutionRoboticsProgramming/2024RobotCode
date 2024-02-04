@@ -23,10 +23,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
-import frc.robot.Elevator.Elevator;
-import frc.robot.Elevator.commands.ElevatorTrap;
-import frc.robot.Elevator.commands.RunElevator;
-import frc.robot.Shooter.Shooter;
+// import frc.robot.Elevator.Elevator;
+// import frc.robot.Elevator.commands.ElevatorTrap;
+// import frc.robot.Elevator.commands.RunElevator;
+// import frc.robot.Shooter.Shooter;
 import frc.robot.Vision.Vision;
 import frc.robot.Vision.VisionCommands.ChaseTarget;
 
@@ -48,7 +48,7 @@ public class RobotContainer {
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
+  // private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
 
   AutonMaster mAutonMaster = new AutonMaster();
 
@@ -68,7 +68,7 @@ public class RobotContainer {
 
   /* Subsystems */
   public static final Drivetrain mSwerveDrivetrain = new Drivetrain();
-  public static final Elevator elevator = new Elevator();
+  // public static final Elevator elevator = new Elevator();
 
   /* Auton Chooser */
   public static SendableChooser<Command> mAutonChooser;
@@ -81,7 +81,7 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
+                true
             )
         );
 
@@ -110,8 +110,8 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
     aimtarget.whileTrue(new ChaseTarget(Vision.ShooterCams.shooterCam1, mSwerveDrivetrain::getPose, mSwerveDrivetrain));
 
-    elevatorButton.onTrue(new RunElevator(elevator, null));
-    trapButton.onTrue(new ElevatorTrap(elevator));
+    // elevatorButton.onTrue(new RunElevator(elevator, null));
+    // trapButton.onTrue(new ElevatorTrap(elevator));
   }
 
   /**

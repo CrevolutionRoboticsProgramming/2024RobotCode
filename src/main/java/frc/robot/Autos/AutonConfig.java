@@ -6,8 +6,8 @@ import edu.wpi.first.math.util.Units;
 
 public class AutonConfig {
     
-    public static final PIDConstants TRANSLATION_PID = new PIDConstants(5,0,0);
-    public static final PIDConstants ROTATION_PID = new PIDConstants(5,0,0);
+    public static final PIDConstants TRANSLATION_PID = new PIDConstants(5,0.1,0.25);
+    public static final PIDConstants ROTATION_PID = new PIDConstants(2.5,0,0);
 
     //TODO: change the Drive Base Radius and Max speed
     // Drive base radius in meters. Distance from robot center to furthest module.

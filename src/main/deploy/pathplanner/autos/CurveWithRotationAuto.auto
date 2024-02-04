@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.91,
-      "y": 5.73
+      "x": 1.82409310273166,
+      "y": 6.884614496501721
     },
     "rotation": 0
   },
@@ -11,6 +11,12 @@
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ZeroHeading"
+          }
+        },
         {
           "type": "path",
           "data": {

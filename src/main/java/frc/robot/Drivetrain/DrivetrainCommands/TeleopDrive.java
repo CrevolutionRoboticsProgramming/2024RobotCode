@@ -15,16 +15,16 @@ public class TeleopDrive extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
-    private BooleanSupplier robotCentricSup;
+    private boolean isFieldRelative;
 
-    public TeleopDrive(Drivetrain swerveDrivetrain, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
+    public TeleopDrive(Drivetrain swerveDrivetrain, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, boolean isFieldRelative) {
         this.swerveDrivetrain = swerveDrivetrain;
         addRequirements(swerveDrivetrain);
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
-        this.robotCentricSup = robotCentricSup;
+        this.isFieldRelative = isFieldRelative;
     }
 
 
@@ -38,7 +38,7 @@ public class TeleopDrive extends Command {
         swerveDrivetrain.drive(
             new Translation2d(translationVal, strafeVal).times(DriveConstants.maxSpeed), 
             rotationVal * DriveConstants.maxAngularVelocity, 
-            !robotCentricSup.getAsBoolean(), 
+            isFieldRelative, 
             true
         );
     }

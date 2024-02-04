@@ -14,6 +14,7 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -38,8 +39,10 @@ public class AutonMaster {
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
     public AutonMaster() { 
+         NamedCommands.registerCommand("ZeroHeading", new InstantCommand(() -> {
+                                RobotContainer.mSwerveDrivetrain.gyro.setYaw(-180);}));
 
-        configureNamedCommands();
+        // configureNamedCommands();
         
 
         //Configuring AutoBuilder

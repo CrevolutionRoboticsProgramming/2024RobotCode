@@ -1,5 +1,6 @@
 package frc.robot.Elevator;
 
+import edu.wpi.first.math.util.Units;
 import frc.robot.CrevoLib.math.Conversions;
 
 public class ElevatorConfig {
@@ -24,7 +25,7 @@ public class ElevatorConfig {
     public static final boolean kElevatorEncoderInverted = false;
     
     //needs reviewing
-    public static final double kSprocketDiameter = Conversions.feetToMeters(1.273 / 12.0);
+    public static final double kSprocketDiameter = Units.feetToMeters(1.273 / 12.0);
     
     public static final int kLowerLimitSwitchPort = 53;
     public static final int kUpperLimitSwitchPort = 54;
