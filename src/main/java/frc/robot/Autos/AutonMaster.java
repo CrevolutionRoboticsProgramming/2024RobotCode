@@ -40,7 +40,7 @@ public class AutonMaster {
 
     public AutonMaster() { 
          NamedCommands.registerCommand("ZeroHeading", new InstantCommand(() -> {
-                                RobotContainer.mSwerveDrivetrain.gyro.setYaw(-180);}));
+                                RobotContainer.mSwerveDrivetrain.zeroHeading();}));
 
         // configureNamedCommands();
         
