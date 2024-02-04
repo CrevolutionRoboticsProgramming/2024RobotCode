@@ -26,9 +26,9 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() { 
         gyro = new Pigeon2(DriveConstants.pigeonID, "Canivore");
-        // SensorDirectionValue pigeon2Invert = SensorDirectionValue.CounterClockwise_Positive;
+// SensorDirectionValue pigeon2Invert = SensorDirectionValue.CounterClockwise_Positive;
         gyro.getConfigurator().apply(new Pigeon2Configuration());
-        
+
         
         gyro.setYaw(0);
 
@@ -73,7 +73,7 @@ public class Drivetrain extends SubsystemBase {
 
     public ChassisSpeeds getRobotRelativeSpeeds(){
         return DriveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());
-    }
+    }   
 
 
     public void stopSwerve() {
