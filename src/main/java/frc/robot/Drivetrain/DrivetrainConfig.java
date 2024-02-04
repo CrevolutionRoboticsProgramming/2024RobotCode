@@ -8,7 +8,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import frc.robot.CrevoLib.util.SDSConstants;
+import frc.CrevoLib.util.SDSConstants;
 import frc.robot.Drivetrain.SwerveModule.SwerveModuleConfig;
 
 public class DrivetrainConfig {

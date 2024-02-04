@@ -1,4 +1,4 @@
-package frc.robot.CrevoLib.util;
+package frc.CrevoLib.util;
 
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;

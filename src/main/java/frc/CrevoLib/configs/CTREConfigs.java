@@ -1,12 +1,12 @@
-package frc.robot.CrevoLib.configs;
+package frc.CrevoLib.configs;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 
 import frc.robot.Drivetrain.DrivetrainConfig.DriveConstants;
 // import frc.robot.Shooter.Shooter;
-import frc.robot.Shooter.ShooterConfig;
-import frc.robot.Shooter.ShooterConfig.*;
+// import frc.robot.Shooter.ShooterConfig;
+// import frc.robot.Shooter.ShooterConfig.*;
 
 public final class CTREConfigs {
     public TalonFXConfiguration angleMotorConfig = new TalonFXConfiguration();

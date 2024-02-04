@@ -1,4 +1,4 @@
-package frc.robot.CrevoLib.math;
+package frc.CrevoLib.math;
 
 public class Conversions {
     
