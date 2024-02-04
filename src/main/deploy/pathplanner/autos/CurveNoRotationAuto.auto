@@ -22,6 +22,12 @@
           "data": {
             "pathName": "CurveNoRotation"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ZeroHeading"
+          }
         }
       ]
     }

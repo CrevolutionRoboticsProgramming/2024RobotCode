@@ -38,11 +38,12 @@ public class AutonMaster {
     private static Field2d mGameField;
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
-    public AutonMaster() { 
-         NamedCommands.registerCommand("ZeroHeading", new InstantCommand(() -> {
-                                RobotContainer.mSwerveDrivetrain.zeroHeading();}));
+    public AutonMaster() {
+        /* Define Named Commands Here */
 
-        // configureNamedCommands();
+        //Zero Heading -> use at the beginning and end of every auton
+        NamedCommands.registerCommand("ZeroHeading", new InstantCommand(() -> {
+                                RobotContainer.mSwerveDrivetrain.zeroHeading();}));
         
 
         //Configuring AutoBuilder
