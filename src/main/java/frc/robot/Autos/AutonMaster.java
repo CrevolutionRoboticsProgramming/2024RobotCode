@@ -69,25 +69,16 @@ public class AutonMaster {
             RobotContainer.mSwerveDrivetrain 
         );
        
-        
+        /* Add all auton options here */
         autonChooser.setDefaultOption("CurveNoRotationAuto", AutoBuilder.buildAuto("CurveNoRotationAuto"));
         autonChooser.addOption("CurveWithRotationAuto", AutoBuilder.buildAuto("CurveWithRotationAuto"));
        
-       configurePathPlannerLogging();
+        configurePathPlannerLogging();
     }
     
 
     public SendableChooser<Command> getAutonSelector() {
-        
         return autonChooser;
-    }
-
-    public static Command curveNoRotationAuto() {
-        return new PathPlannerAuto("CurveNoRotationAuto");
-    }
-
-    public static Command curveWithRotationAuto() {
-        return new PathPlannerAuto("CurveWithRotationAuto");
     }
 
     private void configurePathPlannerLogging() {
@@ -107,11 +98,4 @@ public class AutonMaster {
         });
     }
 
-    /* Named Commands are like the new "Event Map" */
-    private void configureNamedCommands() {
-        NamedCommands.registerCommand("ZeroHeading", new InstantCommand(() -> {
-                                RobotContainer.mSwerveDrivetrain.gyro.setYaw(RobotContainer.mSwerveDrivetrain.getGyroYaw().getDegrees());}));
-        
-        NamedCommands.registerCommand("StopSwerve", new InstantCommand(RobotContainer.mSwerveDrivetrain::stopSwerve));
-    }
 }
