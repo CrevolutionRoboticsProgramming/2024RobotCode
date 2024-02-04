@@ -74,9 +74,13 @@ public class DrivetrainConfig {
 
         /* Drive Motor Characterization Values From SYSID */
         //TODO: This must be tuned to specific robot using SYSID, But Knight Vision Constants work good :)
-        public static final double driveKS = 0.48665; 
-        public static final double driveKV = 2.4132;
-        public static final double driveKA = 0.06921;
+        // public static final double driveKS = 0.48665; 
+        // public static final double driveKV = 2.4132;
+        // public static final double driveKA = 0.06921;
+
+        public static final double driveKS = 0.32; 
+        public static final double driveKV = 1.51;
+        public static final double driveKA = 0.27;
 
         /* Swerve Profiling Values */
         /** Meters per Second */
