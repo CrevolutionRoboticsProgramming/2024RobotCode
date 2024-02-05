@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.003163460872377,
+      "y": 5.597247558131481
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ZeroHeading"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2NoteAmpEnd"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ZeroHeading"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

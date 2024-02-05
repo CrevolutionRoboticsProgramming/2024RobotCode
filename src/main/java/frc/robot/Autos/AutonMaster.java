@@ -44,7 +44,9 @@ public class AutonMaster {
         //Zero Heading -> use at the beginning and end of every auton
         NamedCommands.registerCommand("ZeroHeading", new InstantCommand(() -> {
                                 RobotContainer.mSwerveDrivetrain.zeroHeading();}));
-        
+
+        //Wait Command -> Common Command for Robot to Wait
+        NamedCommands.registerCommand("WaitCommand", new WaitCommand(5));
 
         //Configuring AutoBuilder
         AutoBuilder.configureHolonomic(
@@ -72,7 +74,7 @@ public class AutonMaster {
         /* Add all auton options here */
         autonChooser.setDefaultOption("CurveNoRotationAuto", AutoBuilder.buildAuto("CurveNoRotationAuto"));
         autonChooser.addOption("CurveWithRotationAuto", AutoBuilder.buildAuto("CurveWithRotationAuto"));
-       
+        autonChooser.addOption("2NoteAmpEndAuto", AutoBuilder.buildAuto("2NoteAmpEndAuto"));
         configurePathPlannerLogging();
     }
     
