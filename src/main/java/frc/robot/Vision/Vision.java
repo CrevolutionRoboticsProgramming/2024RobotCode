@@ -19,7 +19,9 @@ import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
@@ -101,13 +103,14 @@ public class Vision {
                 
                 photonNotifier.setName("PhotonRunnable");
                 photonNotifier.startPeriodic(0.02);
+
+                ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
+                addDashboardWidgets(mVisionTab);
         }
         
-        public void addDashboardWidgets(Shuffleboard tab){
-            Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName)
-            .add("Field", field2d).withPosition(0, 0).withSize(6, 4);
-            Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName)
-            .addString("Pose", this::getFormattedPose).withPosition(6, 2).withSize(2, 1);
+        public void addDashboardWidgets(ShuffleboardTab tab){
+            tab.add("Field", field2d).withPosition(0, 0).withSize(6, 4);
+            tab.addString("Pose", this::getFormattedPose).withPosition(6, 2).withSize(2, 1);
         }
 
         public void setAlliance(Alliance alliance){
@@ -132,30 +135,6 @@ public class Vision {
             }
         }
 
-        @Override
-        public void periodic(){
-            //Update estimator every 20 ms
-            poseEstimator.update(rotationSupplier.get(), modSupplier.get());
-
-            //adding vision measurement
-            var visionPose = photonEstimator.getLatestEstimatedPose();
-            if (visionPose != null){
-                sawTag = true;
-                var pose2d = visionPose.estimatedPose.toPose2d();
-                if (originPosition != OriginPosition.kBlueAllianceWallRightSide){
-                    pose2d = flipAlliance(pose2d);
-                }
-                poseEstimator.addVisionMeasurement(pose2d, visionPose.timestampSeconds);
-            }
-
-            //log to dashboard
-            var dashboardPose = poseEstimator.getEstimatedPosition();
-            if (originPosition == OriginPosition.kRedAllianceWallRightSide){
-                dashboardPose = flipAlliance(dashboardPose);
-            }
-        }
-
-        //methods needed for this class
         private String getFormattedPose(){
             var pose = getCurrentPose();
             return String.format("(%.3f, %.3f) %.2f degrees", 
@@ -179,5 +158,34 @@ public class Vision {
         private Pose2d flipAlliance(Pose2d poseToFlip){
             return poseToFlip.relativeTo(ShooterCamsConfig.flippingPose);
         }
+
+        @Override
+        public void periodic(){
+            //Update estimator every 20 ms
+            poseEstimator.update(rotationSupplier.get(), modSupplier.get());
+
+            //adding vision measurement
+            var visionPose = photonEstimator.getLatestEstimatedPose();
+            if (visionPose != null){
+                sawTag = true;
+                var pose2d = visionPose.estimatedPose.toPose2d();
+                if (originPosition != OriginPosition.kBlueAllianceWallRightSide){
+                    pose2d = flipAlliance(pose2d);
+                }
+                poseEstimator.addVisionMeasurement(pose2d, visionPose.timestampSeconds);
+            }
+
+            //log to dashboard
+            var dashboardPose = poseEstimator.getEstimatedPosition();
+            if (originPosition == OriginPosition.kRedAllianceWallRightSide){
+                dashboardPose = flipAlliance(dashboardPose);
+            }
+
+            SmartDashboard.putString("Estimated Pose", getFormattedPose());
+            field2d.setRobotPose(getCurrentPose());
+        }
+
+        //methods needed for this class
+       
     }
 }
