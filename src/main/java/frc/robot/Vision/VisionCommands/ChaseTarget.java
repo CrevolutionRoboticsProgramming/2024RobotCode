@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Autos.AutonConfig;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Vision.Vision.ShooterCams;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
@@ -26,9 +27,9 @@ public class ChaseTarget extends Command{
      new Rotation3d(0.0, 0.0, 0.0));
     
     //PID  Controllers
-    static ProfiledPIDController xController = new ProfiledPIDController(ShooterCamsConfig.linearP, 0, ShooterCamsConfig.linearD, ShooterCamsConfig.xConstraints);
-    static ProfiledPIDController yController = new ProfiledPIDController(ShooterCamsConfig.linearP, 0, ShooterCamsConfig.linearD, ShooterCamsConfig.yConstraints);
-    static ProfiledPIDController omegaController = new ProfiledPIDController(ShooterCamsConfig.angularP, 0, ShooterCamsConfig.angularD, ShooterCamsConfig.omegaConstraints);
+    static ProfiledPIDController xController = new ProfiledPIDController(AutonConfig.TRANSLATION_PID.kP, 0, AutonConfig.TRANSLATION_PID.kD, ShooterCamsConfig.xConstraints);
+    static ProfiledPIDController yController = new ProfiledPIDController(AutonConfig.TRANSLATION_PID.kP, 0, AutonConfig.TRANSLATION_PID.kD, ShooterCamsConfig.yConstraints);
+    static ProfiledPIDController omegaController = new ProfiledPIDController(AutonConfig.ROTATION_PID.kP, 0, AutonConfig.ROTATION_PID.kD, ShooterCamsConfig.omegaConstraints);
 
     public ChaseTarget(
         PhotonCamera shooterCam1,
@@ -100,7 +101,7 @@ public class ChaseTarget extends Command{
                 omegaSpeed = 0;
             }
 
-            drivetrain.drive(new Translation2d(xSpeed, ySpeed), omegaSpeed, true, true);
+            drivetrain.drive(new Translation2d(0, 0), omegaSpeed, true, true);
                 
         } else {
             // if we have no targets, don't move
