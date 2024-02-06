@@ -48,7 +48,7 @@ public class AutonMaster {
                                 RobotContainer.mSwerveDrivetrain.zeroHeading();}));
         
         NamedCommands.registerCommand("ResetFieldOrientation", new InstantCommand( () -> {
-            RobotContainer.mSwerveDrivetrain.swerveOdometry.resetPosition(RobotContainer.mSwerveDrivetrain.getGyroYaw(), 
+            RobotContainer.mSwerveDrivetrain.swerveOdometry.resetPosition(Rotation2d.fromDegrees(-180), 
                         RobotContainer.mSwerveDrivetrain.getModulePositions(), 
                 new Pose2d(new Translation2d(1.89, 7.73), Rotation2d.fromDegrees(0)));   
         }));
