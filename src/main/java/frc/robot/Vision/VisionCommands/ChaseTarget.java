@@ -14,12 +14,11 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Autos.AutonConfig;
 import frc.robot.Drivetrain.Drivetrain;
-import frc.robot.Vision.Vision.ShooterCams;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 
 public class ChaseTarget extends Command{
     
-    private PhotonCamera shooterCam1 = ShooterCams.shooterCam1;
+    private PhotonCamera shooterCam1 = ShooterCamsConfig.shooterCam1;
     private Drivetrain drivetrain;
     private Supplier<Pose2d> poseEst;
     private Transform3d targetGoal =
