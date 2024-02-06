@@ -35,13 +35,6 @@ public class VisionConfig{
         public static final TrapezoidProfile.Constraints yConstraints = new TrapezoidProfile.Constraints(3, 2);
         public static final TrapezoidProfile.Constraints omegaConstraints =   new TrapezoidProfile.Constraints(8, 8);
 
-        
-        public static final double linearP = DriveConstants.driveKP; //P term constant
-        public static final double linearD = DriveConstants.driveKD; //D term constant
-
-        public static final double angularP = DriveConstants.angleKP; //angle P term constant
-        public static final double angularD = DriveConstants.angleKD; //angle D term constant
-
         public static final double fieldLength_m = Units.inchesToMeters(651.25);
         public static final double fieldWidth_m = Units.inchesToMeters(323.25);
 

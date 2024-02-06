@@ -3,6 +3,7 @@ package frc.robot.Vision;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
+import org.opencv.photo.Photo;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -15,6 +16,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -25,7 +27,7 @@ import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 public class Vision {
 
     //this is how 7028 used PhotonPoseEstimator, so far easiest way i found to use it
-    public class PhotonRunnable implements Runnable{
+    public static class PhotonRunnable implements Runnable{
 
         private final PhotonCamera photoncamera;
         private final PhotonPoseEstimator photonPoseEstimator;
@@ -69,12 +71,12 @@ public class Vision {
                 }
             }
         }
-        public EstimatedRobotPose grabLatestEstimatedPose() {
+        public EstimatedRobotPose getLatestEstimatedPose() {
             return atomicEstimatedRobotPose.getAndSet(null);
         }  
     }
     
-    public class PoseEstimator extends SubsystemBase{
+    public static class PoseEstimator extends SubsystemBase{
 
         private final Supplier<Rotation2d> rotationSupplier;
         private final Supplier<SwerveModulePosition[]> modSupplier;
@@ -106,6 +108,51 @@ public class Vision {
             .add("Field", field2d).withPosition(0, 0).withSize(6, 4);
             Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName)
             .addString("Pose", this::getFormattedPose).withPosition(6, 2).withSize(2, 1);
+        }
+
+        public void setAlliance(Alliance alliance){
+            boolean allianceChanged = false;
+            switch(alliance){
+                case Blue:
+                    allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+                    originPosition = OriginPosition.kBlueAllianceWallRightSide;
+                    break;
+                case Red:
+                    allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+                    originPosition = OriginPosition.kBlueAllianceWallRightSide;
+                    break;
+                default:
+                //no default, has to be either blue or red
+            }
+            if (allianceChanged && sawTag) {
+                //alliance determines coordinate system,
+                //if it changes the coordinate system also has to change
+                var newPose = flipAlliance(getCurrentPose());
+                poseEstimator.resetPosition(rotationSupplier.get(), modSupplier.get(), newPose);
+            }
+        }
+
+        @Override
+        public void periodic(){
+            //Update estimator every 20 ms
+            poseEstimator.update(rotationSupplier.get(), modSupplier.get());
+
+            //adding vision measurement
+            var visionPose = photonEstimator.getLatestEstimatedPose();
+            if (visionPose != null){
+                sawTag = true;
+                var pose2d = visionPose.estimatedPose.toPose2d();
+                if (originPosition != OriginPosition.kBlueAllianceWallRightSide){
+                    pose2d = flipAlliance(pose2d);
+                }
+                poseEstimator.addVisionMeasurement(pose2d, visionPose.timestampSeconds);
+            }
+
+            //log to dashboard
+            var dashboardPose = poseEstimator.getEstimatedPosition();
+            if (originPosition == OriginPosition.kRedAllianceWallRightSide){
+                dashboardPose = flipAlliance(dashboardPose);
+            }
         }
 
         //methods needed for this class

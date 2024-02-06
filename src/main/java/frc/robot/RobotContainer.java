@@ -5,14 +5,10 @@
 package frc.robot;
 
 
-import org.photonvision.PhotonPoseEstimator;
-
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,11 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
-// import frc.robot.Elevator.Elevator;
-// import frc.robot.Elevator.commands.ElevatorTrap;
-// import frc.robot.Elevator.commands.RunElevator;
-// import frc.robot.Shooter.Shooter;
-import frc.robot.Vision.Vision;
+import frc.robot.Vision.Vision.PoseEstimator;
 import frc.robot.Vision.VisionCommands.ChaseTarget;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 
@@ -69,6 +61,7 @@ public class RobotContainer {
 
   /* Subsystems */
   public static final Drivetrain mSwerveDrivetrain = new Drivetrain();
+  public static final PoseEstimator poseEstimator = new PoseEstimator(mSwerveDrivetrain::getGyroYaw, mSwerveDrivetrain::getModulePositions);
   // public static final Elevator elevator = new Elevator();
 
   /* Auton Chooser */
@@ -109,7 +102,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.whileTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, mSwerveDrivetrain::getPose, mSwerveDrivetrain));
+    aimtarget.whileTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, poseEstimator::getCurrentPose, mSwerveDrivetrain));
 
     // elevatorButton.onTrue(new RunElevator(elevator, null));
     // trapButton.onTrue(new ElevatorTrap(elevator));
