@@ -29,6 +29,7 @@ import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 // import frc.robot.Shooter.Shooter;
 import frc.robot.Vision.Vision;
 import frc.robot.Vision.VisionCommands.ChaseTarget;
+import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -108,7 +109,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.whileTrue(new ChaseTarget(Vision.ShooterCams.shooterCam1, mSwerveDrivetrain::getPose, mSwerveDrivetrain));
+    aimtarget.whileTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, mSwerveDrivetrain::getPose, mSwerveDrivetrain));
 
     // elevatorButton.onTrue(new RunElevator(elevator, null));
     // trapButton.onTrue(new ElevatorTrap(elevator));
