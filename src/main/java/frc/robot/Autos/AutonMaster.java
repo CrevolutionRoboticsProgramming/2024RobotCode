@@ -14,7 +14,9 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -44,7 +46,12 @@ public class AutonMaster {
         //Zero Heading -> use at the beginning and end of every auton
         NamedCommands.registerCommand("ZeroHeading", new InstantCommand(() -> {
                                 RobotContainer.mSwerveDrivetrain.zeroHeading();}));
-
+        
+        NamedCommands.registerCommand("ResetFieldOrientation", new InstantCommand( () -> {
+            RobotContainer.mSwerveDrivetrain.swerveOdometry.resetPosition(RobotContainer.mSwerveDrivetrain.getGyroYaw(), 
+                        RobotContainer.mSwerveDrivetrain.getModulePositions(), 
+                new Pose2d(new Translation2d(1.89, 7.73), Rotation2d.fromDegrees(0)));   
+        }));
         //Wait Command -> Common Command for Robot to Wait
         NamedCommands.registerCommand("WaitCommand", new WaitCommand(5));
 
