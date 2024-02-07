@@ -182,6 +182,7 @@ public class Vision {
             }
 
             SmartDashboard.putString("Estimated Pose", getFormattedPose());
+            SmartDashboard.putData(field2d);
             field2d.setRobotPose(getCurrentPose());
         }
 
