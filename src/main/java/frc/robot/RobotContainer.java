@@ -86,7 +86,8 @@ public class RobotContainer {
     autonTab.add(mAutonChooser);
     SmartDashboard.putData(mAutonChooser);
 
-    
+    ShuffleboardTab visionTab = Shuffleboard.getTab("Vision");
+    poseEstimator.addDashboardWidgets(visionTab);
     configureBindings();
    
   }

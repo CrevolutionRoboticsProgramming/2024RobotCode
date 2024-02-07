@@ -104,8 +104,8 @@ public class Vision {
                 photonNotifier.setName("PhotonRunnable");
                 photonNotifier.startPeriodic(0.02);
 
-                ShuffleboardTab mVisionTab = Shuffleboard.getTab("Vision");
-                addDashboardWidgets(mVisionTab);
+                
+            
         }
         
         public void addDashboardWidgets(ShuffleboardTab tab){
