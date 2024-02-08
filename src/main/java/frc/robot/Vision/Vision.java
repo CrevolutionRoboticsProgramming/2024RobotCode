@@ -86,6 +86,7 @@ public class Vision {
         private final Field2d field2d = new Field2d();
         private final PhotonRunnable photonEstimator = new PhotonRunnable();
         private final Notifier photonNotifier = new Notifier(photonEstimator);
+        private final ShuffleboardTab visionTab = Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName);
         
         private OriginPosition originPosition = OriginPosition.kBlueAllianceWallRightSide;
         private boolean sawTag = false;

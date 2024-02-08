@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Autos.AutonConfig;
 import frc.robot.Drivetrain.Drivetrain;
@@ -85,15 +86,15 @@ public class ChaseTarget extends Command{
             omegaController.setGoal(goalPose.getRotation().getRadians());
 
             //drive to target
-            var xSpeed = xController.calculate(robotPose.getX());
-            if (xController.atGoal()){
-                xSpeed = 0;
-            }
+            // var xSpeed = xController.calculate(robotPose.getX());
+            // if (xController.atGoal()){
+            //     xSpeed = 0;
+            // }
 
-            var ySpeed = yController.calculate(robotPose.getY());
-            if (yController.atGoal()){
-                ySpeed = 0;
-            }
+            // var ySpeed = yController.calculate(robotPose.getY());
+            // if (yController.atGoal()){
+            //     ySpeed = 0;
+            // }
 
             var omegaSpeed = omegaController.calculate(robotPose2d.getRotation().getRadians());
             if (omegaController.atGoal()){
@@ -101,6 +102,8 @@ public class ChaseTarget extends Command{
             }
 
             drivetrain.drive(new Translation2d(0, 0), omegaSpeed, true, true);
+
+            Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName).add("Omega Goal", omegaSpeed);
                 
         } else {
             // if we have no targets, don't move
