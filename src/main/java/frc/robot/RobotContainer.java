@@ -103,7 +103,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.whileTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, poseEstimator::getCurrentPose, mSwerveDrivetrain));
+    aimtarget.onTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, poseEstimator::getCurrentPose, mSwerveDrivetrain));
 
     // elevatorButton.onTrue(new RunElevator(elevator, null));
     // trapButton.onTrue(new ElevatorTrap(elevator));

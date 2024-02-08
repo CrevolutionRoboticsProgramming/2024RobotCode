@@ -27,9 +27,9 @@ public class ChaseTarget extends Command{
      new Rotation3d(0.0, 0.0, 0.0));
     
     //PID  Controllers
-    static ProfiledPIDController xController = new ProfiledPIDController(AutonConfig.TRANSLATION_PID.kP, 0, AutonConfig.TRANSLATION_PID.kD, ShooterCamsConfig.xConstraints);
-    static ProfiledPIDController yController = new ProfiledPIDController(AutonConfig.TRANSLATION_PID.kP, 0, AutonConfig.TRANSLATION_PID.kD, ShooterCamsConfig.yConstraints);
-    static ProfiledPIDController omegaController = new ProfiledPIDController(AutonConfig.ROTATION_PID.kP, 0, AutonConfig.ROTATION_PID.kD, ShooterCamsConfig.omegaConstraints);
+    static ProfiledPIDController xController = new ProfiledPIDController(ShooterCamsConfig.kPTranslation, ShooterCamsConfig.kITranslation, ShooterCamsConfig.kDTranslation, ShooterCamsConfig.xConstraints);
+    static ProfiledPIDController yController = new ProfiledPIDController(ShooterCamsConfig.kPTranslation, ShooterCamsConfig.kITranslation, ShooterCamsConfig.kDTranslation, ShooterCamsConfig.yConstraints);
+    static ProfiledPIDController omegaController = new ProfiledPIDController(ShooterCamsConfig.kPRotation, ShooterCamsConfig.kIRotation, ShooterCamsConfig.kDRotation, ShooterCamsConfig.omegaConstraints);
 
     public ChaseTarget(
         PhotonCamera shooterCam1,
@@ -96,14 +96,14 @@ public class ChaseTarget extends Command{
             //     ySpeed = 0;
             // }
 
-            var omegaSpeed = omegaController.calculate(robotPose2d.getRotation().getRadians());
+            var omegaSpeed = -omegaController.calculate(robotPose2d.getRotation().getRadians());
             if (omegaController.atGoal()){
                 omegaSpeed = 0;
             }
 
             drivetrain.drive(new Translation2d(0, 0), omegaSpeed, true, true);
 
-            Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName).add("Omega Goal", omegaSpeed);
+            // Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName).add("Omega Goal", omegaSpeed);
                 
         } else {
             // if we have no targets, don't move
