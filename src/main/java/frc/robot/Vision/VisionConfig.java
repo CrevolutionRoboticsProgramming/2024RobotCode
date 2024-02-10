@@ -1,5 +1,7 @@
 package frc.robot.Vision;
 
+import java.util.List;
+
 import org.photonvision.PhotonCamera;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -50,6 +52,9 @@ public class VisionConfig{
         public static final Pose2d flippingPose = new Pose2d(
         new Translation2d(fieldLength_m, fieldWidth_m),
         new Rotation2d(Math.PI));
+
+        public static int target6 = 6;
+        public static int target7 = 7;
 
         public static final String shuffleboardTabName = "Vision";
     }
