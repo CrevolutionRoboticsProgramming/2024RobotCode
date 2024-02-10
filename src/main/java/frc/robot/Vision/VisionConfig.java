@@ -33,11 +33,11 @@ public class VisionConfig{
         
 
         //PID Values for Vision
-        public static final double kPTranslation = 0.1;
+        public static final double kPTranslation = 0.2;
         public static final double kITranslation = 0;
         public static final double kDTranslation = 0;
 
-        public static final double kPRotation = 0.2;
+        public static final double kPRotation = 0.1;
         public static final double kIRotation = 0;
         public static final double kDRotation = 0;
         //Aiming Constants
