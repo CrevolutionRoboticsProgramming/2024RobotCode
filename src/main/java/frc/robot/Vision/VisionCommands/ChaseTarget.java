@@ -96,9 +96,12 @@ public class ChaseTarget extends Command{
             //     ySpeed = 0;
             // }
 
-            var omegaSpeed = -omegaController.calculate(robotPose2d.getRotation().getRadians());
+            var omegaSpeed = omegaController.calculate(robotPose2d.getRotation().getRadians());
             if (omegaController.atGoal()){
                 omegaSpeed = 0;
+            }
+            if(goalPose.getRotation().getRadians() > 0) {
+                omegaSpeed = -omegaSpeed;
             }
 
             drivetrain.drive(new Translation2d(0, 0), omegaSpeed, true, true);
