@@ -70,7 +70,9 @@ public class ChaseTarget extends Command{
         //get last camera result
         var result = shooterCam1.getLatestResult();
 
-        if (result.hasTargets()) {
+        if (result.hasTargets() && 
+        result.getBestTarget().getFiducialId() == ShooterCamsConfig.target6 ||
+        result.getBestTarget().getFiducialId() == ShooterCamsConfig.target7) {
             //get camera position
             var camPose = robotPose.transformBy(ShooterCamsConfig.robotToCam1);
             
