@@ -35,9 +35,9 @@ public class VisionConfig{
         public static final double kITranslation = 0;
         public static final double kDTranslation = 0;
 
-        public static final double kPRotation = 0.5;
+        public static final double kPRotation = 0.2;
         public static final double kIRotation = 0;
-        public static final double kDRotation = 0.05;
+        public static final double kDRotation = 0;
         //Aiming Constants
         //TODO: Set max velocity and acceleration to TrapezoidProfile.Constraints (currently set: default example code values)
         public static final TrapezoidProfile.Constraints xConstraints = new TrapezoidProfile.Constraints(3, 2);

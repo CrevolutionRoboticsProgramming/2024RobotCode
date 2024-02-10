@@ -100,7 +100,7 @@ public class ChaseTarget extends Command{
             if (omegaController.atGoal()){
                 omegaSpeed = 0;
             }
-            if(goalPose.getRotation().getRadians() > 0) {
+            if(goalPose.getRotation().getRadians() < 0) {
                 omegaSpeed = -omegaSpeed;
             }
 
