@@ -1,5 +1,6 @@
 package frc.robot.Vision;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.photonvision.PhotonCamera;
@@ -53,8 +54,9 @@ public class VisionConfig{
         new Translation2d(fieldLength_m, fieldWidth_m),
         new Rotation2d(Math.PI));
 
-        public static int target6 = 6;
-        public static int target7 = 7;
+        //Target list
+        public static Integer targetList[] = {6,7};
+        
 
         public static final String shuffleboardTabName = "Vision";
     }
