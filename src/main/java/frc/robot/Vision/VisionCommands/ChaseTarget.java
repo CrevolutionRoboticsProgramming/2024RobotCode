@@ -87,6 +87,13 @@ public class ChaseTarget extends Command{
             yController.setGoal(goalPose.getY());
             omegaController.setGoal(goalPose.getRotation().getRadians());
 
+            //print vision vars
+            System.out.println("Goal Pose: " + goalPose.getRotation().getDegrees());
+            System.out.println("Cam Pose: " + camPose);
+            System.out.println("Target Pose: " + targetPose);
+            System.out.println("Robot Pose: " + robotPose2d.getRotation().getDegrees());
+            System.out.println("Cam to Target " + camToTarget);
+
             //drive to target
             // var xSpeed = xController.calculate(robotPose.getX());
             // if (xController.atGoal()){
@@ -100,7 +107,7 @@ public class ChaseTarget extends Command{
 
             var omegaSpeed = omegaController.calculate(robotPose2d.getRotation().getRadians());
             if (omegaController.atGoal()){
-                omegaSpeed = 0;
+                drivetrain.stopSwerve();
             }
             if(goalPose.getRotation().getRadians() < 0) {
                 omegaSpeed = -omegaSpeed;
@@ -109,6 +116,8 @@ public class ChaseTarget extends Command{
             drivetrain.drive(new Translation2d(0, 0), omegaSpeed, true, true);
 
             // Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName).add("Omega Goal", omegaSpeed);
+
+            
                 
         } else {
             // if we have no targets, don't move
