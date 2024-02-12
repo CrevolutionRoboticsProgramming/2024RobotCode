@@ -1,5 +1,7 @@
 package frc.robot.Vision.VisionCommands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 import org.photonvision.PhotonCamera;
@@ -47,6 +49,11 @@ public class ChaseTarget extends Command{
             addRequirements(drivetrain);
         }
 
+    private static boolean checkID(Integer[] arr, int fiducialID){
+        boolean acceptedID = Arrays.asList(arr).contains(fiducialID);
+        return acceptedID;
+    }
+
     @Override
     public void initialize() {
         //reset all poses
@@ -71,8 +78,7 @@ public class ChaseTarget extends Command{
         var result = shooterCam1.getLatestResult();
 
         if (result.hasTargets() && 
-        result.getBestTarget().getFiducialId() == ShooterCamsConfig.target6 ||
-        result.getBestTarget().getFiducialId() == ShooterCamsConfig.target7) {
+        checkID(ShooterCamsConfig.targetList, result.getBestTarget().getFiducialId())) {
             //get camera position
             var camPose = robotPose.transformBy(ShooterCamsConfig.robotToCam1);
             
