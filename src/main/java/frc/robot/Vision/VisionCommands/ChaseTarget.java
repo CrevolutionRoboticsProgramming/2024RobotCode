@@ -5,9 +5,13 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
+
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -17,10 +21,13 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Autos.AutonConfig;
 import frc.robot.Drivetrain.Drivetrain;
+import frc.robot.Vision.Vision.PoseEstimator;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 
 public class ChaseTarget extends Command{
-    
+
+    private Drivetrain swerve = new Drivetrain();
+    private PoseEstimator poseEstimator = new PoseEstimator(swerve::getGyroYaw, swerve::getModulePositions);
     private PhotonCamera shooterCam1 = ShooterCamsConfig.shooterCam1;
     private Drivetrain drivetrain;
     private Supplier<Pose2d> poseEst;
@@ -43,7 +50,7 @@ public class ChaseTarget extends Command{
             //TODO: Set tolerances, example code tolerances currently set
             xController.setTolerance(0.2);
             yController.setTolerance(0.2);
-            omegaController.setTolerance(Units.degreesToRadians(3));
+            //omegaController.setTolerance(Units.degreesToRadians(3));
             omegaController.enableContinuousInput(-Math.PI, Math.PI);
 
             addRequirements(drivetrain);
@@ -81,6 +88,8 @@ public class ChaseTarget extends Command{
         checkID(ShooterCamsConfig.targetList, result.getBestTarget().getFiducialId())) {
             //get camera position
             var camPose = robotPose.transformBy(ShooterCamsConfig.robotToCam1);
+
+            
             
             //get target position
             var camToTarget = result.getBestTarget().getBestCameraToTarget();
@@ -100,19 +109,22 @@ public class ChaseTarget extends Command{
             System.out.println("Robot Pose: " + robotPose2d.getRotation().getDegrees());
             System.out.println("Cam to Target " + camToTarget);
 
-            //drive to target
-            // var xSpeed = xController.calculate(robotPose.getX());
-            // if (xController.atGoal()){
-            //     xSpeed = 0;
-            // }
+            // //drive to target
+            // // var xSpeed = xController.calculate(robotPose.getX());
+            // // if (xController.atGoal()){
+            // //     xSpeed = 0;
+            // // }
 
-            // var ySpeed = yController.calculate(robotPose.getY());
-            // if (yController.atGoal()){
-            //     ySpeed = 0;
-            // }
+            // // var ySpeed = yController.calculate(robotPose.getY());
+            // // if (yController.atGoal()){
+            // //     ySpeed = 0;
+            // // }
+            // var goalPose = calculateRequiredHeading();
 
             var omegaSpeed = omegaController.calculate(robotPose2d.getRotation().getRadians());
-            if (omegaController.atGoal()){
+            if (-goalPose.getRotation().getDegrees() - 7.5 <= robotPose.getRotation().getAngle() 
+            && robotPose.getRotation().getAngle() <= goalPose.getRotation().getDegrees() +7.5){
+                System.out.println("Goal met");
                 drivetrain.stopSwerve();
             }
             if(goalPose.getRotation().getRadians() < 0) {
@@ -135,4 +147,8 @@ public class ChaseTarget extends Command{
     public void end(boolean interrupted) {
         drivetrain.stopSwerve();
     }
+    // public Rotation2d calculateRequiredHeading(){
+    //     var pose = poseEstimator.getCurrentPose();
+    //     return PhotonUtils.getYawToPose(pose, new Pose2d(0, 5.6, new Rotation2d(0,0)));
+    // }
 }
