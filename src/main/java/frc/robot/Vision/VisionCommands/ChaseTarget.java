@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -19,6 +20,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.CrevoLib.util.SDSConstants.MK4i.driveRatios;
 import frc.robot.Autos.AutonConfig;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Vision.Vision.PoseEstimator;
@@ -27,13 +29,13 @@ import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 public class ChaseTarget extends Command{
 
     private Drivetrain swerve = new Drivetrain();
-    private PoseEstimator poseEstimator = new PoseEstimator(swerve::getGyroYaw, swerve::getModulePositions);
     private PhotonCamera shooterCam1 = ShooterCamsConfig.shooterCam1;
     private Drivetrain drivetrain;
     private Supplier<Pose2d> poseEst;
     private Transform3d targetGoal =
      new Transform3d(new Translation3d(0.0, 0.0, Units.inchesToMeters(53)),
-     new Rotation3d(0.0, 0.0, 0.0));
+     new Rotation3d(0.0, 0.0, Math.PI));
+    private PhotonTrackedTarget lastTarget;
     
     //PID  Controllers
     static ProfiledPIDController xController = new ProfiledPIDController(ShooterCamsConfig.kPTranslation, ShooterCamsConfig.kITranslation, ShooterCamsConfig.kDTranslation, ShooterCamsConfig.xConstraints);
@@ -83,60 +85,41 @@ public class ChaseTarget extends Command{
         
         //get last camera result
         var result = shooterCam1.getLatestResult();
-        var goalPose = new Pose2d();
 
-        if (result.hasTargets() && 
-        checkID(ShooterCamsConfig.targetList, result.getBestTarget().getFiducialId())) {
-            //get camera position
-            var camPose = robotPose.transformBy(ShooterCamsConfig.robotToCam1);
+        if (result.hasTargets()) {
+            //verify target id
+            var optionalTarget = result.getTargets().stream()
+            .filter(t -> checkID(ShooterCamsConfig.targetList, t.getFiducialId()))
+            .filter(t -> !t.equals(lastTarget) && t.getPoseAmbiguity() <= .2 && t.getPoseAmbiguity() != -1)
+            .findFirst();
+            if (optionalTarget.isPresent()){
+                var target = optionalTarget.get();
+                lastTarget = target;
 
-            //get target position
-            var camToTarget = result.getBestTarget().getBestCameraToTarget();
-            var targetPose = camPose.transformBy(camToTarget);
+                //get camera pose
+                var cameraPose = robotPose.transformBy(ShooterCamsConfig.robotToCam1);
 
-            //set goals
-            goalPose = targetPose.transformBy(targetGoal).toPose2d();
+                //get target pose
+                var camToTarget = target.getBestCameraToTarget();
+                var targetPose = cameraPose.transformBy(camToTarget);
 
-            xController.setGoal(goalPose.getX());
-            yController.setGoal(goalPose.getY());
-            omegaController.setGoal(goalPose.getRotation().getRadians());
-
-            //print vision vars
-            System.out.println("Goal Pose: " + goalPose.getRotation().getDegrees());
-            System.out.println("Cam Pose: " + camPose);
-            System.out.println("Target Pose: " + targetPose);
-            System.out.println("Robot Pose: " + robotPose2d.getRotation().getDegrees());
-            System.out.println("Cam to Target " + camToTarget);
-
-            // //drive to target
-            // // var xSpeed = xController.calculate(robotPose.getX());
-            // // if (xController.atGoal()){
-            // //     xSpeed = 0;
-            // // }
-
-            // // var ySpeed = yController.calculate(robotPose.getY());
-            // // if (yController.atGoal()){
-            // //     ySpeed = 0;
-            // // }
-            // var goalPose = calculateRequiredHeading();
-
-            // Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName).add("Omega Goal", omegaSpeed);
+                //set goal pose
+                var goalPose = targetPose.transformBy(targetGoal).toPose2d();
                 
-        } else {
-            // if we have no targets, don't move
-            drivetrain.stopSwerve();
-        }
-        var omegaSpeed = omegaController.calculate(robotPose2d.getRotation().getRadians());
-            if (-goalPose.getRotation().getDegrees() - 7.5 <= robotPose.getRotation().getAngle() 
-            && robotPose.getRotation().getAngle() <= goalPose.getRotation().getDegrees() +7.5){
-                System.out.println("Goal met");
-                drivetrain.stopSwerve();
+                omegaController.setGoal(goalPose.getRotation().getRadians());
             }
-            if(goalPose.getRotation().getRadians() < 0) {
-                omegaSpeed = -omegaSpeed;
+        }
+        if (lastTarget == null){
+            drivetrain.stopSwerve();
+        } else {
+
+            var omegaSpeed = omegaController.calculate(robotPose2d.getRotation().getRadians());
+            if (omegaController.atGoal()){
+                end(true);
             }
 
             drivetrain.drive(new Translation2d(0, 0), omegaSpeed, true, true);
+        }
     }
 
     @Override
