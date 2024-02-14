@@ -1,6 +1,7 @@
 package frc.robot.DataTable;
 
 import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 
 // Define a class to represent a data point with shooter pivot angle, left velocity, and right velocity
 class DataPoint {
@@ -22,8 +23,15 @@ class DataPoint {
 public class Interpolation {
     // Create an InterpolatingTreeMap to store data points with double keys
     private static InterpolatingTreeMap<Double, DataPoint> data = new InterpolatingTreeMap<Double, DataPoint>(null, null);
-    public static void main(String[] args) {
-        // Add sample data points to the TreeMap
+    // private static InterpolatingDoubleTreeMap data = new InterpolatingDoubleTreeMap();
+    public Interpolation() {
+        // Configures the TreeMap
+        configureInterpolatingTreeMap();
+    }
+
+    // Method to set up data values in the TreeMap
+    private void configureInterpolatingTreeMap() {
+        // Add data points to the TreeMap
         data.put(10.0, new DataPoint(45, 20));
         data.put(20.0, new DataPoint(30, 25));
         data.put(30.0, new DataPoint(60, 30));
