@@ -4,6 +4,7 @@
 // import com.ctre.phoenix6.configs.CANcoderConfiguration;
 // import com.ctre.phoenix6.configs.TalonFXConfiguration;
 // import com.ctre.phoenix6.controls.DutyCycleOut;
+// import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 // import com.ctre.phoenix6.controls.PositionDutyCycle;
 // import com.ctre.phoenix6.controls.VelocityDutyCycle;
 // import com.ctre.phoenix6.hardware.CANcoder;
@@ -24,16 +25,19 @@
 // import frc.robot.Intake.IntakeConfig;
 
 // public class ShooterPivot extends SubsystemBase {
-//     private final CANSparkMax Pivot;
+//     private final CANSparkMax m_Pivot;
 
 //     private final AbsoluteEncoder encoder;
 //     private final DigitalInput LimitSwitch;
 
+//     private MotionMagicDutyCycle shooterPivotPosition = ShooterConfig.shooterPivotPosition;
+//     private DutyCycleOut shooterPivotPercentOutput = ShooterConfig.shooterPivotPercentOutput;
+
 //     private ShooterConfig.PivotState state;
 
 //     public ShooterPivot() {
-//         Pivot = new CANSparkMax(ShooterConfig.kPivotSparkID, com.revrobotics.CANSparkLowLevel.MotorType.kBrushless);
-//         encoder = Pivot.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
+//         m_Pivot = new CANSparkMax(ShooterConfig.kPivotSparkID, com.revrobotics.CANSparkLowLevel.MotorType.kBrushless);
+//         encoder = m_Pivot.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
 //         LimitSwitch = new DigitalInput(ShooterConfig.kHOLimitSwitch);
 
@@ -42,9 +46,9 @@
 //     }
 
 //     private void configureMotor() {
-//         Pivot.setInverted(ShooterConfig.kPivotMotorInverted);
-//         Pivot.setIdleMode(ShooterConfig.kPivotIdleMode);
-//         Pivot.setSmartCurrentLimit(ShooterConfig.kDefaultContinuousCurrentLimit, ShooterConfig.kDefaultPeakCurrentLimit);
+//         m_Pivot.setInverted(ShooterConfig.kPivotMotorInverted);
+//         m_Pivot.setIdleMode(ShooterConfig.kPivotIdleMode);
+//         m_Pivot.setSmartCurrentLimit(ShooterConfig.kDefaultContinuousCurrentLimit, ShooterConfig.kDefaultPeakCurrentLimit);
 //     }
 
 //     private void configureSensors() {
@@ -53,19 +57,29 @@
 //     }
 
 //     public void setIdleMode(CANSparkMax.IdleMode mode) {
-//         Pivot.setIdleMode(mode);
+//         m_Pivot.setIdleMode(mode);
 //     }
 
-//     public void setOutput(double output) {
-//         Pivot.set(output);
+//     public void shooterPivot(double position) {
+
+//         shooterPivotPosition.Position = position;
+//         m_Pivot.set
+
+//     }
+
+//     public void shooterPivotPercentOutput(double percentOutput) {
+
+//         shooterPivotPercentOutput.Output = percentOutput;
+//         m_Pivot.setMoti
+
 //     }
 
 //     public void setCurrentLimit(int continuousLimit, int peakLimit) {
-//         Pivot.setSmartCurrentLimit(continuousLimit, peakLimit);
+//         m_Pivot.setSmartCurrentLimit(continuousLimit, peakLimit);
 //     }
 
 //     public void stop() {
-//         Pivot.set(0);
+//         m_Pivot.set(0);
 //     }
 
 //     public ShooterConfig.PivotState getState() {
@@ -98,7 +112,7 @@
 //     }
 
 //     public double getOutputCurrent() {
-//         return Math.abs(Pivot.getOutputCurrent());
+//         return Math.abs(m_Pivot.getOutputCurrent());
 //     }
 
 //     @Override
