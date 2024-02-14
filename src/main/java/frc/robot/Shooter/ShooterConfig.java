@@ -52,7 +52,7 @@ public enum PivotState {
     public static final int kLeftShooterSparkID = 26;
     public static final int kRightShooterSparkID = 27;
     public static final int kPivotSparkID = 28;
-    public static final int kIndexTalonID = 29;
+    public static final int kIndexVictorID = 29;
 
     public static final boolean kPivotMotorInverted = false;
     public static final boolean kShooterMotorInverted = false;
