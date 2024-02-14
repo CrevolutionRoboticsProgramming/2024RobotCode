@@ -3,34 +3,36 @@
 // import com.ctre.phoenix6.hardware.TalonFX;
 
 // import edu.wpi.first.wpilibj.DigitalInput;
+// import edu.wpi.first.wpilibj.motorcontrol.Victor;
+// import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.Shooter.ShooterConfig.*;
 
 // public class ShooterIndexer {
-//     private final TalonFX Index;
+//     private final Victor m_Index;
 //     private final DigitalInput BeamBreaker;
 
 //     public ShooterIndexer() {
-//         Index = new TalonFX(ShooterConfig.kIndexTalonID, "Canivore");
-//         Index.setInverted(ShooterConfig.kIndexerMotorInverted);
+//         m_Index = new Victor(ShooterConfig.kIndexVictorID);
+//         m_Index.setInverted(ShooterConfig.kIndexerMotorInverted);
 
 //         BeamBreaker = new DigitalInput(ShooterConfig.kIndexerBeamBreak);
 //     }
 
 //     public void setIntakeSpeed() {
-//         Index.set(1);
+//         m_Index.set(1);
 //     }
 
 //     public void setOuttakeSpeed() {
-//         Index.set(-1);
+//         m_Index.set(-1);
 //     }
     
 //     public void stopIndexer() {
-//         Index.set(0);
+//         m_Index.stopMotor();
 //     }
 
 //     public Double getIndexerSpeed() {
-//         return Index.getVelocity().getValueAsDouble();
+//         return m_Index.get();
 //     }
 
 //     public boolean getBeamBreaker() {

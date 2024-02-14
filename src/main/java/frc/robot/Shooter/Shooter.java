@@ -3,6 +3,7 @@
 // import com.ctre.phoenix6.configs.CANcoderConfiguration;
 // import com.ctre.phoenix6.configs.TalonFXConfiguration;
 // import com.ctre.phoenix6.controls.DutyCycleOut;
+// import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 // import com.ctre.phoenix6.controls.PositionDutyCycle;
 // import com.ctre.phoenix6.controls.VelocityDutyCycle;
 // import com.ctre.phoenix6.hardware.CANcoder;
@@ -19,10 +20,14 @@
 
 
 // public class Shooter extends SubsystemBase {
-//     private final TalonFX RShooter;
-//     private final TalonFX LShooter;
+//     private final TalonFX RShooter, LShooter;
 //     private final double LeftToRightDiff;
 //     private final ShooterIndexer m_Index;
+
+//     private VelocityDutyCycle L_shooterVelocity = ShooterConfig.LeftShooterVelocity;
+//     private VelocityDutyCycle R_shooterVelocity = ShooterConfig.RightShooterVelocity;
+//     private DutyCycleOut L_shooterPercentOutput = ShooterConfig.LeftShooterPercentOutput;
+//     private DutyCycleOut R_shooterPercentOutput = ShooterConfig.RightShooterPercentOutput;
 
 
 //     public Shooter() {
@@ -34,17 +39,24 @@
 //         LeftToRightDiff = ShooterConfig.LeftToRightDiff;
 //     }
 
-//     public void shooterPercentOutput(double percentOutput) {
-//         RShooter.set(percentOutput);
-//         LShooter.set(percentOutput*LeftToRightDiff);
+//     public void LeftShooterVelocity(double velocity) {
+//         L_shooterVelocity.Velocity = velocity;
+//         LShooter.setControl(L_shooterVelocity);
 //     }
 
 //     public void LeftshooterPercentOutput(double percentOutput) {
-//         LShooter.set(percentOutput);
+//         L_shooterPercentOutput.Output = percentOutput;
+//         LShooter.setControl(L_shooterPercentOutput);
+//     }
+
+//     public void RightShooterVelocity(double velocity) {
+//         R_shooterVelocity.Velocity = velocity;
+//         RShooter.setControl(R_shooterVelocity);
 //     }
 
 //     public void RightshooterPercentOutput(double percentOutput) {
-//         RShooter.set(percentOutput);
+//         R_shooterPercentOutput.Output = percentOutput;
+//         RShooter.setControl(R_shooterPercentOutput);
 //     }
 
 //     public void stop() {

@@ -1,5 +1,8 @@
 // package frc.robot.Shooter;
 
+// import com.ctre.phoenix6.controls.DutyCycleOut;
+// import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
+// import com.ctre.phoenix6.controls.VelocityDutyCycle;
 // import com.ctre.phoenix6.hardware.TalonFX;
 // import com.ctre.phoenix6.signals.InvertedValue;
 // import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -45,11 +48,11 @@
 //         private final String kName;
 //     }
 
-//  //motor IDs have to be changed
+//     //motor IDs have to be changed
 //     public static final int kLeftShooterSparkID = 26;
 //     public static final int kRightShooterSparkID = 27;
 //     public static final int kPivotSparkID = 28;
-//     public static final int kIndexTalonID = 29;
+//     public static final int kIndexVictorID = 29;
 
 //     public static final boolean kPivotMotorInverted = false;
 //     public static final boolean kShooterMotorInverted = false;
@@ -63,6 +66,16 @@
 //     // public static ShooterProfile kShoot = new ShooterProfile(60, 60, -.8, "ShootCube");
 //     // public static ShooterProfile kHandoff = new ShooterProfile(40, 40, 0.5, "Handoff");
 //     // public static ShooterProfile kDefaultProfile = new ShooterProfile(40, 40, 1, "Default");
+
+//     // Shooter Velocity & Percent Output Controllers
+//     public static final VelocityDutyCycle LeftShooterVelocity = new VelocityDutyCycle(0);
+//     public static final VelocityDutyCycle RightShooterVelocity = new VelocityDutyCycle(0);
+//     public static final DutyCycleOut LeftShooterPercentOutput = new DutyCycleOut(0);
+//     public static final DutyCycleOut RightShooterPercentOutput = new DutyCycleOut(0);
+
+//     // Shooter Pivot Pos & Percent Output
+//     public static final MotionMagicDutyCycle shooterPivotPosition = new MotionMagicDutyCycle(0);
+//     public static final DutyCycleOut shooterPivotPercentOutput = new DutyCycleOut(0);
 
 //     public static final int shooterCurrentLimit = 35;
 //     public static final int shooterCurrentThreshold = 60;
