@@ -1,30 +1,24 @@
 package frc.robot.Vision.VisionCommands;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Supplier;
 
 import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.CrevoLib.util.SDSConstants.MK4i.driveRatios;
-import frc.robot.Autos.AutonConfig;
 import frc.robot.Drivetrain.Drivetrain;
-import frc.robot.Vision.Vision.PoseEstimator;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
+import frc.robot.DataTable.Interpolation;
+
 
 public class ChaseTarget extends Command{
 
@@ -70,6 +64,7 @@ public class ChaseTarget extends Command{
         omegaController.reset(robotPose.getRotation().getRadians());
         xController.reset(robotPose.getX());
         yController.reset(robotPose.getY());
+
     }
 
     @Override
@@ -85,6 +80,9 @@ public class ChaseTarget extends Command{
         
         //get last camera result
         var result = shooterCam1.getLatestResult();
+
+        // TreeMap Testing
+        Interpolation.interpolate(15);
 
         if (result.hasTargets()) {
             //verify target id
