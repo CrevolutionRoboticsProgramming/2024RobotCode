@@ -83,20 +83,19 @@ public class ChaseTarget extends Command{
         
         //get last camera result
         var result = shooterCam1.getLatestResult();
+        var goalPose = new Pose2d();
 
         if (result.hasTargets() && 
         checkID(ShooterCamsConfig.targetList, result.getBestTarget().getFiducialId())) {
             //get camera position
             var camPose = robotPose.transformBy(ShooterCamsConfig.robotToCam1);
 
-            
-            
             //get target position
             var camToTarget = result.getBestTarget().getBestCameraToTarget();
             var targetPose = camPose.transformBy(camToTarget);
 
             //set goals
-            var goalPose = targetPose.transformBy(targetGoal).toPose2d();
+            goalPose = targetPose.transformBy(targetGoal).toPose2d();
 
             xController.setGoal(goalPose.getX());
             yController.setGoal(goalPose.getY());
@@ -121,7 +120,13 @@ public class ChaseTarget extends Command{
             // // }
             // var goalPose = calculateRequiredHeading();
 
-            var omegaSpeed = omegaController.calculate(robotPose2d.getRotation().getRadians());
+            // Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName).add("Omega Goal", omegaSpeed);
+                
+        } else {
+            // if we have no targets, don't move
+            drivetrain.stopSwerve();
+        }
+        var omegaSpeed = omegaController.calculate(robotPose2d.getRotation().getRadians());
             if (-goalPose.getRotation().getDegrees() - 7.5 <= robotPose.getRotation().getAngle() 
             && robotPose.getRotation().getAngle() <= goalPose.getRotation().getDegrees() +7.5){
                 System.out.println("Goal met");
@@ -132,15 +137,6 @@ public class ChaseTarget extends Command{
             }
 
             drivetrain.drive(new Translation2d(0, 0), omegaSpeed, true, true);
-
-            // Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName).add("Omega Goal", omegaSpeed);
-
-            
-                
-        } else {
-            // if we have no targets, don't move
-            drivetrain.stopSwerve();
-        }
     }
 
     @Override
