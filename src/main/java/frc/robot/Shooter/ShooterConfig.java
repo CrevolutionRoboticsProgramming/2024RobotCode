@@ -48,7 +48,7 @@ public enum PivotState {
         private final String kName;
     }
 
- //motor IDs have to be changed
+    //motor IDs have to be changed
     public static final int kLeftShooterSparkID = 26;
     public static final int kRightShooterSparkID = 27;
     public static final int kPivotSparkID = 28;
