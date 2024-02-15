@@ -17,7 +17,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
-import frc.robot.DataTable.Interpolation;
 
 
 public class ChaseTarget extends Command{
@@ -80,9 +79,6 @@ public class ChaseTarget extends Command{
         
         //get last camera result
         var result = shooterCam1.getLatestResult();
-
-        // TreeMap Testing
-        Interpolation.interpolate(15);
 
         if (result.hasTargets()) {
             //verify target id
