@@ -1,5 +1,5 @@
 package frc.robot.LEDs;
 
-public class LEDsConfig {
+public class LED {
     
 }
