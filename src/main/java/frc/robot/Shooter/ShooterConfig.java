@@ -42,15 +42,15 @@ public enum PivotState {
             return kName;
         }
 
-        final int kStallCurrentLimit;
+        public final int kStallCurrentLimit;
         final int kFreeCurrentLimit;
         final double kNominalOutput;
         private final String kName;
     }
 
     //motor IDs have to be changed
-    public static final int kLeftShooterSparkID = 26;
-    public static final int kRightShooterSparkID = 27;
+    public static final int kLeftShooterID = 26;
+    public static final int kRightShooterID = 27;
     public static final int kPivotSparkID = 28;
     public static final int kIndexVictorID = 29;
 
@@ -68,10 +68,11 @@ public enum PivotState {
     // public static ShooterProfile kDefaultProfile = new ShooterProfile(40, 40, 1, "Default");
 
     // Shooter Velocity & Percent Output Controllers
-    public static final VelocityDutyCycle leftShooterVelocity = new VelocityDutyCycle(0);
-    public static final VelocityDutyCycle rightShooterVelocity = new VelocityDutyCycle(0);
-    public static final DutyCycleOut leftShooterPercentOutput = new DutyCycleOut(0);
-    public static final DutyCycleOut rightShooterPercentOutput = new DutyCycleOut(0);
+    // public static final VelocityDutyCycle leftShooterVelocity = new VelocityDutyCycle(0);
+    // public static final VelocityDutyCycle rightShooterVelocity = new VelocityDutyCycle(0);
+    // public static final DutyCycleOut leftShooterPercentOutput = new DutyCycleOut(0);
+    // public static final DutyCycleOut rightShooterPercentOutput = new DutyCycleOut(0);
+    public static final VelocityDutyCycle shooterVelocityOutput = new VelocityDutyCycle(0);
     public static final DutyCycleOut shooterPercentOutput = new DutyCycleOut(0);
 
     // Shooter Pivot Pos & Percent Output

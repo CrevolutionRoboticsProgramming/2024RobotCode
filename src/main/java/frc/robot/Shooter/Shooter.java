@@ -23,44 +23,51 @@ public class Shooter extends SubsystemBase {
     private final TalonFX rShooterMotor, lShooterMotor;
     private final ShooterIndexer m_Indexer;
 
-    private VelocityDutyCycle l_shooterVelocity = ShooterConfig.leftShooterVelocity;
-    private VelocityDutyCycle r_shooterVelocity = ShooterConfig.rightShooterVelocity;
-    private DutyCycleOut l_shooterPercentOutput = ShooterConfig.leftShooterPercentOutput;
-    private DutyCycleOut r_shooterPercentOutput = ShooterConfig.rightShooterPercentOutput;
+    // private VelocityDutyCycle l_shooterVelocity = ShooterConfig.leftShooterVelocity;
+    // private VelocityDutyCycle r_shooterVelocity = ShooterConfig.rightShooterVelocity;
+    // private DutyCycleOut l_shooterPercentOutput = ShooterConfig.leftShooterPercentOutput;
+    // private DutyCycleOut r_shooterPercentOutput = ShooterConfig.rightShooterPercentOutput;
+    private VelocityDutyCycle shooterVelocityOutput = ShooterConfig.shooterVelocityOutput;
     private DutyCycleOut shooterPercentOutput = ShooterConfig.shooterPercentOutput;
 
 
     public Shooter() {
-        rShooterMotor = new TalonFX(ShooterConfig.kRightShooterSparkID, "Canivore");
-        lShooterMotor = new TalonFX(ShooterConfig.kLeftShooterSparkID, "Canivore");
-
+        rShooterMotor = new TalonFX(ShooterConfig.kRightShooterID);
+        lShooterMotor = new TalonFX(ShooterConfig.kLeftShooterID);
+        
         m_Indexer = new ShooterIndexer();
     }
 
-    public void LeftShooterVelocity(double velocity) {
-        l_shooterVelocity.Velocity = velocity;
-        lShooterMotor.setControl(l_shooterVelocity);
-    }
+    // public void LeftShooterVelocity(double velocity) {
+    //     l_shooterVelocity.Velocity = velocity;
+    //     lShooterMotor.setControl(l_shooterVelocity);
+    // }
 
-    public void LeftshooterPercentOutput(double percentOutput) {
-        l_shooterPercentOutput.Output = percentOutput;
-        lShooterMotor.setControl(l_shooterPercentOutput);
-    }
+    // public void LeftshooterPercentOutput(double percentOutput) {
+    //     l_shooterPercentOutput.Output = percentOutput;
+    //     lShooterMotor.setControl(l_shooterPercentOutput);
+    // }
 
-    public void RightShooterVelocity(double velocity) {
-        r_shooterVelocity.Velocity = velocity;
-        rShooterMotor.setControl(r_shooterVelocity);
-    }
+    // public void RightShooterVelocity(double velocity) {
+    //     r_shooterVelocity.Velocity = velocity;
+    //     rShooterMotor.setControl(r_shooterVelocity);
+    // }
 
-    public void RightshooterPercentOutput(double percentOutput) {
-        r_shooterPercentOutput.Output = percentOutput;
-        rShooterMotor.setControl(r_shooterPercentOutput);
-    }
+    // public void RightshooterPercentOutput(double percentOutput) {
+    //     r_shooterPercentOutput.Output = percentOutput;
+    //     rShooterMotor.setControl(r_shooterPercentOutput);
+    // }
 
     public void shooterPercentOutput(double percentOutput) {
         shooterPercentOutput.Output = percentOutput;
         rShooterMotor.setControl(shooterPercentOutput);
         lShooterMotor.setControl(shooterPercentOutput);
+    }
+
+    public void shooterVeclocity(double velocity) {
+        shooterVelocityOutput.Velocity = velocity;
+        rShooterMotor.setControl(shooterVelocityOutput);
+        lShooterMotor.setControl(shooterVelocityOutput);
     }
 
     public void stop() {
@@ -73,17 +80,28 @@ public class Shooter extends SubsystemBase {
         lShooterMotor.getConfigurator().apply(Robot.ctreConfigs.shooterConfig);
     }
 
-    public double getRightShooterVelocity() {
-        return rShooterMotor.getVelocity().getValueAsDouble();
+    public double[] getShooterPercentOutputs() {
+        return new double[]{rShooterMotor.get(), lShooterMotor.get()};
     }
-    public double getLeftShooterVelocity() {
-        return lShooterMotor.getVelocity().getValueAsDouble();
+
+    public double[] getShooterVelocities() {
+        return new double[]{rShooterMotor.getVelocity().getValueAsDouble(), lShooterMotor.getVelocity().getValueAsDouble()};
     }
+
+    // public double getRightShooterVelocity() {
+    //     return rShooterMotor.getVelocity().getValueAsDouble();
+    // }
+    // public double getLeftShooterVelocity() {
+    //     return lShooterMotor.getVelocity().getValueAsDouble();
+    // }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Right Shooter Velocity", getRightShooterVelocity());
-        SmartDashboard.putNumber("Left Shooter Velocity", getLeftShooterVelocity());
+        // SmartDashboard.putNumber("Right Shooter Velocity", getRightShooterVelocity());
+        // SmartDashboard.putNumber("Left Shooter Velocity", getLeftShooterVelocity());
+
+        SmartDashboard.putNumberArray("Shooter Percent Output", getShooterPercentOutputs());
+        SmartDashboard.putNumberArray("Shooter Velocities", getShooterVelocities());
         SmartDashboard.putNumber("Indexer Velocity", m_Indexer.getIndexerSpeed());
     }
     
