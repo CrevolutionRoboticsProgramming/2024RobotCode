@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.Autos.AutonCommands.TurnInPlaceCommand;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainConfig;
 
@@ -52,8 +53,13 @@ public class AutonMaster {
                         RobotContainer.mSwerveDrivetrain.getModulePositions(), 
                 new Pose2d(new Translation2d(1.89, 7.73), Rotation2d.fromDegrees(0)));   
         }));
+
         //Wait Command -> Common Command for Robot to Wait
         NamedCommands.registerCommand("WaitCommand", new WaitCommand(5));
+
+        //Turn in place command -> enter custom angle 
+        //This turns 45 deg.
+        NamedCommands.registerCommand("TurnInPlace", new TurnInPlaceCommand(45, RobotContainer.mSwerveDrivetrain));
 
         //Configuring AutoBuilder
         AutoBuilder.configureHolonomic(
