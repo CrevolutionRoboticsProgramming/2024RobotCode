@@ -123,8 +123,9 @@ public class ChaseTarget extends Command{
     public void end(boolean interrupted) {
         drivetrain.stopSwerve();
     }
-    // public Rotation2d calculateRequiredHeading(){
-    //     var pose = poseEstimator.getCurrentPose();
-    //     return PhotonUtils.getYawToPose(pose, new Pose2d(0, 5.6, new Rotation2d(0,0)));
-    // }
+    
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }
