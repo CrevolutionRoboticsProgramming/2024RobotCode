@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Autos.AutonMaster;
+import frc.robot.Autos.AutonCommands.TurnInPlaceCommand;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 import frc.robot.Intake.Intake;
@@ -59,6 +60,7 @@ public class RobotContainer {
 
   private final JoystickButton zeroGyro = new JoystickButton(driver, PS5Controller.Button.kTriangle.value);
   private final JoystickButton robotCentric = new JoystickButton(driver, PS5Controller.Button.kCross.value);
+  private final JoystickButton turnInPlace = new JoystickButton(driver, PS5Controller.Button.kSquare.value);
 
   /*Vision Controls*/
   private final JoystickButton aimtarget = new JoystickButton(driver, PS5Controller.Button.kCircle.value);
@@ -114,6 +116,7 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
     // aimtarget.toggleOnTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, poseEstimator::getCurrentPose, mSwerveDrivetrain));
     aimtarget.onTrue(new VisionLineUp(mSwerveDrivetrain, poseEstimator));
+    turnInPlace.onTrue(new TurnInPlaceCommand(90, mSwerveDrivetrain));
     // elevatorButton.onTrue(new RunElevator(elevator, null));
     // trapButton.onTrue(new ElevatorTrap(elevator));
   }
