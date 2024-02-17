@@ -58,13 +58,13 @@ public class Shooter extends SubsystemBase {
     //     rShooterMotor.setControl(r_shooterPercentOutput);
     // }
 
-    public void shooterPercentOutput(double percentOutput) {
+    public void setShooterPercentOutput(double percentOutput) {
         shooterPercentOutput.Output = percentOutput;
         rShooterMotor.setControl(shooterPercentOutput);
         lShooterMotor.setControl(shooterPercentOutput);
     }
 
-    public void shooterVeclocity(double velocity) {
+    public void setShooterVeclocity(double velocity) {
         shooterVelocityOutput.Velocity = velocity;
         rShooterMotor.setControl(shooterVelocityOutput);
         lShooterMotor.setControl(shooterVelocityOutput);
