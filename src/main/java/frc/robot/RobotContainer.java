@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Autos.AutonMaster;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
+import frc.robot.Intake.Intake;
+import frc.robot.Intake.IntakePivot;
 import frc.robot.Vision.Vision.PoseEstimator;
 import frc.robot.Vision.VisionCommands.ChaseTarget;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
@@ -33,6 +35,9 @@ import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 public class RobotContainer {
   /* Joysticks */
   private final Joystick driver = new Joystick(0);
+
+  public static IntakePivot intakePivot;
+  public static Intake intakeRoller;
 
 
   /* Driver Controls */
@@ -106,7 +111,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.whileTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, poseEstimator::getCurrentPose, mSwerveDrivetrain));
+    aimtarget.toggleOnTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, poseEstimator::getCurrentPose, mSwerveDrivetrain));
 
     // elevatorButton.onTrue(new RunElevator(elevator, null));
     // trapButton.onTrue(new ElevatorTrap(elevator));

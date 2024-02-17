@@ -1,7 +1,5 @@
-package frc.robot.Shooter;
+package frc.robot.Intake;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
@@ -11,20 +9,18 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Shooter.ShooterConfig;
 
-public class ShooterPivot extends SubsystemBase {
+public class IntakePivot extends SubsystemBase {
     private final CANSparkMax m_Pivot;
 
     private final AbsoluteEncoder encoder;
-    private final DigitalInput LimitSwitch;
 
-    private ShooterConfig.PivotState state;
+    private IntakeConfig.PivotState state;
 
-    public ShooterPivot() {
-        m_Pivot = new CANSparkMax(ShooterConfig.kPivotSparkID, MotorType.kBrushless);
+    public IntakePivot() {
+        m_Pivot = new CANSparkMax(IntakeConfig.kPivotSparkID, MotorType.kBrushless);
         encoder = m_Pivot.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
-
-        LimitSwitch = new DigitalInput(ShooterConfig.kHOLimitSwitch);
 
         configureMotor();
         configureSensors();
@@ -38,15 +34,11 @@ public class ShooterPivot extends SubsystemBase {
         m_Pivot.set(0);
     }
 
-    public boolean getLimitSwitchState() {
-        return !LimitSwitch.get();
-    }
-
-    public void setState(ShooterConfig.PivotState state) {
+    public void setState(IntakeConfig.PivotState state) {
         this.state = state;
     }
 
-    public ShooterConfig.PivotState getState() {
+    public IntakeConfig.PivotState getState() {
         return state;
     }
 
@@ -59,9 +51,9 @@ public class ShooterPivot extends SubsystemBase {
     }
 
      private void configureMotor() {
-        m_Pivot.setInverted(ShooterConfig.kPivotMotorInverted);
-        m_Pivot.setIdleMode(ShooterConfig.kPivotIdleMode);
-        m_Pivot.setSmartCurrentLimit(ShooterConfig.kDefaultContinuousCurrentLimit, ShooterConfig.kDefaultPeakCurrentLimit);
+        m_Pivot.setInverted(IntakeConfig.kPivotMotorInverted);
+        m_Pivot.setIdleMode(IntakeConfig.kPivotIdleMode);
+        m_Pivot.setSmartCurrentLimit(IntakeConfig.kDefaultContinuousCurrentLimit, IntakeConfig.kDefaultPeakCurrentLimit);
     }
 
     private void configureSensors() {
@@ -92,12 +84,8 @@ public class ShooterPivot extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (getLimitSwitchState()) {
-            encoder.setZeroOffset(encoder.getPosition());
-        }
-        System.out.println("[Shooter Pivot] pos (" + encoder.getPosition() + "), vel (" + getVelocityRps() + ")");
-        System.out.println(getLimitSwitchState());
-    updateSmartDashboard();
+        System.out.println("[Intake Pivot] pos (" + encoder.getPosition() + "), vel (" + getVelocityRps() + ")");
+        updateSmartDashboard();
     }
 
     private void updateSmartDashboard() {
