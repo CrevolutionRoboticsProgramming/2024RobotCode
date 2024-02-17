@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 
-public class Vision {
+public class Vision extends SubsystemBase {
 
     //this is how 7028 used PhotonPoseEstimator, so far easiest way i found to use it
     public static class PhotonRunnable implements Runnable{

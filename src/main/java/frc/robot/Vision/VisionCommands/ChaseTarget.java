@@ -93,7 +93,6 @@ public class ChaseTarget extends Command{
                 //get camera pose
                 var cameraPose = robotPose.transformBy(ShooterCamsConfig.robotToCam1);
                 System.out.println("Camera Pose: " + cameraPose);
-                System.out.println("Goal Pose: " + cameraPose.getRotation());
 
                 //get target pose
                 var camToTarget = target.getBestCameraToTarget();
@@ -103,8 +102,6 @@ public class ChaseTarget extends Command{
                 //set goal pose
                 var goalPose = targetPose.transformBy(targetGoal).toPose2d();
                 System.out.println("Goal Pose: " + goalPose);
-                System.out.println("GoalPose: " + goalPose.getRotation());
-                System.out.println("GoalPose: " + goalPose.getRotation().getDegrees());
                 
                 omegaController.setGoal(goalPose.getRotation().getRadians());
             }
