@@ -18,11 +18,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.Drivetrain.SwerveModule.SwerveModule;
+import frc.robot.Vision.Vision;
+import frc.robot.Vision.VisionCommands.VisionLineUp;
 
 public class Drivetrain extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+
+    private SwerveModuleState[] lastTargetStates;
 
     public Drivetrain() { 
         gyro = new Pigeon2(DriveConstants.pigeonID, "Canivore");
@@ -37,6 +41,13 @@ public class Drivetrain extends SubsystemBase {
             new SwerveModule(1, DriveConstants.Mod1.config),
             new SwerveModule(2, DriveConstants.Mod2.config),
             new SwerveModule(3, DriveConstants.Mod3.config)
+        };
+
+        lastTargetStates = new SwerveModuleState[] {
+            new SwerveModuleState(0, new Rotation2d()),
+            new SwerveModuleState(0, new Rotation2d()),
+            new SwerveModuleState(0, new Rotation2d()),
+            new SwerveModuleState(0, new Rotation2d())
         };
 
         swerveOdometry = new SwerveDriveOdometry(DriveConstants.swerveKinematics, getGyroYaw(), getModulePositions());
@@ -86,7 +97,9 @@ public class Drivetrain extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+            var targetState = desiredStates[mod.moduleNumber];
+            mod.setDesiredState(targetState, false);
+            lastTargetStates[mod.moduleNumber] = targetState;
         }
     }
 
@@ -157,7 +170,9 @@ public class Drivetrain extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Target Velocity", lastTargetStates[mod.moduleNumber].speedMetersPerSecond);
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity Error", (Math.abs(lastTargetStates[mod.moduleNumber].speedMetersPerSecond) - Math.abs(mod.getState().speedMetersPerSecond)));
         }
     }
 }
