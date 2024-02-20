@@ -45,12 +45,11 @@ public class SetPivotState extends Command{
 
     @Override
     public void execute() {
-        final var duration = getElapsedTime();
         if (startTs == null) {
             startTs = System.currentTimeMillis();
         }
 
-        final var targetState = profile.calculate(duration);
+        final var targetState = profile.calculate(getElapsedTime());
 
         final var ffOutput = ffController.calculate(pivot.getAngleRads(), targetState.velocity);
         final var pidOutput = pidController.calculate(pivot.getVelocityRps(), targetState.velocity);

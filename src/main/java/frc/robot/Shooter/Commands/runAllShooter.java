@@ -145,6 +145,8 @@ public class runAllShooter extends Command {
   @Override
   public void end(boolean interrupted) {
     mShooter.stop();
+    mIndex.stopIndexer();
+    mPivot.setState(null);
   }
   
   private double getElapsedTime() {
@@ -157,7 +159,7 @@ public class runAllShooter extends Command {
   }
 
   private TrapezoidProfile generateProfile() {
-    return new TrapezoidProfile(new TrapezoidProfile.Constraints(DriveConstants.maxAngularVelocity, 720.0), 
+    return new TrapezoidProfile(new TrapezoidProfile.Constraints(ShooterConfig.kMaxAngularVelocity, 720.0), 
     new TrapezoidProfile.State(Units.degreesToRadians(mAngle),0),
     new TrapezoidProfile.State(Units.degreesToRadians(startingAngle), 0));
   }

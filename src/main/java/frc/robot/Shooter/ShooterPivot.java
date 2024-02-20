@@ -16,15 +16,12 @@ public class ShooterPivot extends SubsystemBase {
     private final CANSparkMax m_Pivot;
 
     private final AbsoluteEncoder encoder;
-    private final DigitalInput LimitSwitch;
 
     private ShooterConfig.PivotState state;
 
     public ShooterPivot() {
         m_Pivot = new CANSparkMax(ShooterConfig.kPivotSparkID, MotorType.kBrushless);
         encoder = m_Pivot.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
-
-        LimitSwitch = new DigitalInput(ShooterConfig.kHOLimitSwitch);
 
         configureMotor();
         configureSensors();
@@ -36,10 +33,6 @@ public class ShooterPivot extends SubsystemBase {
 
     public void stop() {
         m_Pivot.set(0);
-    }
-
-    public boolean getLimitSwitchState() {
-        return !LimitSwitch.get();
     }
 
     public void setState(ShooterConfig.PivotState state) {
@@ -92,12 +85,8 @@ public class ShooterPivot extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (getLimitSwitchState()) {
-            encoder.setZeroOffset(encoder.getPosition());
-        }
         System.out.println("[Shooter Pivot] pos (" + encoder.getPosition() + "), vel (" + getVelocityRps() + ")");
-        System.out.println(getLimitSwitchState());
-    updateSmartDashboard();
+        updateSmartDashboard();
     }
 
     private void updateSmartDashboard() {
