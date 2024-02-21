@@ -51,7 +51,7 @@ public class ShooterPivot extends SubsystemBase {
         m_Pivot.setIdleMode(mode);
     }
 
-     private void configureMotor() {
+    private void configureMotor() {
         m_Pivot.setInverted(ShooterConfig.kPivotMotorInverted);
         m_Pivot.setIdleMode(ShooterConfig.kPivotIdleMode);
         m_Pivot.setSmartCurrentLimit(ShooterConfig.kDefaultContinuousCurrentLimit, ShooterConfig.kDefaultPeakCurrentLimit);

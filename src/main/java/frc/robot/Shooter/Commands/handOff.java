@@ -105,7 +105,7 @@ public class handOff extends Command{
 
     private TrapezoidProfile generateIntakeProfile() {
         return new TrapezoidProfile(
-            new TrapezoidProfile.Constraints(IntakeConfig.kMaxAngularVelocity, 3.0),
+            new TrapezoidProfile.Constraints(IntakeConfig.kMaxAngularVelocity, IntakeConfig.kMaxAngularAcceleration),
             new TrapezoidProfile.State(intakeHandOff, 0),
             new TrapezoidProfile.State(0, 0)
         );
@@ -113,7 +113,7 @@ public class handOff extends Command{
 
     private TrapezoidProfile generateShooterProfile() {
         return new TrapezoidProfile(
-            new TrapezoidProfile.Constraints(ShooterConfig.kMaxAngularVelocity, 3.0),
+            new TrapezoidProfile.Constraints(ShooterConfig.kMaxAngularVelocity, ShooterConfig.kMaxAngularAcceleration),
             new TrapezoidProfile.State(shooterHandOff, 0),
             new TrapezoidProfile.State(0, 0)
         );

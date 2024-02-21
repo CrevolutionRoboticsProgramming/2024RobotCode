@@ -92,8 +92,11 @@ public class runAllShooter extends Command {
     var xLength = targetPose.getX();
     var yLength = targetPose.getY();
     var actualDist = Math.sqrt((xLength * xLength) + (yLength * yLength));
-    mAngle = mInterpolate.getInterpolatedAngle(actualDist);
+    startingAngle = mPivot.getAngleRads();
+    var interpolatedAngle = Units.degreesToRadians(mInterpolate.getInterpolatedAngle(actualDist));
+    mAngle = interpolatedAngle - startingAngle;
     mVelocity = mInterpolate.getInterpolatedPercentOutput(actualDist);
+
     profile = generateProfile();
 
     var currentAlliance = DriverStation.getAlliance();
@@ -159,7 +162,7 @@ public class runAllShooter extends Command {
   }
 
   private TrapezoidProfile generateProfile() {
-    return new TrapezoidProfile(new TrapezoidProfile.Constraints(ShooterConfig.kMaxAngularVelocity, 720.0), 
+    return new TrapezoidProfile(new TrapezoidProfile.Constraints(ShooterConfig.kMaxAngularVelocity, ShooterConfig.kMaxAngularAcceleration), 
     new TrapezoidProfile.State(Units.degreesToRadians(mAngle),0),
     new TrapezoidProfile.State(Units.degreesToRadians(startingAngle), 0));
   }

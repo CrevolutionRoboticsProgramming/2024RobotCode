@@ -8,6 +8,7 @@ public class ElevatorConfig {
     public enum ElevatorState {
         kZero(0),
         kTrap(0.9),
+        kHigh(1),
         kUnspecified(0);
         
         public final double target;
@@ -30,11 +31,34 @@ public class ElevatorConfig {
     public static final int kLowerLimitSwitchPort = 53;
     public static final int kUpperLimitSwitchPort = 54;
 
-    //kMaxVelocity and kMaxAcceleration are currently not being used
-    public static final double kMaxVelocity = 0.5;
-    public static final double kMaxAcceleration = 0.6;
+    // Pivot PID constants
+    public static final double kVelP = 0.1;
+    public static final double kVelI = 0.0;
+    public static final double kVelD = 0.0;
 
-    public static final double kSeekVoltage = 2;
+    // Pivot Feedforward Constants (reca.lc)
+    public static final double kG = 0.23;
+    public static final double kS = 0.0;
+    public static final double kV = 2.92;
+    public static final double kA = 0.01;
+
+     // Max velocity and acceleration
+     public static final double kMaxVelocity = 0.5;
+     public static final double kMaxAcceleration = 0.6;
+
+    // Sensor Parameters
+    public static final boolean kPivotEncoderInverted = true;
+    public static final double kPivotZeroOffset = 0.95;
+
+    // Tensioning constants
+    public static final int kDefaultContinuousCurrentLimit = 35;
+    public static final int kDefaultPeakCurrentLimit = 60;
+
+     public static final double kTensionOutput = -0.02;
+     public static final double kTensionFindOutput = -0.05;
+ 
+     public static final int kTensionContinuousCurrentLimit = 1;
+     public static final int kTensionPeakCurrentLimit = 1;
 
    
 }
