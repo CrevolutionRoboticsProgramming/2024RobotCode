@@ -27,8 +27,8 @@ public class IntakeConfig {
         }
         public final double target;
     }
-    public class IntakeProfile {
-        public IntakeProfile(int stallLimit, int freeLimit, double nominalSpeed, String name) {
+    public static class IntakeProfile {
+        private IntakeProfile(int stallLimit, int freeLimit, double nominalSpeed, String name) {
             kStallCurrentLimit = stallLimit;
             kFreeCurrentLimit = freeLimit;
             kNominalOutput = nominalSpeed;
@@ -56,9 +56,9 @@ public class IntakeConfig {
     public static final CANSparkMax.IdleMode kRollerIdleMode = CANSparkMax.IdleMode.kCoast;
 
     // Intake Profiles
-    // public static IntakeProfile kIntake = new IntakeProfile(60, 60, -1.0, "OutTake");
-    // public static IntakeProfile kHandoff = new IntakeProfile(40, 40, 0.5, "Handoff");
-    // public static IntakeProfile kDefaultProfile = new IntakeProfile(40, 40, 1.0, "Default");
+    public static IntakeProfile kIntake = new IntakeProfile(60, 60, -1.0, "OutTake");
+    public static IntakeProfile kHandoff = new IntakeProfile(40, 40, 0.5, "Handoff");
+    public static IntakeProfile kDefaultProfile = new IntakeProfile(40, 40, 1.0, "Default");
 
     // Shooter Velocity & Percent Output Controllers
     public static final VelocityDutyCycle intakeVelocity = new VelocityDutyCycle(0);
@@ -76,7 +76,7 @@ public class IntakeConfig {
      public static final int kHOLimitSwitch = 53;
      public static final int kIndexerBeamBreak = 54;
 
-     // Pivot PID constants
+    // Pivot PID constants
     public static final double kVelP = 0.1;
     public static final double kVelI = 0.0;
     public static final double kVelD = 0.0;

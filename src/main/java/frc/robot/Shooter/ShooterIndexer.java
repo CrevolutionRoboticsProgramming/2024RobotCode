@@ -6,9 +6,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Shooter.ShooterConfig.*;
 
-public class ShooterIndexer {
+public class ShooterIndexer extends SubsystemBase{
     private final Victor shooterIndex;
     private final DigitalInput beamBreaker;
 

@@ -36,7 +36,7 @@ public class ShooterInterpolation {
     }
 
     // Method to interpolate the data point at a specific distance
-    public static double getInterpolatedPercentOutput(double distance) {
+    public double getInterpolatedPercentOutput(double distance) {
 
         /* Get the interpolated entry from the TreeMap for the specified distance */
         double shooterVelocity = dataPercentOutput.get(distance);
@@ -54,7 +54,7 @@ public class ShooterInterpolation {
     }
 
     // Method to interpolate the data point at a specific distance
-    public static double getInterpolatedAngle(double distance) {
+    public double getInterpolatedAngle(double distance) {
 
         /* Get the interpolated entry from the TreeMap for the specified distance */
         double shooterPivotAngle = dataAngle.get(distance);

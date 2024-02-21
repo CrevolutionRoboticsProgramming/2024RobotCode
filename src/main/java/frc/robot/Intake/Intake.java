@@ -14,6 +14,7 @@ import frc.robot.Shooter.ShooterIndexer;
 
 public class Intake extends SubsystemBase{
     private final CANSparkMax m_Roller;
+    private double nominalOutput = 1.0;
 
     public Intake() {
         m_Roller = new CANSparkMax(IntakeConfig.kIntakeSparkID, MotorType.kBrushless);
@@ -33,9 +34,10 @@ public class Intake extends SubsystemBase{
         m_Roller.set(0);
     }
 
-    // public void setProfile(ShooterConfig.ShooterProfile profile) {
-    //     m_Roller.set
-    // }
+    public void setProfile(IntakeConfig.IntakeProfile profile) {
+        m_Roller.setSmartCurrentLimit(profile.kStallCurrentLimit, profile.kFreeCurrentLimit);
+        nominalOutput = profile.kNominalOutput;
+    }
 
     public void setCurrentLimit(int continuousLimit, int peakLimit) {
         m_Roller.setSmartCurrentLimit(continuousLimit, peakLimit);
