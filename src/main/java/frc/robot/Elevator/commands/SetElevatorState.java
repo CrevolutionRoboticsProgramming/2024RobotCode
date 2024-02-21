@@ -31,7 +31,7 @@ public class SetElevatorState extends Command {
     this.targetState = targetState;
 
     ffController = new ArmFeedforward(ElevatorConfig.kS, ElevatorConfig.kG, ElevatorConfig.kV, ElevatorConfig.kA);
-    pidController = new PIDController(ElevatorConfig.kVelP, ElevatorConfig.kVelI, ElevatorConfig.kVelD);
+    pidController = new PIDController(ElevatorConfig.kP, ElevatorConfig.kI, ElevatorConfig.kD);
 
     startTs = null;
 

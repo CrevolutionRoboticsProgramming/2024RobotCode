@@ -21,6 +21,7 @@ import frc.robot.Autos.AutonMaster;
 import frc.robot.Autos.AutonCommands.TurnInPlaceCommand;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
+import frc.robot.Elevator.Elevator;
 import frc.robot.Intake.Intake;
 import frc.robot.Intake.IntakePivot;
 import frc.robot.Vision.Vision.PoseEstimator;
@@ -40,6 +41,7 @@ public class RobotContainer {
 
   public static IntakePivot intakePivot;
   public static Intake intakeRoller;
+  public static Elevator mElevator;
 
 
   /* Driver Controls */
