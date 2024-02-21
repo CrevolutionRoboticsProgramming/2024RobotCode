@@ -6,6 +6,7 @@ import java.util.List;
 import org.photonvision.PhotonCamera;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -46,6 +47,7 @@ public class VisionConfig{
         public static final TrapezoidProfile.Constraints xConstraints = new TrapezoidProfile.Constraints(3, 2);
         public static final TrapezoidProfile.Constraints yConstraints = new TrapezoidProfile.Constraints(3, 2);
         public static final TrapezoidProfile.Constraints omegaConstraints =   new TrapezoidProfile.Constraints(8, 8);
+        public static final TrapezoidProfile.Constraints xyConstraints = new TrapezoidProfile.Constraints(3, 2);
 
         public static final double fieldLength_m = Units.inchesToMeters(651.25);
         public static final double fieldWidth_m = Units.inchesToMeters(323.25);
@@ -56,6 +58,9 @@ public class VisionConfig{
 
         //Target list
         public static Integer targetList[] = {6,7};
+        //TODO: get exact poses for targets
+        public static Pose3d target6Pose = new Pose3d(new Translation3d(0,0,0), new Rotation3d(0,0,0)); 
+        public static Pose3d target7Pose = new Pose3d(new Translation3d(0,0,0), new Rotation3d(0,0,0));
         
 
         public static final String shuffleboardTabName = "Vision";
