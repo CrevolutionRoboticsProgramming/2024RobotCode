@@ -30,9 +30,7 @@ public class ChaseTag2 extends Command{
     private Pose3d targetPose;
     private int target7 = 7;
 
-    public ChaseTag2(
-        PoseEstimator poseEstimator,
-        Drivetrain drivetrain){
+    public ChaseTag2(PoseEstimator poseEstimator, Drivetrain drivetrain){
             this.poseEstimator = poseEstimator;
             this.drivetrain = drivetrain;
 

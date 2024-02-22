@@ -13,11 +13,9 @@ import edu.wpi.first.wpilibj.XboxController;
 
 public class ShooterConfig {
 public enum PivotState {
-        
-        kScoreLow(Units.degreesToRadians(60)),
         // kHumanPlayer(Conversions.degreesToRadians(135)),
-        kShootSpeaker(Units.degreesToRadians(60));
-
+        kHandOff(Units.degreesToRadians(0)),
+        kUnspecified(0);
         
         /**
          * Creates a PivotState with a target in radians
@@ -29,8 +27,8 @@ public enum PivotState {
         }
         public final double target;
     }
-    public class ShooterProfile {
-        public ShooterProfile(int stallLimit, int freeLimit, double nominalSpeed, String name) {
+    public static class ShooterProfile {
+        private ShooterProfile(int stallLimit, int freeLimit, double nominalSpeed, String name) {
             kStallCurrentLimit = stallLimit;
             kFreeCurrentLimit = freeLimit;
             kNominalOutput = nominalSpeed;
@@ -61,11 +59,11 @@ public enum PivotState {
     public static final CANSparkMax.IdleMode kPivotIdleMode = CANSparkMax.IdleMode.kBrake;
     public static final CANSparkMax.IdleMode kRollerIdleMode = CANSparkMax.IdleMode.kCoast;
 
-    // Intake Profiles
-    // public static ShooterProfile kOuttake = new ShooterProfile(60, 60, -1, "OutTake");
-    // public static ShooterProfile kShoot = new ShooterProfile(60, 60, -.8, "ShootCube");
-    // public static ShooterProfile kHandoff = new ShooterProfile(40, 40, 0.5, "Handoff");
-    // public static ShooterProfile kDefaultProfile = new ShooterProfile(40, 40, 1, "Default");
+    // Shooter Profiles
+    public static ShooterProfile kOuttake = new ShooterProfile(60, 60, -1, "OutTake");
+    public static ShooterProfile kShoot = new ShooterProfile(60, 60, -.8, "ShootCube");
+    public static ShooterProfile kHandoff = new ShooterProfile(40, 40, 0.5, "Handoff");
+    public static ShooterProfile kUnspecified = new ShooterProfile(40, 40, 1, "Default");
 
     // Shooter Velocity & Percent Output Controllers
     // public static final VelocityDutyCycle leftShooterVelocity = new VelocityDutyCycle(0);

@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 
 import frc.robot.Drivetrain.DrivetrainConfig.DriveConstants;
+import frc.robot.Shooter.ShooterConfig;
 // import frc.robot.Shooter.Shooter;
 // import frc.robot.Shooter.ShooterConfig;
 // import frc.robot.Shooter.ShooterConfig.*;
@@ -62,9 +63,9 @@ public final class CTREConfigs {
         driveMotorConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = DriveConstants.closedLoopRamp;
 
         /* Shooter Current Limits */
-        // shooterConfig.CurrentLimits.SupplyCurrentLimit = ShooterProfile.;
-        // shooterConfig.CurrentLimits.SupplyCurrentLimitEnable = ShooterConfig.shooterEnableCurrentLimit;
-        // shooterConfig.CurrentLimits.SupplyCurrentThreshold = ShooterConfig.shooterCurrentThreshold;
-        // shooterConfig.CurrentLimits.SupplyTimeThreshold = ShooterConfig.shooterCurrentThresholdTime;
+        shooterConfig.CurrentLimits.SupplyCurrentLimit = ShooterConfig.shooterCurrentLimit;
+        shooterConfig.CurrentLimits.SupplyCurrentLimitEnable = ShooterConfig.shooterEnableCurrentLimit;
+        shooterConfig.CurrentLimits.SupplyCurrentThreshold = ShooterConfig.shooterCurrentThreshold;
+        shooterConfig.CurrentLimits.SupplyTimeThreshold = ShooterConfig.shooterCurrentThresholdTime;
     }
 }
