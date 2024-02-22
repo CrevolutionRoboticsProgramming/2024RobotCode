@@ -15,6 +15,8 @@ public class ShooterConfig {
 public enum PivotState {
         // kHumanPlayer(Conversions.degreesToRadians(135)),
         kHandOff(Units.degreesToRadians(0)),
+        kStowed(Units.degreesToRadians(0)),
+        kDeployed(Units.degreesToRadians(0)),
         kUnspecified(0);
         
         /**

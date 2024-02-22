@@ -24,6 +24,7 @@ import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 import frc.robot.Elevator.Elevator;
 import frc.robot.Intake.Intake;
 import frc.robot.Intake.IntakePivot;
+import frc.robot.Shooter.ShooterPivot;
 import frc.robot.Vision.Vision.PoseEstimator;
 import frc.robot.Vision.VisionCommands.ChaseTag2;
 import frc.robot.Vision.VisionCommands.ChaseTarget;
@@ -43,6 +44,7 @@ public class RobotContainer {
   public static IntakePivot intakePivot;
   public static Intake intakeRoller;
   public static Elevator mElevator;
+  public static ShooterPivot shooterPivot;
 
 
   /* Driver Controls */
