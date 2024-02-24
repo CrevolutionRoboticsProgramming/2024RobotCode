@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Elevator.Elevator;
 import frc.robot.Elevator.ElevatorConfig;
 import frc.robot.Elevator.ElevatorConfig.ElevatorState;
-import frc.robot.Intake.IntakeConfig;
-import frc.robot.Intake.IntakePivot;
+import frc.robot.IntakePivot.IntakePivot;
+import frc.robot.IntakeRoller.IntakeConfig;
 
 public class SetElevatorState extends Command {
   private final Elevator mElevator;

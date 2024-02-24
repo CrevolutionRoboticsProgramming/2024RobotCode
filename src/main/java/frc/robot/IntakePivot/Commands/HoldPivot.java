@@ -1,18 +1,17 @@
-// package frc.robot.Shooter.Commands;
+// package frc.robot.IntakePivot.Commands;
 
 // import com.revrobotics.CANSparkMax;
 
 // import edu.wpi.first.wpilibj2.command.Command;
 // import frc.robot.IntakePivot.IntakePivot;
+// import frc.robot.IntakePivot.IntakePivotConfig;
 // import frc.robot.IntakeRoller.IntakeConfig;
-// import frc.robot.Shooter.ShooterConfig;
-// import frc.robot.Shooter.ShooterPivot;
 
 // public class HoldPivot extends Command{
-//     private final ShooterPivot pivot;
-//     private ShooterConfig.PivotState state;
+//     private final IntakePivot pivot;
+//     private IntakePivotConfig.PivotState state;
 
-//     public HoldPivot(ShooterPivot pivot) {
+//     public HoldPivot(IntakePivot pivot) {
 //         this.pivot = pivot;
 //         addRequirements(pivot);
 //     }
@@ -23,8 +22,8 @@
 //         switch (state) {
 //             case kDeployed:
 //                 pivot.setCurrentLimit(
-//                         IntakeConfig.kTensionContinuousCurrentLimit,
-//                         IntakeConfig.kTensionPeakCurrentLimit
+//                         IntakePivotConfig.kDefaultContinuousCurrentLimit,
+//                         IntakePivotConfig.kDefaultPeakCurrentLimit
 //                 );
 //                 pivot.setIdleMode(CANSparkMax.IdleMode.kBrake);
 //                 break;
@@ -40,14 +39,14 @@
 
 //     @Override
 //     public void execute() {
-//         if (state == ShooterConfig.PivotState.kDeployed) {
-//             pivot.setOutput(pivot.getAngleRads() < 0 ? IntakeConfig.kTensionOutput : IntakeConfig.kTensionFindOutput);
+//         if (state == IntakePivotConfig.PivotState.kDeployed) {
+//             pivot.setOutput(pivot.getAngleRads() < 0 ? IntakePivotConfig.kTensionOutput : IntakePivotConfig.kTensionFindOutput);
 //         }
 //     }
 
 //     @Override
 //     public void end(boolean interrupted) {
-//         pivot.setCurrentLimit(IntakeConfig.kDefaultContinuousCurrentLimit, IntakeConfig.kDefaultPeakCurrentLimit);
+//         pivot.setCurrentLimit(IntakePivotConfig.kDefaultContinuousCurrentLimit, IntakePivotConfig.kDefaultPeakCurrentLimit);
 //         pivot.stop();
 //     }
 // }

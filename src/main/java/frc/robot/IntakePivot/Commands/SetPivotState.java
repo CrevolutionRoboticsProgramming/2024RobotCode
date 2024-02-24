@@ -1,16 +1,17 @@
-package frc.robot.Intake.Commands;
+package frc.robot.IntakePivot.Commands;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Intake.IntakeConfig;
-import frc.robot.Intake.IntakePivot;
+import frc.robot.IntakePivot.IntakePivot;
+import frc.robot.IntakePivot.IntakePivotConfig;
+import frc.robot.IntakeRoller.IntakeConfig;
 
 public class SetPivotState extends Command{
     private final IntakePivot pivot;
-    private final IntakeConfig.PivotState targetPivotState;
+    private final IntakePivotConfig.PivotState targetPivotState;
 
     private TrapezoidProfile profile;
     private final ArmFeedforward ffController;
@@ -18,12 +19,12 @@ public class SetPivotState extends Command{
 
     private Long startTs;
 
-    public SetPivotState(IntakePivot pivot, IntakeConfig.PivotState targetPivotState) {
+    public SetPivotState(IntakePivot pivot, IntakePivotConfig.PivotState targetPivotState) {
         this.pivot = pivot;
         this.targetPivotState = targetPivotState;
 
-        ffController = new ArmFeedforward(IntakeConfig.kS, IntakeConfig.kG, IntakeConfig.kV, IntakeConfig.kA);
-        pidController = new PIDController(IntakeConfig.kVelP, IntakeConfig.kVelI, IntakeConfig.kVelD);
+        ffController = new ArmFeedforward(IntakePivotConfig.kS, IntakePivotConfig.kG, IntakePivotConfig.kV, IntakePivotConfig.kA);
+        pidController = new PIDController(IntakePivotConfig.kVelP, IntakePivotConfig.kVelI, IntakePivotConfig.kVelD);
 
         startTs = null;
 
@@ -61,12 +62,12 @@ public class SetPivotState extends Command{
     public void end(boolean interrupted) {
         System.out.println(getName() + ": end");
 
-        final IntakeConfig.PivotState state;
+        final IntakePivotConfig.PivotState state;
         if (pivot.getAngleRads() <= 0) {
-            state = IntakeConfig.PivotState.kDeployed;
+            state = IntakePivotConfig.PivotState.kDeployed;
         } else if (interrupted) {
             System.out.println("pivot set state interrupted");
-            state = IntakeConfig.PivotState.kUnspecified;
+            state = IntakePivotConfig.PivotState.kUnspecified;
         } else {
             state = targetPivotState;
         }

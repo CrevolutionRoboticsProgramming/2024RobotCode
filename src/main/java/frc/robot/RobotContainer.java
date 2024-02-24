@@ -22,8 +22,8 @@ import frc.robot.Autos.AutonCommands.TurnInPlaceCommand;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 import frc.robot.Elevator.Elevator;
-import frc.robot.Intake.Intake;
-import frc.robot.Intake.IntakePivot;
+import frc.robot.IntakePivot.IntakePivot;
+import frc.robot.IntakeRoller.Intake;
 import frc.robot.Shooter.ShooterPivot;
 import frc.robot.Vision.Vision.PoseEstimator;
 import frc.robot.Vision.VisionCommands.ChaseTag2;
@@ -44,7 +44,6 @@ public class RobotContainer {
   public static IntakePivot intakePivot;
   public static Intake intakeRoller;
   public static Elevator mElevator;
-  public static ShooterPivot shooterPivot;
 
 
   /* Driver Controls */
@@ -120,8 +119,8 @@ public class RobotContainer {
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
     // aimtarget.toggleOnTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, poseEstimator::getCurrentPose, mSwerveDrivetrain));
-    // aimtarget.onTrue(new VisionLineUp(mSwerveDrivetrain, poseEstimator));
-    aimtarget.onTrue(new ChaseTag2(poseEstimator, mSwerveDrivetrain));
+    aimtarget.onTrue(new VisionLineUp(mSwerveDrivetrain, poseEstimator));
+    // aimtarget.onTrue(new ChaseTag2(poseEstimator, mSwerveDrivetrain));
     turnInPlace.onTrue(new TurnInPlaceCommand(90, mSwerveDrivetrain));
     // elevatorButton.onTrue(new RunElevator(elevator, null));
     // trapButton.onTrue(new ElevatorTrap(elevator));

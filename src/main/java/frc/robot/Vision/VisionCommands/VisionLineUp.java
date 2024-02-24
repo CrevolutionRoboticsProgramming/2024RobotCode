@@ -45,33 +45,48 @@ public class VisionLineUp extends Command {
     public VisionLineUp(Drivetrain mDrivetrain, PoseEstimator mPoseEstimator) {
         this.mDrivetrain = mDrivetrain;
         this.mPoseEstimator = mPoseEstimator;
-        profile = null;
-        startTs = null;
 
         addRequirements(mDrivetrain, mPoseEstimator);
     }
 
     @Override
     public void initialize() {
+        profile = null;
+        startTs = null;
         robotPose = mPoseEstimator.getCurrentPose();
         var currentAlliance = DriverStation.getAlliance();
-        if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
-            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
-        }
-        else {
-            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
-        }
-        
-        startingAngle = robotPose.getRotation().getDegrees();
-        double adjacent = Math.abs((robotPose.getX()) - (goalPose.getX()));
-        double opposite = Math.abs((robotPose.getY()) - (goalPose.getY()));
-        endAngle = Math.atan2(adjacent, opposite);
+        // if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
+        //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        // }
+        // else {
+        //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+        // }
 
-        var deltaTheta = Units.degreesToRadians(endAngle - startingAngle);
+        goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        final var startingAngle =  robotPose.getRotation();
+        final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle();
+        final var deltaTheta = -1.0f*endAngle.minus(startingAngle).getRadians();
+
+        // startingAngle = robotPose.getRotation().getRadians();
+        // double adjacent = Math.abs(robotPose.getX() - goalPose.getX());
+        // double opposite = Math.abs(robotPose.getY() - goalPose.getY());
+        // endAngle = Math.atan2(adjacent, opposite);
+
+        // var deltaTheta = (endAngle - startingAngle);
+        // deltaTheta *= Math.signum((robotPose.getX()) - (goalPose.getX()));
         distance = radius * deltaTheta;
         profile = generateProfile(distance);
         
-        System.out.println(deltaTheta);
+        // System.out.println("Starting Angle: " + Units.radiansToDegrees(startingAngle));
+        // System.out.println("End Angle: " + Units.radiansToDegrees(endAngle));
+        // System.out.println("Delta Theta: " + Units.radiansToDegrees(deltaTheta));
+
+        System.out.println(goalPose.toString());
+        System.out.println(robotPose.toString());
+        System.out.println(goalPose.getTranslation().minus(robotPose.getTranslation()));
+        System.out.println("Starting Angle: " + startingAngle.getDegrees());
+        System.out.println("End Angle: " + endAngle.getDegrees());
+        System.out.println("Delta Theta: " + Units.degreesToRadians(deltaTheta));
     }   
 
     @Override

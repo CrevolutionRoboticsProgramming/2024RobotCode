@@ -1,4 +1,4 @@
-package frc.robot.Intake;
+package frc.robot.IntakePivot;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
@@ -9,17 +9,16 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Shooter.ShooterConfig;
 
 public class IntakePivot extends SubsystemBase {
     private final CANSparkMax m_Pivot;
 
     private final AbsoluteEncoder encoder;
 
-    private IntakeConfig.PivotState state;
+    private IntakePivotConfig.PivotState state;
 
     public IntakePivot() {
-        m_Pivot = new CANSparkMax(IntakeConfig.kPivotSparkID, MotorType.kBrushless);
+        m_Pivot = new CANSparkMax(IntakePivotConfig.kPivotSparkID, MotorType.kBrushless);
         encoder = m_Pivot.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
         configureMotor();
@@ -34,11 +33,11 @@ public class IntakePivot extends SubsystemBase {
         m_Pivot.set(0);
     }
 
-    public void setState(IntakeConfig.PivotState state) {
+    public void setState(IntakePivotConfig.PivotState state) {
         this.state = state;
     }
 
-    public IntakeConfig.PivotState getState() {
+    public IntakePivotConfig.PivotState getState() {
         return state;
     }
 
@@ -51,14 +50,14 @@ public class IntakePivot extends SubsystemBase {
     }
 
      private void configureMotor() {
-        m_Pivot.setInverted(IntakeConfig.kPivotMotorInverted);
-        m_Pivot.setIdleMode(IntakeConfig.kPivotIdleMode);
-        m_Pivot.setSmartCurrentLimit(IntakeConfig.kDefaultContinuousCurrentLimit, IntakeConfig.kDefaultPeakCurrentLimit);
+        m_Pivot.setInverted(IntakePivotConfig.kPivotMotorInverted);
+        m_Pivot.setIdleMode(IntakePivotConfig.kPivotIdleMode);
+        m_Pivot.setSmartCurrentLimit(IntakePivotConfig.kDefaultContinuousCurrentLimit, IntakePivotConfig.kDefaultPeakCurrentLimit);
     }
 
     private void configureSensors() {
-        encoder.setZeroOffset(ShooterConfig.kPivotZeroOffset);
-        encoder.setInverted(ShooterConfig.kPivotEncoderInverted);
+        encoder.setZeroOffset(IntakePivotConfig.kPivotZeroOffset);
+        encoder.setInverted(IntakePivotConfig.kPivotEncoderInverted);
     }
 
     /**

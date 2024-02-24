@@ -1,16 +1,17 @@
-package frc.robot.Intake.Commands;
+package frc.robot.IntakeRoller.Commands;
 
 import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Intake.Intake;
-import frc.robot.Intake.IntakeConfig;
+import frc.robot.IntakeRoller.Intake;
+import frc.robot.IntakeRoller.IntakeConfig;
 
-public class RunIntakeManual extends Command {
+public class SetOutput extends Command{
     private final DoubleSupplier supplier;
     private final Intake roller;
 
-    public RunIntakeManual(Intake roller, DoubleSupplier supplier) {
+    public SetOutput(Intake roller, DoubleSupplier supplier) {
         this.supplier = supplier;
         this.roller = roller;
 

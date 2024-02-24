@@ -8,8 +8,4 @@ public class ElevatorCommands{
     public static Command setState(ElevatorConfig.ElevatorState state) {
         return new SetElevatorState(RobotContainer.mElevator, state);
     }
-
-    public static Command holdState() {
-        return new HoldElevatorState(RobotContainer.mElevator);
-    }
 }

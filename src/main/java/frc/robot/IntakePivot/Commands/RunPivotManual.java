@@ -1,10 +1,11 @@
-package frc.robot.Intake.Commands;
+package frc.robot.IntakePivot.Commands;
 
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Intake.IntakeConfig;
-import frc.robot.Intake.IntakePivot;
+import frc.robot.IntakePivot.IntakePivot;
+import frc.robot.IntakePivot.IntakePivotConfig;
+import frc.robot.IntakeRoller.IntakeConfig;
 
 public class RunPivotManual extends Command{
     private final IntakePivot pivot;
@@ -24,7 +25,7 @@ public class RunPivotManual extends Command{
 
     @Override
     public void initialize() {
-        pivot.setState(IntakeConfig.PivotState.kUnspecified);
+        pivot.setState(IntakePivotConfig.PivotState.kUnspecified);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class RunPivotManual extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        pivot.setState(pivot.getAngleRads() < 0 ? IntakeConfig.PivotState.kDeployed : IntakeConfig.PivotState.kUnspecified);
+        pivot.setState(pivot.getAngleRads() < 0 ? IntakePivotConfig.PivotState.kDeployed : IntakePivotConfig.PivotState.kUnspecified);
         pivot.stop();
     }
 }
