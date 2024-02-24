@@ -85,9 +85,12 @@ public class AutonMaster {
         );
        
         /* Add all auton options here */
-        autonChooser.setDefaultOption("CurveNoRotationAuto", AutoBuilder.buildAuto("CurveNoRotationAuto"));
-        autonChooser.addOption("CurveWithRotationAuto", AutoBuilder.buildAuto("CurveWithRotationAuto"));
-        autonChooser.addOption("2NoteAmpEndAuto", AutoBuilder.buildAuto("2NoteAmpEndAuto"));
+        // autonChooser.setDefaultOption("CurveNoRotationAuto", AutoBuilder.buildAuto("CurveNoRotationAuto"));
+        // autonChooser.addOption("CurveWithRotationAuto", AutoBuilder.buildAuto("CurveWithRotationAuto"));
+        // autonChooser.addOption("2NoteAmpEndAuto", AutoBuilder.buildAuto("2NoteAmpEndAuto"));
+        autonChooser.setDefaultOption("RightSpeaker2PieceAuton", AutoBuilder.buildAuto("RightSpeaker2PieceAuton"));
+        autonChooser.addOption("CenterSpeaker3PieceAuton", AutoBuilder.buildAuto("CenterSpeaker3PieceAuton"));
+        autonChooser.addOption("CenterSpeaker4PieceAuton", AutoBuilder.buildAuto("CenterSpeaker4PieceAuton"));
         configurePathPlannerLogging();
     }
     

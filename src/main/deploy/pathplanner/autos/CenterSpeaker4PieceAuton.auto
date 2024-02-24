@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.24,
+      "y": 5.53
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CS4P#1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CS4P#2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CS4P#3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

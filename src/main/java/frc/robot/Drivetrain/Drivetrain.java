@@ -43,13 +43,6 @@ public class Drivetrain extends SubsystemBase {
             new SwerveModule(3, DriveConstants.Mod3.config)
         };
 
-        lastTargetStates = new SwerveModuleState[] {
-            new SwerveModuleState(0, new Rotation2d()),
-            new SwerveModuleState(0, new Rotation2d()),
-            new SwerveModuleState(0, new Rotation2d()),
-            new SwerveModuleState(0, new Rotation2d())
-        };
-
         swerveOdometry = new SwerveDriveOdometry(DriveConstants.swerveKinematics, getGyroYaw(), getModulePositions());
     }
 
@@ -86,7 +79,6 @@ public class Drivetrain extends SubsystemBase {
         return DriveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());
     }   
 
-
     public void stopSwerve() {
         Translation2d stop = new Translation2d(0, 0);
         drive(stop, 0, true, true);
@@ -97,9 +89,7 @@ public class Drivetrain extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
-            var targetState = desiredStates[mod.moduleNumber];
-            mod.setDesiredState(targetState, false);
-            lastTargetStates[mod.moduleNumber] = targetState;
+            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
         }
     }
 
@@ -170,9 +160,7 @@ public class Drivetrain extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Target Velocity", lastTargetStates[mod.moduleNumber].speedMetersPerSecond);
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity Error", (Math.abs(lastTargetStates[mod.moduleNumber].speedMetersPerSecond) - Math.abs(mod.getState().speedMetersPerSecond)));
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
     }
 }

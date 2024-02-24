@@ -2,7 +2,12 @@
   "robotWidth": 0.762,
   "robotLength": 0.762,
   "holonomicMode": true,
-  "pathFolders": [],
+  "pathFolders": [
+    "CenterSpeaker3PiecePath",
+    "LeftSpeaker6PiecePath",
+    "CenterSpeaker4PiecePath",
+    "RightSpeaker2PiecePath"
+  ],
   "autoFolders": [],
   "defaultMaxVel": 1.0,
   "defaultMaxAccel": 3.0,

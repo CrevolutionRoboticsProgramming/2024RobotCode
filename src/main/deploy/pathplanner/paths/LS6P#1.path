@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7419585748262406,
+        "y": 4.515113030226061
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.3576558062207034,
+        "y": 4.216593160459048
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.44,
+        "y": 4.123305701156857
+      },
+      "prevControl": {
+        "x": 1.524071058390013,
+        "y": 4.123305701156857
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "LeftSpeaker6PiecePath",
+  "previewStartingState": {
+    "rotation": -58.860000000000014,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
