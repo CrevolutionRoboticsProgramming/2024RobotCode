@@ -25,7 +25,7 @@ public class SetOutput extends Command{
 
     @Override
     public void initialize() {
-        // roller.setProfile(IntakeConfig.kDefaultProfile);
+        
     }
 
     @Override

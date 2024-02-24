@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Elevator.ElevatorConfig.ElevatorState;
-import frc.robot.Shooter.ShooterConfig;
 
 public class Elevator extends SubsystemBase {
     private final CANSparkMax mSpark1;
@@ -96,14 +95,14 @@ public class Elevator extends SubsystemBase {
     }
 
     private void configureMotor() {
-        mSpark1.setInverted(ShooterConfig.kPivotMotorInverted);
-        mSpark1.setIdleMode(ShooterConfig.kPivotIdleMode);
-        mSpark1.setSmartCurrentLimit(ShooterConfig.kDefaultContinuousCurrentLimit, ShooterConfig.kDefaultPeakCurrentLimit);
+        mSpark1.setInverted(ElevatorConfig.kElevatorMotorInverted);
+        mSpark1.setIdleMode(ElevatorConfig.kElevatorIdleMode);
+        mSpark1.setSmartCurrentLimit(ElevatorConfig.kDefaultContinuousCurrentLimit, ElevatorConfig.kDefaultPeakCurrentLimit);
     }
 
     private void configureSensors() {
-        encoder.setZeroOffset(ShooterConfig.kPivotZeroOffset);
-        encoder.setInverted(ShooterConfig.kPivotEncoderInverted);
+        encoder.setZeroOffset(ElevatorConfig.kPivotZeroOffset);
+        encoder.setInverted(ElevatorConfig.kPivotEncoderInverted);
     }
 
      @Override

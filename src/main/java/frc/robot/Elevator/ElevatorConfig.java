@@ -1,5 +1,7 @@
 package frc.robot.Elevator;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.math.util.Units;
 import frc.CrevoLib.math.Conversions;
 
@@ -23,7 +25,10 @@ public class ElevatorConfig {
     public static final int kElevatorSparkID2 = 52;
 
     public static final boolean kElevatorMotorInverted = true;
-    public static final boolean kElevatorEncoderInverted = false;
+    
+    // Sensor Parameters
+    public static final boolean kPivotEncoderInverted = true;
+    public static final double kPivotZeroOffset = 0.95;
     
     //needs reviewing
     public static final double kSprocketDiameter = Units.feetToMeters(1.273 / 12.0);
@@ -48,5 +53,9 @@ public class ElevatorConfig {
 
     public static final double kSeekVoltage = 2;
 
+    public static final int kDefaultContinuousCurrentLimit = 35;
+    public static final int kDefaultPeakCurrentLimit = 60;
+
+    public static final CANSparkMax.IdleMode kElevatorIdleMode = CANSparkMax.IdleMode.kBrake;
    
 }
