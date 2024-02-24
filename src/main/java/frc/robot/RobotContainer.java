@@ -7,7 +7,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -25,10 +24,7 @@ import frc.robot.Elevator.Elevator;
 import frc.robot.IntakePivot.IntakePivot;
 import frc.robot.IntakeRoller.Intake;
 import frc.robot.Vision.Vision.PoseEstimator;
-import frc.robot.Vision.VisionCommands.ChaseTag2;
-import frc.robot.Vision.VisionCommands.ChaseTarget;
 import frc.robot.Vision.VisionCommands.VisionLineUp;
-import frc.robot.Vision.VisionConfig.ShooterCamsConfig;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -117,9 +113,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    // aimtarget.toggleOnTrue(new ChaseTarget(ShooterCamsConfig.shooterCam1, poseEstimator::getCurrentPose, mSwerveDrivetrain));
     aimtarget.onTrue(new VisionLineUp(mSwerveDrivetrain, poseEstimator));
-    // aimtarget.onTrue(new ChaseTag2(poseEstimator, mSwerveDrivetrain));
     turnInPlace.onTrue(new TurnInPlaceCommand(90, mSwerveDrivetrain));
     // elevatorButton.onTrue(new RunElevator(elevator, null));
     // trapButton.onTrue(new ElevatorTrap(elevator));

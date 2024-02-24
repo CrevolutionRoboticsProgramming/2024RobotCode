@@ -25,6 +25,8 @@ public class ElevatorConfig {
     public static final int kElevatorSparkID2 = 52;
 
     public static final boolean kElevatorMotorInverted = true;
+
+    public static final CANSparkMax.IdleMode kElevatorIdleMode = CANSparkMax.IdleMode.kBrake;
     
     // Sensor Parameters
     public static final boolean kPivotEncoderInverted = true;
@@ -55,7 +57,5 @@ public class ElevatorConfig {
 
     public static final int kDefaultContinuousCurrentLimit = 35;
     public static final int kDefaultPeakCurrentLimit = 60;
-
-    public static final CANSparkMax.IdleMode kElevatorIdleMode = CANSparkMax.IdleMode.kBrake;
    
 }
