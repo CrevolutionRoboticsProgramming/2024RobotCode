@@ -41,6 +41,14 @@ public class DrivetrainConfig {
         public static final InvertedValue angleMotorInvert = chosenModule.angleMotorInvert;
         public static final InvertedValue driveMotorInvert = chosenModule.driveMotorInvert;
 
+        /*Slow Mode Modifiers */
+        public static final double kSlowModeTranslationModifier = 0.25;
+        public static final double kSlowModeRotationModifier = 0.5;
+
+        /*Intake Mode Modifiers */
+        public static final double kIntakeModeTranslationModifier = 0.75;
+        public static final double kIntakeModeRotationModifier = 0.6;
+
         /* Angle Encoder Invert */
         public static final SensorDirectionValue cancoderInvert = chosenModule.cancoderInvert;
 
@@ -91,6 +99,10 @@ public class DrivetrainConfig {
         /* Neutral Modes */
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
         public static final NeutralModeValue driveNeutralMode = NeutralModeValue.Brake;
+
+        /*Swerve Profiling Values*/
+        public static final double MAX_SPEED = (Units.feetToMeters(18.0)); //Max from SDS Limit Speed
+        public static final double MAX_ANGULAR_VELOCITY = Math.PI * 4.12 * 0.5;
 
 
         //TODO: TUNE THESE TO THE IDs FOR EACH MOTOR AND CANCODER and FIGURE OUT THE OFFSET

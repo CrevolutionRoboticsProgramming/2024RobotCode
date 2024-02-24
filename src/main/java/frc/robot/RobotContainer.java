@@ -20,11 +20,11 @@ import frc.robot.Autos.AutonMaster;
 import frc.robot.Autos.AutonCommands.TurnInPlaceCommand;
 import frc.robot.Drivetrain.Drivetrain;
 import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
+import frc.robot.Drivetrain.DrivetrainCommands.DrivetarinCommands;
 import frc.robot.Elevator.Elevator;
 import frc.robot.IntakePivot.IntakePivot;
 import frc.robot.IntakeRoller.Intake;
 import frc.robot.Vision.Vision.PoseEstimator;
-import frc.robot.Vision.VisionCommands.VisionLineUp;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -113,7 +113,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.onTrue(new VisionLineUp(mSwerveDrivetrain, poseEstimator));
+    aimtarget.onTrue(DrivetarinCommands.autoLineUp());
     turnInPlace.onTrue(new TurnInPlaceCommand(90, mSwerveDrivetrain));
     // elevatorButton.onTrue(new RunElevator(elevator, null));
     // trapButton.onTrue(new ElevatorTrap(elevator));
