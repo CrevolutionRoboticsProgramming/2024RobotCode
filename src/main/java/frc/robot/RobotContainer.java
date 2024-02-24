@@ -24,7 +24,6 @@ import frc.robot.Drivetrain.DrivetrainCommands.TeleopDrive;
 import frc.robot.Elevator.Elevator;
 import frc.robot.IntakePivot.IntakePivot;
 import frc.robot.IntakeRoller.Intake;
-import frc.robot.Shooter.ShooterPivot;
 import frc.robot.Vision.Vision.PoseEstimator;
 import frc.robot.Vision.VisionCommands.ChaseTag2;
 import frc.robot.Vision.VisionCommands.ChaseTarget;
