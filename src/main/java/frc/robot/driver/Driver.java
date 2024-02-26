@@ -1,6 +1,6 @@
 package frc.robot.driver;
 
-import frc.CrevoLib.util.Gamepad;
+import frc.crevolib.util.Gamepad;
 
 public class Driver extends Gamepad {
     private static class Settings {
