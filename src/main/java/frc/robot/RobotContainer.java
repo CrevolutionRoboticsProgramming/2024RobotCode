@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -14,17 +11,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.auton.AutonMaster;
 import frc.robot.auton.commands.TurnInPlaceCommand;
+import frc.robot.driver.Driver;
 import frc.robot.drivetrain.Drivetrain;
-import frc.robot.drivetrain.commands.TeleopDrive;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
-import frc.robot.elevator.Elevator;
-import frc.robot.intakepivot.IntakePivot;
-import frc.robot.intakeroller.Intake;
-import frc.robot.vision.Vision.PoseEstimator;
+import frc.robot.vision.Vision;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,99 +26,43 @@ import frc.robot.vision.Vision.PoseEstimator;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  /* Joysticks */
-  private final Joystick driver = new Joystick(0);
 
-  public static IntakePivot intakePivot;
-  public static Intake intakeRoller;
-  public static Elevator mElevator;
+    AutonMaster mAutonMaster = new AutonMaster();
+
+    // Gamepads
 
 
-  /* Driver Controls */
-  //TODO: UNCOMMENT THE PS5 CODE IF THAT IS THE DRIVE CONTROLLER
-  // private final int translationAxis = XboxController.Axis.kLeftY.value;
-  // private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  // private final int rotationAxis = XboxController.Axis.kRightX.value;
+    /* Subsystems */
 
-  // private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  // private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kY.value);
+    /* Auton Chooser */
+    public static SendableChooser<Command> mAutonChooser;
 
-  AutonMaster mAutonMaster = new AutonMaster();
+    public RobotContainer() {
+        final var driver = Driver.getInstance();
 
-  //PS5 Code:
-  public static final int translationAxis = PS5Controller.Axis.kLeftY.value;
-  public static final int strafeAxis = PS5Controller.Axis.kLeftX.value;
-  public static final int rotationAxis = PS5Controller.Axis.kRightX.value;
-
-  private final JoystickButton zeroGyro = new JoystickButton(driver, PS5Controller.Button.kTriangle.value);
-  private final JoystickButton robotCentric = new JoystickButton(driver, PS5Controller.Button.kCross.value);
-  private final JoystickButton turnInPlace = new JoystickButton(driver, PS5Controller.Button.kSquare.value);
-
-  /*Vision Controls*/
-  private final JoystickButton aimtarget = new JoystickButton(driver, PS5Controller.Button.kCircle.value);
+        Drivetrain.getInstance().setDefaultCommand(DrivetrainCommands.drive(
+            driver::getDriveTranslation,
+            driver::getDriveRotation
+        ));
 
 
-  // private final JoystickButton aimtarget = new JoystickButton(driver, XboxController.Button.kA.value);
-  // private final JoystickButton elevatorButton = new JoystickButton(driver, XboxController.Button.kB.value);
-  // private final JoystickButton trapButton = new JoystickButton(driver, XboxController.Button.kX.value);
+        mAutonChooser = mAutonMaster.getAutonSelector();
 
-  /* Subsystems */
-  public static final Drivetrain mSwerveDrivetrain = new Drivetrain();
-  public static final PoseEstimator poseEstimator = new PoseEstimator(mSwerveDrivetrain::getGyroYaw, mSwerveDrivetrain::getModulePositions);
-  // public static final Elevator elevator = new Elevator();
+        ShuffleboardTab autonTab = Shuffleboard.getTab("Auton Chooser");
+        autonTab.add(mAutonChooser);
+        SmartDashboard.putData(mAutonChooser);
 
-  /* Auton Chooser */
-  public static SendableChooser<Command> mAutonChooser;
+        ShuffleboardTab visionTab = Shuffleboard.getTab("Vision");
+        Vision.PoseEstimator.getInstance().addDashboardWidgets(visionTab);
+    }
 
-  public RobotContainer() {
-    //TODO: May need to change the - sign in front of "driver.getRawAxis()"
-    mSwerveDrivetrain.setDefaultCommand(
-            new TeleopDrive(
-                mSwerveDrivetrain, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                true
-            )
-        );
-
-    
-    mAutonChooser = mAutonMaster.getAutonSelector();
-    
-    ShuffleboardTab autonTab = Shuffleboard.getTab("Auton Chooser");
-    autonTab.add(mAutonChooser);
-    SmartDashboard.putData(mAutonChooser);
-
-    ShuffleboardTab visionTab = Shuffleboard.getTab("Vision");
-    poseEstimator.addDashboardWidgets(visionTab);
-    configureBindings();
-   
-  }
-
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
-  private void configureBindings() {
-    zeroGyro.onTrue(new InstantCommand(() -> mSwerveDrivetrain.zeroHeading()));
-    aimtarget.onTrue(DrivetrainCommands.autoLineUp());
-    turnInPlace.onTrue(new TurnInPlaceCommand(90, mSwerveDrivetrain));
-    // elevatorButton.onTrue(new RunElevator(elevator, null));
-    // trapButton.onTrue(new ElevatorTrap(elevator));
-  }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    return mAutonChooser.getSelected();
-  }
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        return mAutonChooser.getSelected();
+    }
 }
   

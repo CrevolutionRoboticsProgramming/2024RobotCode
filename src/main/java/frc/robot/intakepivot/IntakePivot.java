@@ -1,93 +1,94 @@
 package frc.robot.intakepivot;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakePivot extends SubsystemBase {
-    private final CANSparkMax m_Pivot;
 
+    private static class Settings {
+        static final int kSparkID = 21;
+        static final boolean kSparkInverted = false;
+        static final CANSparkBase.IdleMode kSparkIdleMode = CANSparkBase.IdleMode.kBrake;
+
+        static final boolean kEncoderInverted = false;
+        static final double kEncoderZeroOffset = 0;
+
+        // 45 degrees per second
+        static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(45);
+        static final double kMaxVoltage = 12.0;
+
+        static final double kG = 0.0;
+        static final double kS = 0.0;
+        static final double kV = 0.0;
+        static final double kA = 0.0;
+        static final double kP = 0.0;
+        static final double kI = 0.0;
+        static final double kD = 0.0;
+    }
+
+    private static IntakePivot mInstance;
+    private final CANSparkMax mSpark;
     private final AbsoluteEncoder encoder;
-
-    private IntakePivotConfig.PivotState state;
+    private final ArmFeedforward ffContoller;
+    private final PIDController pidController;
 
     public IntakePivot() {
-        m_Pivot = new CANSparkMax(IntakePivotConfig.kPivotSparkID, MotorType.kBrushless);
-        encoder = m_Pivot.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
+        mSpark = new CANSparkMax(Settings.kSparkID, MotorType.kBrushless) {{
+            setInverted(Settings.kSparkInverted);
+            setIdleMode(Settings.kSparkIdleMode);
+        }};
 
-        configureMotor();
-        configureSensors();
+        encoder = mSpark.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
+        encoder.setZeroOffset(IntakePivotConfig.kPivotZeroOffset);
+        encoder.setInverted(IntakePivotConfig.kPivotEncoderInverted);
+
+        ffContoller = new ArmFeedforward(Settings.kS, Settings.kG, Settings.kV, Settings.kA);
+        pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
+    }
+
+    public static IntakePivot getInstance() {
+        if (mInstance == null) {
+            mInstance = new IntakePivot();
+        }
+        return mInstance;
     }
 
     public void setOutput(double output) {
-        m_Pivot.set(output);
-    }
-
-    public void stop() {
-        m_Pivot.set(0);
-    }
-
-    public void setState(IntakePivotConfig.PivotState state) {
-        this.state = state;
-    }
-
-    public IntakePivotConfig.PivotState getState() {
-        return state;
-    }
-
-    public void setCurrentLimit(int continuousLimit, int peakLimit) {
-        m_Pivot.setSmartCurrentLimit(continuousLimit, peakLimit);
-    }
-
-    public void setIdleMode(CANSparkMax.IdleMode mode) {
-        m_Pivot.setIdleMode(mode);
-    }
-
-     private void configureMotor() {
-        m_Pivot.setInverted(IntakePivotConfig.kPivotMotorInverted);
-        m_Pivot.setIdleMode(IntakePivotConfig.kPivotIdleMode);
-        m_Pivot.setSmartCurrentLimit(IntakePivotConfig.kDefaultContinuousCurrentLimit, IntakePivotConfig.kDefaultPeakCurrentLimit);
-    }
-
-    private void configureSensors() {
-        encoder.setZeroOffset(IntakePivotConfig.kPivotZeroOffset);
-        encoder.setInverted(IntakePivotConfig.kPivotEncoderInverted);
+        mSpark.set(output);
     }
 
     /**
-     * @return position in radians
+     * @param angularVelocity in units per second
      */
-    public double getAngleRads() {
-        final var angle = Units.rotationsToRadians(encoder.getPosition());
-        // return (angle >= 6) ? 0 : angle;
-        return angle;
-        // return encoder.getPosition();
+    public void setVelocity(Rotation2d angularVelocity) {
+        final var ffComponent = ffContoller.calculate(getAngle().getRadians(), angularVelocity.getRadians());
+        final var pidComponent = pidController.calculate(getAngularVelocity().getRadians(), angularVelocity.getRadians());
+        mSpark.setVoltage(ffComponent + pidComponent);
+    }
+
+    public Rotation2d getAngle() {
+        return Rotation2d.fromRotations(encoder.getPosition());
     }
 
     /**
-     * @return angular velocity in rads / sec
+     * @return velocity in units per seconds
      */
-    public double getVelocityRps() {
-        return Units.rotationsToRadians(encoder.getVelocity() / 60.0);
-    }
-
-    public double getOutputCurrent() {
-        return Math.abs(m_Pivot.getOutputCurrent());
+    public Rotation2d getAngularVelocity() {
+        return Rotation2d.fromRotations(encoder.getVelocity() / 60.0);
     }
 
     @Override
     public void periodic() {
-        System.out.println("[Intake Pivot] pos (" + encoder.getPosition() + "), vel (" + getVelocityRps() + ")");
-        updateSmartDashboard();
-    }
-
-    private void updateSmartDashboard() {
-        SmartDashboard.putNumber("Shooter Pivot Angle (Radians)", getAngleRads());
-        SmartDashboard.putNumber("Shooter Pivot Angular Velocity (Radians / Second)", getVelocityRps());
+        SmartDashboard.putNumber("Shooter Pivot Angle (Degrees)", getAngle().getDegrees());
+        SmartDashboard.putNumber("Shooter Pivot Angular Velocity (Degrees / Second)", getAngularVelocity().getDegrees());
     }
 }
