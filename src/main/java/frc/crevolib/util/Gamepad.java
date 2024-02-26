@@ -1,6 +1,7 @@
 package frc.crevolib.util;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
@@ -38,7 +39,7 @@ public abstract class Gamepad extends SubsystemBase {
             boolean isConnected = controller.getHID().isConnected();
             if (!isConnected) {
                 if (!printed) {
-                    System.out.println("error: gamepad not connected \"" + getName() + "\"");
+                    System.out.println("[error] " + getName() + ": gamepad not connected");
                     printed = true;
                 }
                 return;
@@ -54,7 +55,7 @@ public abstract class Gamepad extends SubsystemBase {
             }
             configured = true;
 
-//            RobotTelemetry.print("## " + getName() + ": gamepad is connected ##");
+            System.out.println("[info] " + getName() + ": gamepad connected");
         }
     }
 

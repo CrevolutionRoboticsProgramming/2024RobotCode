@@ -6,16 +6,24 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase{
+public class IntakeRoller extends SubsystemBase {
+    private static IntakeRoller mInstance;
+
     private final CANSparkMax m_Roller;
 
-    public Intake() {
+    public IntakeRoller() {
         m_Roller = new CANSparkMax(IntakeConfig.kIntakeSparkID, MotorType.kBrushless);
-
         configureMotor();
     }
 
-    public void setIntakeRollerPercentOutput(double percentOutput) {
+    public static IntakeRoller getInstance() {
+        if (mInstance == null) {
+            mInstance = new IntakeRoller();
+        }
+        return mInstance;
+    }
+
+    public void setOutput(double percentOutput) {
         m_Roller.set(percentOutput);
     }
 
@@ -35,7 +43,7 @@ public class Intake extends SubsystemBase{
         m_Roller.setIdleMode(mode);
     }
 
-     private void configureMotor() {
+    private void configureMotor() {
         m_Roller.setInverted(IntakeConfig.kShooterMotorInverted);
         m_Roller.setIdleMode(IntakeConfig.kRollerIdleMode);
         m_Roller.setSmartCurrentLimit(IntakeConfig.kDefaultContinuousCurrentLimit, IntakeConfig.kDefaultPeakCurrentLimit);

@@ -1,5 +1,7 @@
 package frc.robot.driver;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.crevolib.util.Gamepad;
 
 public class Driver extends Gamepad {
@@ -34,5 +36,13 @@ public class Driver extends Gamepad {
     @Override
     public void setupTestButtons() {
 
+    }
+
+    public Translation2d getDriveTranslation() {
+        return new Translation2d(-controller.getLeftX(), controller.getLeftY());
+    }
+
+    public double getDriveRotation() {
+        return controller.getRightX();
     }
 }

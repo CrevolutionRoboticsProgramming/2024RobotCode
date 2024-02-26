@@ -17,13 +17,14 @@ import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.drivetrain.swerve.SwerveModule;
 
 public class Drivetrain extends SubsystemBase {
+    private static Drivetrain mInstance;
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
     private SwerveModuleState[] lastTargetStates;
 
-    public Drivetrain() { 
+    private Drivetrain() {
         gyro = new Pigeon2(DriveConstants.pigeonID, "Canivore");
 // SensorDirectionValue pigeon2Invert = SensorDirectionValue.CounterClockwise_Positive;
         gyro.getConfigurator().apply(new Pigeon2Configuration());
@@ -39,6 +40,13 @@ public class Drivetrain extends SubsystemBase {
         };
 
         swerveOdometry = new SwerveDriveOdometry(DriveConstants.swerveKinematics, getGyroYaw(), getModulePositions());
+    }
+
+    public static Drivetrain getInstance() {
+        if (mInstance == null) {
+            mInstance = new Drivetrain();
+        }
+        return mInstance;
     }
 
     //MASTER DRIVE METHOD

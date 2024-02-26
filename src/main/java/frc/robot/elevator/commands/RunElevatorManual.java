@@ -10,8 +10,8 @@ public class RunElevatorManual extends Command{
     private final DoubleSupplier supplier;
     private final Elevator elevator;
 
-    public RunElevatorManual(Elevator elevator, DoubleSupplier supplier) {
-        this.elevator = elevator;
+    public RunElevatorManual(DoubleSupplier supplier) {
+        this.elevator = Elevator.getInstance();
         this.supplier = supplier;
 
         addRequirements(elevator);

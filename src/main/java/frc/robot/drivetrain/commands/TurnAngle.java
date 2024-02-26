@@ -8,10 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
 
-public class TurnToAngle extends Command {
+public class TurnAngle extends Command {
     private final Drivetrain mDrivetrain;
-    // private final PIDController pidController;
-    // private final SimpleMotorFeedforward ffController;
     private TrapezoidProfile profile;
     Rotation2d deltaTheta;
     private double distance;
@@ -21,9 +19,9 @@ public class TurnToAngle extends Command {
     private final double radius = 0.97 / 2.0; 
     
 
-    public TurnToAngle(Drivetrain mDrivetrain, Rotation2d rotate2d) {
-        this.mDrivetrain = mDrivetrain;
-        deltaTheta = rotate2d;
+    public TurnAngle(Rotation2d deltaTheta) {
+        mDrivetrain = Drivetrain.getInstance();
+        this.deltaTheta = deltaTheta;
 
         addRequirements(mDrivetrain);
     }

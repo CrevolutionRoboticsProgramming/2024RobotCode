@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.elevator.ElevatorConfig.ElevatorState;
 
 public class Elevator extends SubsystemBase {
+    private static Elevator mInstance;
+
     private final CANSparkMax mSpark1;
     private final CANSparkMax mSpark2;
     private final AbsoluteEncoder encoder;
@@ -19,7 +21,7 @@ public class Elevator extends SubsystemBase {
                 
     private ElevatorState currentState;
 
-    public Elevator(){
+    private Elevator(){
         mSpark1 = new CANSparkMax(ElevatorConfig.kElevatorSparkID1, MotorType.kBrushless);
         mSpark2 = new CANSparkMax(ElevatorConfig.kElevatorSparkID2, MotorType.kBrushless);
         lowerLimitSwitch = new DigitalInput(ElevatorConfig.kLowerLimitSwitchPort);
@@ -33,6 +35,13 @@ public class Elevator extends SubsystemBase {
 
         configureMotor();
         configureSensors();
+    }
+
+    public static Elevator getInstance() {
+        if (mInstance == null) {
+            mInstance = new Elevator();
+        }
+        return mInstance;
     }
 
     public void setOutput(double output) {
