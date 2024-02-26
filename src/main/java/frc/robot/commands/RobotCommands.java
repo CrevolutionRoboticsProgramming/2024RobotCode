@@ -1,0 +1,31 @@
+package frc.robot.commands;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.RobotContainer;
+import frc.robot.elevator.ElevatorConfig.ElevatorState;
+import frc.robot.elevator.commands.SetElevatorState;
+import frc.robot.intakepivot.Commands.SetPivotState;
+import frc.robot.intakepivot.IntakePivotConfig.PivotState;
+
+public class RobotCommands {
+    public static Command handOff() {
+        return new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                new SetPivotState(RobotContainer.intakePivot, PivotState.kHandoff),
+                new SetElevatorState(RobotContainer.mElevator, ElevatorState.kZero)
+                /*Add setShooterState */
+            ),
+            new ParallelRaceGroup(
+                /*new laodIndex Command */ 
+                new SequentialCommandGroup(
+                    new WaitCommand(0.5)
+                    /*new OutTake */
+                )
+            )
+        );
+    }
+}
