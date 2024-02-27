@@ -6,13 +6,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.intakepivot.IntakePivotConfig;
 
 public class IntakePivotCommands {
-    @Deprecated
     public static Command setPivotState(SetStatePivot.State state) {
         return new SetStatePivot(state);
     }
-
-    @Deprecated
-    public static Command setPivotOutput(DoubleSupplier supplier) {
-        return new SetOutputPivot(supplier);
-    }
+    // public static Command setPivotOutput(DoubleSupplier supplier) {
+    //     return new SetOutputPivot(supplier);
+    // }
 }

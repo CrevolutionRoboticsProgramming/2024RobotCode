@@ -12,6 +12,7 @@ import frc.robot.intakeroller.IntakeConfig;
 public class SetStatePivot extends Command{
     public enum State {
         kDeployed(Rotation2d.fromDegrees(0)),
+        kSpit(Rotation2d.fromDegrees(20)),
         kStowed(Rotation2d.fromDegrees(90));
 
         final Rotation2d setpoint;

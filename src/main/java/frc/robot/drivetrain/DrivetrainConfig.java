@@ -21,8 +21,8 @@ public class DrivetrainConfig {
 
         /* Drivetrain Constants */
         //TODO: Change Robot Frame's Width and Length Depending on Frame Size Design makes
-        public static final double trackWidth = Units.inchesToMeters(26.25);
-        public static final double wheelBase = Units.inchesToMeters(26.25);
+        public static final double trackWidth = Units.inchesToMeters(22.75);
+        public static final double wheelBase = Units.inchesToMeters(22.75);
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 

@@ -1,44 +1,53 @@
-// package frc.robot.Shooter;
+package frc.robot.Shooter;
 
-// import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.TalonFX;
 
-// import edu.wpi.first.wpilibj.DigitalInput;
-// import edu.wpi.first.wpilibj.motorcontrol.Victor;
-// import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// import frc.robot.Shooter.ShooterConfig.*;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.motorcontrol.Victor;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Shooter.ShooterConfig.*;
+import frc.robot.drivetrain.Drivetrain;
 
-// public class ShooterIndexer extends SubsystemBase{
-//     private final Victor shooterIndex;
-//     private final DigitalInput beamBreaker;
+public class ShooterIndexer extends SubsystemBase{
+    private final Victor shooterIndex;
+    private final DigitalInput beamBreaker;
+    private static ShooterIndexer mInstance;
 
-//     public ShooterIndexer() {
-//         shooterIndex = new Victor(ShooterConfig.kIndexVictorID);
-//         shooterIndex.setInverted(ShooterConfig.kIndexerMotorInverted);
+    public ShooterIndexer() {
+        shooterIndex = new Victor(ShooterConfig.kIndexVictorID);
+        shooterIndex.setInverted(ShooterConfig.kIndexerMotorInverted);
 
-//         beamBreaker = new DigitalInput(ShooterConfig.kIndexerBeamBreak);
-//     }
+        beamBreaker = new DigitalInput(ShooterConfig.kIndexerBeamBreak);
+    }
 
-//     public void setIntakeSpeed() {
-//         shooterIndex.set(1);
-//     }
+    public static ShooterIndexer getInstance() {
+        if (mInstance == null) {
+            mInstance = new ShooterIndexer();
+        }
+        return mInstance;
+    }
 
-//     public void setOuttakeSpeed() {
-//         shooterIndex.set(-1);
-//     }
+    public void setIntakeSpeed(double velocity) {
+        shooterIndex.set(velocity);
+    }
+
+    public void setOuttakeSpeed(double velocity) {
+        shooterIndex.set(velocity);
+    }
     
-//     public void stopIndexer() {
-//         shooterIndex.stopMotor();
-//     }
+    public void stopIndexer() {
+        shooterIndex.stopMotor();
+    }
 
-//     public Double getIndexerSpeed() {
-//         return shooterIndex.get();
-//     }
+    public Double getIndexerSpeed() {
+        return shooterIndex.get();
+    }
 
-//     public boolean getBeamBreaker() {
-//         return !beamBreaker.get();
-//     }
+    public boolean getBeamBreaker() {
+        return !beamBreaker.get();
+    }
 
 
-// }
+}
