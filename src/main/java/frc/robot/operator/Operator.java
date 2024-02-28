@@ -19,21 +19,16 @@ public class Operator extends Gamepad{
         static final int port = 1;
         static final String name = "operator";
 
-        static final double kTranslationExpVal = 2.0;
-        static final double kRotationExpVal = 1.0;
         static final double kDeadzone = 0.1;
     }
 
-    ExpCurve translationStickCurve;
-    ExpCurve rotationStickCurve;
-
+    ExpCurve stickCurve;
     private static Operator mInstance;
 
     private Operator() {
         super(Settings.name, Settings.port);
 
-        translationStickCurve = new ExpCurve(Settings.kTranslationExpVal, 0, 1, Settings.kDeadzone);
-        rotationStickCurve = new ExpCurve(Settings.kRotationExpVal, 0, 1, Settings.kDeadzone);
+        stickCurve = new ExpCurve(1, 0, 1, Settings.kDeadzone);
     }
 
     public static Operator getInstance() {
@@ -71,13 +66,13 @@ public class Operator extends Gamepad{
     }
 
     public Translation2d getDriveTranslation() {
-        final var xComponent = translationStickCurve.calculate(controller.getLeftX());
-        final var yComponent = translationStickCurve.calculate(controller.getLeftY());
+        final var xComponent = stickCurve.calculate(controller.getLeftX());
+        final var yComponent = stickCurve.calculate(controller.getLeftY());
         // Components are reversed because field coordinates are opposite of joystick coordinates
         return new Translation2d(yComponent, xComponent);
     }
 
     public double getDriveRotation() {
-        return -rotationStickCurve.calculate(controller.getRightX());
+        return -stickCurve.calculate(controller.getRightX());
     }
 }
