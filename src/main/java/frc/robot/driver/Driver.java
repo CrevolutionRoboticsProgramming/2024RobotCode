@@ -5,8 +5,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
+import frc.robot.Shooter.ShooterConfig.PivotState;
+import frc.robot.commands.RobotCommands;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
+import frc.robot.intakepivot.IntakePivot;
+import frc.robot.intakepivot.commands.IntakePivotCommands;
+import frc.robot.intakepivot.commands.SetStatePivot;
+import frc.robot.intakeroller.commands.IntakeCommands;
 
 public class Driver extends Gamepad {
     private static class Settings {
@@ -45,8 +51,14 @@ public class Driver extends Gamepad {
             this::getDriveTranslation,
             this::getDriveRotation));
 
-        // right triger run intake
-        // right bumper spit for amp form intake
+        // Intake Commands
+        rightTriggerOnly().onTrue(IntakePivotCommands.setPivotState(SetStatePivot.State.kDeployed));
+        rightTriggerOnly().onFalse(IntakePivotCommands.setPivotState(SetStatePivot.State.kStowed));
+
+        rightTriggerOnly().whileTrue(IntakeCommands.setOutput(() -> 1));
+
+        // Shooter Amp Command (right bumper)
+
     }
 
     @Override
