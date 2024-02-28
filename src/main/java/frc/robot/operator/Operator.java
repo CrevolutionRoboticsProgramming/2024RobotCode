@@ -1,5 +1,6 @@
 package frc.robot.operator;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.crevolib.util.ExpCurve;
@@ -13,6 +14,10 @@ import frc.robot.intakeroller.commands.IntakeCommands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.shooterflywheel.ShooterFlywheel;
+import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
+import frc.robot.shooterpivot.ShooterPivot;
+import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 
 public class Operator extends Gamepad{
     private static class Settings {
@@ -23,12 +28,16 @@ public class Operator extends Gamepad{
     }
 
     ExpCurve stickCurve;
+    ExpCurve shooterPivotManualCurve;
+    ExpCurve shooterFlywheelManualCurve;
     private static Operator mInstance;
 
     private Operator() {
         super(Settings.name, Settings.port);
 
         stickCurve = new ExpCurve(1, 0, 1, Settings.kDeadzone);
+        shooterPivotManualCurve = new ExpCurve(1, 0, ShooterPivot.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
+        shooterPivotManualCurve = new ExpCurve(1, 0, ShooterFlywheel.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
     }
 
     public static Operator getInstance() {
@@ -49,7 +58,12 @@ public class Operator extends Gamepad{
         //leftTriggerOnly().and(rightXTrigger(ThresholdType.ABS_GREATER_THAN, 0.15).whileTrue(IntakePivotCommands.setPivotOutput(controller::getR2Axis)));
 
         /*Shooter Manual Override (Needs to change from Intake to Shooter) */
-        //leftTriggerOnly().and(leftXTrigger(ThresholdType.ABS_GREATER_THAN, 0.15).whileTrue(IntakePivotCommands.setPivotOutput(controller::getL2Axis)));
+        leftTriggerOnly().and(leftXTrigger(ThresholdType.ABS_GREATER_THAN, Settings.kDeadzone).whileTrue(
+            ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(shooterPivotManualCurve.calculate(controller.getLeftX())), true)
+        ));
+        controller.R2().whileTrue(
+            ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRadians(shooterFlywheelManualCurve.calculate(controller.getR2Axis())))
+        );
 
         /*Elevator Manual Override */
         leftBumperOnly().and(leftYTrigger(ThresholdType.ABS_GREATER_THAN, 0.15).whileFalse(ElevatorCommands.setOuput(controller::getL2Axis)));

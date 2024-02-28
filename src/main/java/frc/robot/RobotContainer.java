@@ -17,6 +17,9 @@ import frc.robot.auton.commands.TurnInPlaceCommand;
 import frc.robot.driver.Driver;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
+import frc.robot.intakepivot.IntakePivot;
+import frc.robot.shooterpivot.ShooterPivot;
+import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 import frc.robot.vision.Vision;
 
 /**
@@ -38,15 +41,8 @@ public class RobotContainer {
     public static SendableChooser<Command> mAutonChooser;
 
     public RobotContainer() {
-        final var driver = Driver.getInstance();
-
-        Drivetrain.getInstance().setDefaultCommand(DrivetrainCommands.drive(
-            driver::getDriveTranslation,
-            driver::getDriveRotation
-        ));
-
-
         mAutonChooser = mAutonMaster.getAutonSelector();
+        setDefaultCommands();
 
         ShuffleboardTab autonTab = Shuffleboard.getTab("Auton Chooser");
         autonTab.add(mAutonChooser);
@@ -63,6 +59,15 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         return mAutonChooser.getSelected();
+    }
+
+    public void setDefaultCommands() {
+        final var driver = Driver.getInstance();
+        Drivetrain.getInstance().setDefaultCommand(DrivetrainCommands.drive(
+            driver::getDriveTranslation,
+            driver::getDriveRotation
+        ));
+        ShooterPivot.getInstance().setDefaultCommand(ShooterPivotCommands.holdState());
     }
 }
   
