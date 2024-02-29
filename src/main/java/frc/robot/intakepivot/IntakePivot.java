@@ -26,10 +26,10 @@ public class IntakePivot extends SubsystemBase {
         static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(45);
         static final double kMaxVoltage = 12.0;
 
-        static final double kG = 0.0;
-        static final double kS = 0.0;
-        static final double kV = 0.0;
-        static final double kA = 0.0;
+        static final double kG = 0.17; // V
+        static final double kS = 0.0;  // V / rad
+        static final double kV = 1.32; // V * sec / rad
+        static final double kA = 0.0;  // V * sec^2 / rad
         static final double kP = 0.0;
         static final double kI = 0.0;
         static final double kD = 0.0;

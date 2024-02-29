@@ -11,9 +11,10 @@ public class ShooterPivot extends SubsystemBase {
     public static class Settings {
         static final int kSparkId = 0;
 
-        static final double kG = 0.0;
-        static final double kS = 0.0;
-        static final double kV = 0.0;
+        static final double kG = 0.45; // V
+        static final double kS = 0.0;  // V / rad
+        static final double kV = 2.46; // V * sec / rad
+        static final double kA = 0.01; // V * sec^2 / rad
 
         static final double kPosP = 0.0;
         static final double kPosI = 0.0;
@@ -50,7 +51,7 @@ public class ShooterPivot extends SubsystemBase {
 
         mPositionPIDController = new PIDController(Settings.kPosP, Settings.kPosI, Settings.kPosD);
         mVelocityPIDController= new PIDController(Settings.kVelP, Settings.kVelI, Settings.kVelD);
-        mFFController = new ArmFeedforward(Settings.kS, Settings.kG, Settings.kV);
+        mFFController = new ArmFeedforward(Settings.kS, Settings.kG, Settings.kV, Settings.kA);
     }
 
     public static ShooterPivot getInstance() {
