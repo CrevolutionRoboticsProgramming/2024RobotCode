@@ -88,7 +88,8 @@ public class IntakePivot extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Shooter Pivot Angle (Degrees)", getAngle().getDegrees());
-        SmartDashboard.putNumber("Shooter Pivot Angular Velocity (Degrees / Second)", getAngularVelocity().getDegrees());
+        SmartDashboard.putNumber("Intake Pivot Angle (Degrees)", getAngle().getDegrees());
+        SmartDashboard.putNumber("Intake Pivot Angular Velocity (Degrees / Second)", getAngularVelocity().getDegrees());
+        SmartDashboard.putNumber("Intake Pivot Angle (Raw)", getAngle().getRotations());
     }
 }
