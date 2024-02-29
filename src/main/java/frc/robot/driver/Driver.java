@@ -57,6 +57,7 @@ public class Driver extends Gamepad {
         rightTriggerOnly().whileTrue(IntakeCommands.setOutput(() -> 1));
 
         // Shooter Amp Command (right bumper)
+        rightBumperOnly().onTrue(RobotCommands.shooterNoteAmp());
 
     }
 

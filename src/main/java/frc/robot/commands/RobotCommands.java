@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -7,20 +8,24 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.elevator.ElevatorConfig.ElevatorState;
+import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.elevator.commands.SetElevatorState;
 import frc.robot.indexer.Indexer;
 import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
 import frc.robot.intakepivot.commands.SetStatePivot;
 import frc.robot.intakeroller.commands.IntakeCommands;
+import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
+import frc.robot.shooterpivot.commands.SetStateShooterPivot;
+import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 
 public class RobotCommands {
     public static Command handOff() {
         return new SequentialCommandGroup(
             new ParallelCommandGroup(
-                new SetStatePivot(SetStatePivot.State.kDeployed),
-                new SetElevatorState(ElevatorState.kZero)
-                /*Add setShooterState */
+                IntakePivotCommands.setPivotState(SetStatePivot.State.kStowed),
+                ElevatorCommands.setState(ElevatorState.kZero),
+                ShooterPivotCommands.setState(SetStateShooterPivot.State.kHandoff)
             ),
             new ParallelRaceGroup(
                 IndexerCommands.loadNote(),
@@ -41,8 +46,8 @@ public class RobotCommands {
 
     public static Command primeAmpShooter() {
         return new SequentialCommandGroup(
-            new ConditionalCommand(null, handOff(), () -> Indexer.getInstance().hasNote())
-            /*Add Shooter set Pivot for Amp */
+            new ConditionalCommand(null, handOff(), () -> Indexer.getInstance().hasNote()),
+            ShooterPivotCommands.setState(SetStateShooterPivot.State.kAmp)
         );
     }
 
@@ -50,8 +55,8 @@ public class RobotCommands {
         return new SequentialCommandGroup(
             new ConditionalCommand(null, handOff(), () -> Indexer.getInstance().hasNote()),
             new ParallelCommandGroup(
-                /*Add set Angle for shooter */
-                /*Add Set RPM for Shooter */
+                ShooterPivotCommands.lockTarget()
+                /*Shooter RPM */
             )
         );
     }
@@ -61,7 +66,7 @@ public class RobotCommands {
             new ParallelRaceGroup(
                 /*Add set RPM for Shooter */
                 new SequentialCommandGroup(
-                    /*Runs Indexer for some time */
+                    IndexerCommands.setOutput(() -> 1),
                     new WaitCommand(1)
                 )
             )
@@ -71,11 +76,11 @@ public class RobotCommands {
     public static Command shooterNoteAmp() {
         return new SequentialCommandGroup(
             new ParallelRaceGroup(
-                /*Run shooter at (spec. velocity) */
+                ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(4000)),
                 new WaitCommand(0.5),
                 new SequentialCommandGroup(
                     new ParallelRaceGroup(
-
+                        IndexerCommands.setOutput(() -> 1),
                         new WaitCommand(1)
                     )
                 )

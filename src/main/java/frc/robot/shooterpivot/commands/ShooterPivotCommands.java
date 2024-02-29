@@ -17,4 +17,8 @@ public class ShooterPivotCommands {
     public static Command holdState() {
         return new HoldState();
     }
+
+    public static Command lockTarget() {
+        return new LockTarget();
+    }
 }
