@@ -1,4 +1,4 @@
-package frc.robot.Shooter;
+package frc.robot.shooterflywheel;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;

@@ -1,4 +1,4 @@
-package frc.robot.Shooter;
+package frc.robot.shooterflywheel;
 
 import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.math.interpolation.Interpolator;

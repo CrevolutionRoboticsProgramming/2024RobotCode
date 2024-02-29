@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
-import frc.robot.Shooter.ShooterConfig.PivotState;
 import frc.robot.commands.RobotCommands;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
