@@ -14,5 +14,5 @@ public class AutonConfig {
     // This is set for Theseus (assuming 26.25 x 26.25 frame, use the actual dimensions from 2024 robot here)
     // Calculate based on a^2 + b^2 = c^2
     public static final double MAX_AUTON_MODULE_SPEED = 4.5; // m/s
-    public static final double DRIVE_BASE_RADIUS = Units.inchesToMeters(344.53125); 
+    public static final double DRIVE_BASE_RADIUS = Units.inchesToMeters(15.73312588);
 }
