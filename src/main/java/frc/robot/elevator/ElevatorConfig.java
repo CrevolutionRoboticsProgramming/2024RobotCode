@@ -20,8 +20,8 @@ public class ElevatorConfig {
     }
 
     //motor IDs have to be changed
-    public static final int kElevatorSparkID1 = 51;
-    public static final int kElevatorSparkID2 = 52;
+    public static final int kElevatorSparkID1 = 22;
+    public static final int kElevatorSparkID2 = 23;
 
     public static final boolean kElevatorMotorInverted = true;
 

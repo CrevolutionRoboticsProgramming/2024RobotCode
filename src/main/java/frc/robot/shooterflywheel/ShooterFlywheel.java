@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterFlywheel extends SubsystemBase {
     public static class Settings {
-        static final int kLeftId = 0;
-        static final int kRightId = 0;
+        static final int kLeftId = 6;
+        static final int kRightId = 9;
 
         static final Slot0Configs kFlywheelConfigs = new Slot0Configs()
             .withKS(0.0)

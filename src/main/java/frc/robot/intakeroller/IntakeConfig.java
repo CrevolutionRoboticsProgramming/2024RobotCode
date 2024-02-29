@@ -7,7 +7,7 @@ import com.revrobotics.CANSparkMax;
 
 public class IntakeConfig {
     //motor IDs have to be changed
-    public static final int kIntakeSparkID = 26;
+    public static final int kIntakeSparkID = 20;
 
     public static final boolean kShooterMotorInverted = false;
 

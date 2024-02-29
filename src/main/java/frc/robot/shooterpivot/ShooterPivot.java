@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterPivot extends SubsystemBase {
     public static class Settings {
-        static final int kSparkId = 0;
+        static final int kSparkId = 24;
 
         static final double kG = 0.45; // V
         static final double kS = 0.0;  // V / rad
@@ -98,5 +98,6 @@ public class ShooterPivot extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Shooter Pivot Angle (degrees)", getAngle().getDegrees());
         SmartDashboard.putNumber("Shooter Pivot Angular Velocity (degrees / sec)", getAngularVelocity().getDegrees());
+        SmartDashboard.putNumber("Shooter Pivot Angular Velocity (raw)", getAngularVelocity().getRotations());
     }
 }
