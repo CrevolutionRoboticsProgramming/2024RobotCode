@@ -1,25 +1,24 @@
 package frc.robot.intakepivot.commands;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.intakepivot.IntakePivot;
-import frc.robot.intakepivot.IntakePivotConfig;
-import frc.robot.intakeroller.IntakeConfig;
 
-public class SetStatePivot extends Command{
+public class SetStatePivot extends Command {
     public enum State {
         kDeployed(Rotation2d.fromDegrees(0)),
-        kSpit(Rotation2d.fromDegrees(20)),
-        kStowed(Rotation2d.fromDegrees(90));
+        kSpit(Rotation2d.fromDegrees(90)),
+        kStowed(Rotation2d.fromDegrees(180));
 
-        final Rotation2d setpoint;
-        State(Rotation2d setpoint) {
-            this.setpoint = setpoint;
+        final Rotation2d target;
+
+        State(Rotation2d target) {
+            this.target = target;
         }
     }
+
+    private final Rotation2d kAllowedError = Rotation2d.fromDegrees(2);
 
     private final IntakePivot pivot;
     private final State targetState;
@@ -65,15 +64,23 @@ public class SetStatePivot extends Command{
 
     @Override
     public boolean isFinished() {
-        final var time = getElapsedTime();
-
-        // Safety stop, it's trying to drive into the robot
-        if (profile != null && time > 0.25 && profile.calculate(time).velocity < 0 && pivot.getAngularVelocity().getDegrees() < 0) {
+        // Handle the early exit case, we're already within the allowed margin of error at the start of the command
+        if (profile == null) {
+            return isWithinAllowedError(targetState.target);
+        }
+        // Profile is complete, go ahead and exit
+        if (profile.isFinished(getElapsedTime())) {
             return true;
         }
-
-        // 1) Profile is still running and reached limit switch
-        return profile != null && profile.isFinished(time);
+        // Exit early if the profile is going to drive through a hard / soft angle limit
+        final var requestedState = profile.calculate(getElapsedTime());
+        if (isWithinAllowedError(Rotation2d.fromDegrees(0)) && requestedState.velocity <= 0) {
+            return true;
+        }
+        if (isWithinAllowedError(IntakePivot.Settings.kMaxAngle) && requestedState.velocity >= 0) {
+            return true;
+        }
+        return false;
     }
 
     private double getElapsedTime() {
@@ -81,26 +88,17 @@ public class SetStatePivot extends Command{
     }
 
     private TrapezoidProfile generateProfile() {
-        final var startPos = pivot.getAngle().getDegrees();
-        final var endPos = targetState.setpoint.getDegrees();
-
-        final var deltaTheta = Math.min(Math.abs(endPos - startPos), 360 - Math.abs(endPos - startPos));
-
-        System.out.println("Start: " + startPos + ", End: " + endPos + ", Dist: " + deltaTheta);
-
-        final TrapezoidProfile.State startState, goalState;
-        if (startPos > 270 || startPos < endPos) {
-            goalState = new TrapezoidProfile.State(deltaTheta, 0.0);
-            startState = new TrapezoidProfile.State(0.0, pivot.getAngularVelocity().getDegrees());
-        } else {
-            goalState = new TrapezoidProfile.State(0.0, 0.0);
-            startState = new TrapezoidProfile.State(deltaTheta, pivot.getAngularVelocity().getDegrees());
-        }
-
         return new TrapezoidProfile(
-            new TrapezoidProfile.Constraints(IntakeConfig.kMaxAngularVelocity, IntakeConfig.kMaxAngularAcceleration),
-            goalState,
-            startState
+            new TrapezoidProfile.Constraints(
+                IntakePivot.Settings.kMaxAngularVelocity.getDegrees(),
+                IntakePivot.Settings.kMaxAngularAcceleration.getDegrees()
+            ),
+            new TrapezoidProfile.State(targetState.target.getDegrees(), 0.0),
+            new TrapezoidProfile.State(pivot.getAngle().getDegrees(), pivot.getAngularVelocity().getDegrees())
         );
+    }
+
+    private boolean isWithinAllowedError(Rotation2d target) {
+        return Math.abs(pivot.getAngle().minus(target).getDegrees()) < kAllowedError.getDegrees();
     }
 }

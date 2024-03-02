@@ -9,6 +9,7 @@ import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.IntakePivot;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
+import frc.robot.intakepivot.commands.SetStatePivot;
 import frc.robot.intakeroller.commands.IntakeRollerCommands;
 import frc.robot.shooterflywheel.ShooterFlywheel;
 import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
@@ -62,7 +63,7 @@ public class Operator extends Gamepad {
         controller.cross().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> ShooterFlywheel.Settings.kMaxAngularVelocity));
         controller.square().whileTrue(IndexerCommands.setOutput(() -> -1));
 
-        //controller.circle().onTrue(RobotCommands.handOff());
+        controller.circle().onTrue(RobotCommands.handOff());
 
         //Elevator Manual Override
         controller.R2().whileTrue(
@@ -82,6 +83,10 @@ public class Operator extends Gamepad {
                 shooterPivotManualCurve.calculate(controller.getRightX())), 
                 false)
         );
+
+        controller.povLeft().onTrue(IntakePivotCommands.setPivotState(SetStatePivot.State.kDeployed));
+        controller.povUp().onTrue(IntakePivotCommands.setPivotState(SetStatePivot.State.kSpit));
+        controller.povRight().onTrue(IntakePivotCommands.setPivotState(SetStatePivot.State.kStowed));
 
         //Shooter Test Commands
         // controller.cross().onTrue(ShooterPivotCommands.setState(SetStateShooterPivot.State.kHandoff));

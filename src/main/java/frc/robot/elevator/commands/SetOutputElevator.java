@@ -12,6 +12,7 @@ public class SetOutputElevator extends Command {
     SetOutputElevator(DoubleSupplier outputSupplier) {
         mElevator = Elevator.getInstance();
         mOutputSupplier = outputSupplier;
+        addRequirements(mElevator);
     }
 
     @Override
