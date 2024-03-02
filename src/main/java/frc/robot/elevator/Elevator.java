@@ -1,40 +1,67 @@
 
 package frc.robot.elevator;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkAbsoluteEncoder;
+import com.revrobotics.*;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.elevator.ElevatorConfig.ElevatorState;
 
 public class Elevator extends SubsystemBase {
+    public static class Settings {
+        static final int kSparkLeaderID = 22;
+        static final int kSparkFollowerID = 23;
+        static final boolean kLeftSparkInverted = false;
+        static final boolean kRightSparkInverted = false;
+
+        static final int kLowerLimitSwitch = 0;
+        static final int kUpperLimitSwitch = 0;
+
+        static final CANSparkBase.IdleMode kIdleMode = CANSparkBase.IdleMode.kCoast;
+
+        static final double kG = 0.0;
+        static final double kS = 0.0;
+        static final double kV = 0.0;
+        static final double kA = 0.0;
+
+        static final double kP = 0.0;
+        static final double kI = 0.0;
+        static final double kD = 0.0;
+
+        static final double kMaxVelocity = 0.0;
+        static final double kMaxAcceleration = 0.0;
+
+        static final double kMaxVoltage = 10.0;
+        static final double kSprocketDiameter = Units.feetToMeters(1.273 / 12.0);
+    }
+
     private static Elevator mInstance;
 
-    private final CANSparkMax mSpark1;
-    private final CANSparkMax mSpark2;
-    private final AbsoluteEncoder encoder;
-    private final DigitalInput lowerLimitSwitch, upperLimitSwitch;
+    private final CANSparkMax mSparkLeader;
+    private final CANSparkMax mSparkFollower;
+    private final RelativeEncoder mEncoder;
+//    private final DigitalInput mLowerLimitSwitch, mUpperLimitSwitch;
                 
     private ElevatorState currentState;
 
     private Elevator(){
-        mSpark1 = new CANSparkMax(ElevatorConfig.kElevatorSparkID1, MotorType.kBrushless);
-        mSpark2 = new CANSparkMax(ElevatorConfig.kElevatorSparkID2, MotorType.kBrushless);
-        lowerLimitSwitch = new DigitalInput(ElevatorConfig.kLowerLimitSwitchPort);
-        upperLimitSwitch = new DigitalInput(ElevatorConfig.kUpperLimitSwitchPort);
-
-        
+        mSparkLeader = new CANSparkMax(ElevatorConfig.kElevatorSparkID1, MotorType.kBrushless) {{
+            setInverted(Settings.kLeftSparkInverted);
+            setIdleMode(Settings.kIdleMode);
+        }};
+        mSparkFollower = new CANSparkMax(ElevatorConfig.kElevatorSparkID2, MotorType.kBrushless) {{
+            setInverted(Settings.kRightSparkInverted);
+            setIdleMode(Settings.kIdleMode);
+            follow(mSparkLeader, true);
+        }};
+//        mLowerLimitSwitch = new DigitalInput(Settings.kLowerLimitSwitch);
+//        mUpperLimitSwitch = new DigitalInput(Settings.kUpperLimitSwitch);
 
         //these 2 lines of code need reviewing
-        encoder = mSpark1.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
-        mSpark2.follow(mSpark1);
-
-        configureMotor();
-        configureSensors();
+        mEncoder = mSparkLeader.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192);
     }
 
     public static Elevator getInstance() {
@@ -45,83 +72,47 @@ public class Elevator extends SubsystemBase {
     }
 
     public void setOutput(double output) {
-        final var switchStates = getLimitStates();
-        if(switchStates[0] && output < 0) {
-            mSpark1.setVoltage(0);
-        }
-        else if(switchStates[1] && output > 0) {
-            mSpark1.setVoltage(0);
-        }
-        else {
-            mSpark1.setVoltage(output);
-        }
+        setVoltage(output * Settings.kMaxVoltage);
     }
 
-    public void stop() {
-        mSpark1.set(0);
+    public void setVoltage(double voltage) {
+        mSparkLeader.setVoltage(voltage);
+        mSparkFollower.setVoltage(voltage);
+        System.out.println("voltage: " + voltage + ", current (leader): " + mSparkLeader.getOutputCurrent() + "current (follower): " + mSparkFollower.getOutputCurrent());
+
     }
 
-    public void setState(ElevatorState state) {
-        currentState = state;
-    }
-
-    public ElevatorState getState() {
-        return currentState;
-    }
-
-    public boolean[] getLimitStates() {
-        return new boolean[]{!lowerLimitSwitch.get(), !upperLimitSwitch.get()};
-    }
-
-    public double getEncoderPosition() {
-        return encoder.getPosition();
+//    public boolean getLowerLimitState() {
+//        return !mLowerLimitSwitch.get();
+//    }
+//
+//    public boolean getUpperLimitState() {
+//        return !mUpperLimitSwitch.get();
+//    }
+//
+    public double getPosition() {
+        return rotationsToMeters(mEncoder.getPosition());
     }
     
-    public double getPositionMeters() {
-        return ElevatorUtils.rotationsToMeters(encoder.getPosition());
-    }
-
     public double getOutputCurrent() {
-        return Math.abs(mSpark1.getOutputCurrent());
+        return Math.abs(mSparkLeader.getOutputCurrent());
     }
 
     /**
      * @return angular velocity in rads / sec
      */
     public double getVelocityMps() {
-        return ElevatorUtils.rotationsToMeters(encoder.getVelocity() / 60.0);
+        return rotationsToMeters(mEncoder.getVelocity() / 60.0);
     }
 
-    public void setCurrentLimit(int continuousLimit, int peakLimit) {
-        mSpark1.setSmartCurrentLimit(continuousLimit, peakLimit);
-        mSpark2.setSmartCurrentLimit(continuousLimit, peakLimit);
+    private double rotationsToMeters(double rotations) {
+        return Settings.kSprocketDiameter * Math.PI * rotations;
     }
 
-    public void setIdleMode(CANSparkMax.IdleMode mode) {
-        mSpark1.setIdleMode(mode);
-        mSpark2.setIdleMode(mode);
-    }
-
-    private void configureMotor() {
-        mSpark1.setInverted(ElevatorConfig.kElevatorMotorInverted);
-        mSpark1.setIdleMode(ElevatorConfig.kElevatorIdleMode);
-        mSpark1.setSmartCurrentLimit(ElevatorConfig.kDefaultContinuousCurrentLimit, ElevatorConfig.kDefaultPeakCurrentLimit);
-    }
-
-    private void configureSensors() {
-        encoder.setZeroOffset(ElevatorConfig.kPivotZeroOffset);
-        encoder.setInverted(ElevatorConfig.kPivotEncoderInverted);
-    }
-
-     @Override
+    @Override
     public void periodic() {
-        
-        updateSmartDashboard();
-    }
-
-    private void updateSmartDashboard() {
-        SmartDashboard.putNumber("Elevator Position: ", getPositionMeters());
-        SmartDashboard.putNumber("Elevator Velocity: ", getVelocityMps());
+         SmartDashboard.putNumber("Elevator Position (m)", getPosition());
+         SmartDashboard.putNumber("Elevator Velocity (m/s): ", getVelocityMps());
     }
 }
 

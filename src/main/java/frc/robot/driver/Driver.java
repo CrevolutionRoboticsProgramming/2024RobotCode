@@ -1,18 +1,16 @@
 package frc.robot.driver;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
+import frc.robot.commands.RobotCommands;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
-import frc.robot.indexer.commands.IndexerCommands;
+import frc.robot.intakepivot.commands.IntakePivotCommands;
+import frc.robot.intakepivot.commands.SetStatePivot;
 import frc.robot.intakeroller.commands.IntakeRollerCommands;
-import frc.robot.shooterflywheel.ShooterFlywheel;
-import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
-import frc.robot.shooterpivot.ShooterPivot;
-import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 
 public class Driver extends Gamepad {
     private static class Settings {
@@ -24,18 +22,14 @@ public class Driver extends Gamepad {
         static final double kDeadzone = 0.1;
     }
 
-    ExpCurve translationStickCurve;
-    ExpCurve rotationStickCurve;
-    ExpCurve testCurve;
-
     private static Driver mInstance;
+    private final ExpCurve translationStickCurve, rotationStickCurve;
 
     private Driver() {
         super(Settings.name, Settings.port);
 
         translationStickCurve = new ExpCurve(Settings.kTranslationExpVal, 0, 1, Settings.kDeadzone);
         rotationStickCurve = new ExpCurve(Settings.kRotationExpVal, 0, 1, Settings.kDeadzone);
-        testCurve = new ExpCurve(1.0, 0, ShooterPivot.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
     }
 
     public static Driver getInstance() {
@@ -47,36 +41,22 @@ public class Driver extends Gamepad {
 
     @Override
     public void setupTeleopButtons() {
-        controller.L1().onTrue(new InstantCommand(() -> Drivetrain.getInstance().zeroHeading()));
+        // Drivetrain Commands
+        controller.triangle().onTrue(new InstantCommand(() -> Drivetrain.getInstance().zeroHeading()));
+        controller.L2().whileTrue(DrivetrainCommands.driveSlowMode(this::getDriveTranslation, this::getDriveRotation));
 
-        controller.R2().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
-            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(getRightTriggerMagnitude())
-        ));
-        controller.L2().whileTrue(IndexerCommands.setOutput(this::getLeftTriggerMagnitude));
-
-        // controller.povRight().whileTrue(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromDegrees(45), false));
-        // controller.povLeft().whileTrue(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromDegrees(-45), false));
+        // Intake Commands
+        controller.R2().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
+        controller.R2().onTrue(IntakePivotCommands.setPivotState(SetStatePivot.State.kDeployed));
+        controller.R2().onFalse(IntakePivotCommands.setPivotState(SetStatePivot.State.kStowed));
+        controller.R1().onTrue(RobotCommands.spitNote());
     }
 
     @Override
-    public void setupDisabledButtons() {
-
-    }
+    public void setupDisabledButtons() {}
 
     @Override
-    public void setupTestButtons() {
-        // Shooter test
-        rightXTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(ShooterPivotCommands.setAngularVelocity(
-            () -> Rotation2d.fromRadians(testCurve.calculate(controller.getRightX())), false
-        ));
-//        controller.R2().whileFalse(ShooterPivotCommands.setAngularVelocity(
-//            () -> Rotation2d.fromRadians(0), false
-//        ));
-        controller.R2().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
-            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(getRightTriggerMagnitude())
-        ));
-        controller.L2().whileTrue(IndexerCommands.setOutput(() -> -getLeftTriggerMagnitude()));
-    }
+    public void setupTestButtons() {}
 
     public Translation2d getDriveTranslation() {
         final var xComponent = translationStickCurve.calculate(controller.getLeftX());

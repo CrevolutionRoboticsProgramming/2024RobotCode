@@ -23,7 +23,7 @@ public class RobotCommands {
         return new SequentialCommandGroup(
             new ParallelCommandGroup(
                 IntakePivotCommands.setPivotState(SetStatePivot.State.kStowed),
-                ElevatorCommands.setState(ElevatorState.kZero),
+//                ElevatorCommands.setState(ElevatorState.kZero),
                 ShooterPivotCommands.setState(SetStateShooterPivot.State.kHandoff)
             ),
             new ParallelRaceGroup(
