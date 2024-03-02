@@ -43,22 +43,23 @@ public class Elevator extends SubsystemBase {
     private final CANSparkMax mSparkLeader;
     private final CANSparkMax mSparkFollower;
     private final RelativeEncoder mEncoder;
-   private final DigitalInput mLowerLimitSwitch, mUpperLimitSwitch;
-                
+    private final DigitalInput mLowerLimitSwitch, mUpperLimitSwitch;
+
     private ElevatorState currentState;
 
-    private Elevator(){
+    private Elevator() {
         mSparkLeader = new CANSparkMax(ElevatorConfig.kElevatorSparkID1, MotorType.kBrushless) {{
             setInverted(Settings.kLeftSparkInverted);
             setIdleMode(Settings.kIdleMode);
+
         }};
         mSparkFollower = new CANSparkMax(ElevatorConfig.kElevatorSparkID2, MotorType.kBrushless) {{
             setInverted(Settings.kRightSparkInverted);
             setIdleMode(Settings.kIdleMode);
             follow(mSparkLeader, true);
         }};
-       mLowerLimitSwitch = new DigitalInput(Settings.kLowerLimitSwitch);
-       mUpperLimitSwitch = new DigitalInput(Settings.kUpperLimitSwitch);
+        mLowerLimitSwitch = new DigitalInput(Settings.kLowerLimitSwitch);
+        mUpperLimitSwitch = new DigitalInput(Settings.kUpperLimitSwitch);
 
         //these 2 lines of code need reviewing
         mEncoder = mSparkLeader.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192);
@@ -78,8 +79,6 @@ public class Elevator extends SubsystemBase {
     public void setVoltage(double voltage) {
         mSparkLeader.setVoltage(voltage);
         mSparkFollower.setVoltage(voltage);
-        System.out.println("voltage: " + voltage + ", current (leader): " + mSparkLeader.getOutputCurrent() + "current (follower): " + mSparkFollower.getOutputCurrent());
-
     }
 
     public boolean[] getLimitStates() {
@@ -93,7 +92,7 @@ public class Elevator extends SubsystemBase {
     public void zero() {
         mEncoder.setPosition(0);
     }
-    
+
     public double getOutputCurrent() {
         return Math.abs(mSparkLeader.getOutputCurrent());
     }
@@ -119,17 +118,9 @@ public class Elevator extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // final var states = getLimitStates();
-        // if (getLimitStates()[0]) {
-        //     currentState = ElevatorState.kZero;
-        //     zero();
-        // }
 
-        System.out.println("Lower Limit Switch: " + !mLowerLimitSwitch.get());
-        System.out.println("Upper Limit Switch: " + !mUpperLimitSwitch.get());
-
-         SmartDashboard.putNumber("Elevator Position (m)", getPosition());
-         SmartDashboard.putNumber("Elevator Velocity (m/s): ", getVelocityMps());
+        SmartDashboard.putNumber("Elevator Position (m)", getPosition());
+        SmartDashboard.putNumber("Elevator Velocity (m/s): ", getVelocityMps());
     }
 }
 

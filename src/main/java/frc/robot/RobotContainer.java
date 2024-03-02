@@ -19,6 +19,7 @@ import frc.robot.driver.Driver;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
 import frc.robot.elevator.Elevator;
+import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.intakepivot.IntakePivot;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
 import frc.robot.shooterpivot.ShooterPivot;
@@ -75,7 +76,7 @@ public class RobotContainer {
 
         ShooterPivot.getInstance().setDefaultCommand(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRotations(0), true));
         IntakePivot.getInstance().setDefaultCommand(IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromDegrees(0), true));
-        Elevator.getInstance().setOutput(0);
+        Elevator.getInstance().setDefaultCommand(ElevatorCommands.setOutput(() -> 0.0));
     }
 }
   

@@ -21,6 +21,7 @@ public class IntakePivot extends SubsystemBase {
 
         // 45 degrees per second
         public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(180);
+        public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(90);
         static final double kMaxVoltage = 12.0;
 
         static final Rotation2d kFFAngleOffset = Rotation2d.fromDegrees(20);
@@ -80,7 +81,7 @@ public class IntakePivot extends SubsystemBase {
 //        System.out.println("err: " + (angularVelocity.minus(getAngularVelocity()).getDegrees()));
         mSpark.setVoltage(ffComponent + pidComponent);
 
-        // System.out.println("FF Component: " + ffComponent);
+         System.out.println("FF Component: " + ffComponent + ", PID: " + pidComponent);
         // System.out.println("Intake Pivot Current: " + mSpark.getOutputCurrent());
     }
 
