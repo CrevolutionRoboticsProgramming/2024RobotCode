@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
+import frc.robot.commands.RobotCommands;
 import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.IntakePivot;
@@ -60,6 +61,8 @@ public class Operator extends Gamepad {
         // Shooter Test Commands
         controller.cross().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> ShooterFlywheel.Settings.kMaxAngularVelocity));
         controller.square().whileTrue(IndexerCommands.setOutput(() -> -1));
+
+        //controller.circle().onTrue(RobotCommands.handOff());
 
         //Elevator Manual Override
         controller.R2().whileTrue(

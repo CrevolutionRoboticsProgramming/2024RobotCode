@@ -17,8 +17,8 @@ public class Elevator extends SubsystemBase {
         static final boolean kLeftSparkInverted = false;
         static final boolean kRightSparkInverted = false;
 
-        static final int kLowerLimitSwitch = 0;
-        static final int kUpperLimitSwitch = 0;
+        static final int kLowerLimitSwitch = 1;
+        static final int kUpperLimitSwitch = 2;
 
         static final CANSparkBase.IdleMode kIdleMode = CANSparkBase.IdleMode.kCoast;
 
@@ -119,11 +119,14 @@ public class Elevator extends SubsystemBase {
 
     @Override
     public void periodic() {
-        final var states = getLimitStates();
-        if (getLimitStates()[0]) {
-            currentState = ElevatorState.kZero;
-            zero();
-        }
+        // final var states = getLimitStates();
+        // if (getLimitStates()[0]) {
+        //     currentState = ElevatorState.kZero;
+        //     zero();
+        // }
+
+        System.out.println("Lower Limit Switch: " + !mLowerLimitSwitch.get());
+        System.out.println("Upper Limit Switch: " + !mUpperLimitSwitch.get());
 
          SmartDashboard.putNumber("Elevator Position (m)", getPosition());
          SmartDashboard.putNumber("Elevator Velocity (m/s): ", getVelocityMps());
