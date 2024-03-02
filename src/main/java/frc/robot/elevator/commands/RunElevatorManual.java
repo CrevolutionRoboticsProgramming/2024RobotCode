@@ -20,25 +20,25 @@ public class RunElevatorManual extends Command{
 
     @Override
     public void initialize() {
-        elevator.setState(ElevatorConfig.ElevatorState.kUnspecified);
+//        elevator.setState(ElevatorConfig.ElevatorState.kUnspecified);
     }
 
     @Override
     public void execute() {
-        final double output = supplier.getAsDouble();
-        final var limitStates = elevator.getLimitStates();
-        if (output < 0 && limitStates[0]) {
-            elevator.setOutput(0);
-        } else if (output > 0 && limitStates[1]) {
-            elevator.setOutput(0);
-        } else {
-            elevator.setOutput(output * 12.0);
-        }
-     
+//        final double output = supplier.getAsDouble();
+//        final var limitStates = elevator.getLimitStates();
+//        if (output < 0 && limitStates[0]) {
+//            elevator.setOutput(0);
+//        } else if (output > 0 && limitStates[1]) {
+//            elevator.setOutput(0);
+//        } else {
+//            elevator.setOutput(output * 12.0);
+//        }
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        elevator.setOutput(0);
+        elevator.setVoltage(0);
     }
 }
