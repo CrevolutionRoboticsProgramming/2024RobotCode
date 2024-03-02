@@ -26,19 +26,19 @@ public class SetVelocityShooterPivot extends Command {
     }
 
     public Rotation2d scaleVelocityRequest(Rotation2d velocity) {
-        final var currentAngle = pivot.getAngle();
-        if (velocity.getDegrees() > 0) {
-            if (currentAngle.getDegrees() >= ShooterPivot.Settings.kMaxAngle.getDegrees()) {
-                return Rotation2d.fromDegrees(0);
-            } else if (ShooterPivot.Settings.kMaxAngle.minus(currentAngle).getDegrees() < kScaleThreshold.getDegrees()) {
-                final var scaleFactor = ShooterPivot.Settings.kMaxAngle.minus(currentAngle).getDegrees() / kScaleThreshold.getDegrees();
-                return velocity.times(scaleFactor);
-            }
-        }
-        if (velocity.getDegrees() < 0 && currentAngle.getDegrees() < kScaleThreshold.getDegrees()) {
-            final var scaleFactor = currentAngle.getDegrees() / kScaleThreshold.getDegrees();
-            return velocity.times(scaleFactor);
-        }
+//        final var currentAngle = pivot.getAngle();
+//        if (velocity.getDegrees() > 0) {
+//            if (currentAngle.getDegrees() >= ShooterPivot.Settings.kMaxAngle.getDegrees()) {
+//                return Rotation2d.fromDegrees(0);
+//            } else if (ShooterPivot.Settings.kMaxAngle.minus(currentAngle).getDegrees() < kScaleThreshold.getDegrees()) {
+//                final var scaleFactor = ShooterPivot.Settings.kMaxAngle.minus(currentAngle).getDegrees() / kScaleThreshold.getDegrees();
+//                return velocity.times(scaleFactor);
+//            }
+//        }
+//        if (velocity.getDegrees() < 0 && currentAngle.getDegrees() < kScaleThreshold.getDegrees()) {
+//            final var scaleFactor = currentAngle.getDegrees() / kScaleThreshold.getDegrees();
+//            return velocity.times(scaleFactor);
+//        }
         return velocity;
     }
 }

@@ -2,18 +2,10 @@ package frc.robot.operator;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
-import frc.robot.drivetrain.Drivetrain;
-import frc.robot.drivetrain.commands.DrivetrainCommands;
 import frc.robot.elevator.ElevatorConfig.ElevatorState;
 import frc.robot.elevator.commands.ElevatorCommands;
-import frc.robot.intakepivot.commands.IntakePivotCommands;
-import frc.robot.intakeroller.commands.IntakeCommands;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.shooterflywheel.ShooterFlywheel;
 import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
 import frc.robot.shooterpivot.ShooterPivot;

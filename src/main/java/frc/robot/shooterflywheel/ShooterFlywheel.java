@@ -14,11 +14,11 @@ public class ShooterFlywheel extends SubsystemBase {
 
         static final Slot0Configs kFlywheelConfigs = new Slot0Configs()
             .withKS(0.0)
-            .withKV(0.0)
+            .withKV(0.115)
             .withKP(0.0);
 
         // 12000 RPM
-        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromRotations(12000.0 / 60.0);
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromRotations(5800.0 / 60.0);
     }
 
     private static ShooterFlywheel mInstance;
@@ -27,9 +27,11 @@ public class ShooterFlywheel extends SubsystemBase {
     private ShooterFlywheel() {
         mFalconLeft = new TalonFX(Settings.kLeftId);
         mFalconLeft.getConfigurator().apply(Settings.kFlywheelConfigs);
+        mFalconLeft.setInverted(true);
 
         mFalconRight = new TalonFX(Settings.kRightId);
         mFalconRight.getConfigurator().apply(Settings.kFlywheelConfigs);
+        mFalconRight.setInverted(false);
     }
 
     public static ShooterFlywheel getInstance() {

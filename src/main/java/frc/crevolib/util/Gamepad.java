@@ -124,6 +124,14 @@ public abstract class Gamepad extends SubsystemBase {
         return Math.sqrt(x * x + y * y);
     }
 
+    public double getLeftTriggerMagnitude() {
+        return (controller.getL2Axis() + 1.0) / 2.0;
+    }
+
+    public double getRightTriggerMagnitude() {
+        return (controller.getR2Axis() + 1.0) / 2.0;
+    }
+
     /** Setup modifier bumper and trigger buttons */
     public Trigger noBumpers() {
         return controller.R1().negate().and(controller.R1().negate());

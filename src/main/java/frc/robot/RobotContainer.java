@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -49,7 +50,9 @@ public class RobotContainer {
         SmartDashboard.putData(mAutonChooser);
 
         ShuffleboardTab visionTab = Shuffleboard.getTab("Vision");
-        Vision.PoseEstimator.getInstance().addDashboardWidgets(visionTab);
+//        Vision.PoseEstimator.getInstance().addDashboardWidgets(visionTab);
+//        final var pivot = ShooterPivot.getInstance();
+        final var ipivot = IntakePivot.getInstance();
     }
 
     /**
@@ -67,7 +70,7 @@ public class RobotContainer {
             driver::getDriveTranslation,
             driver::getDriveRotation
         ));
-        ShooterPivot.getInstance().setDefaultCommand(ShooterPivotCommands.holdState());
+        ShooterPivot.getInstance().setDefaultCommand(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRotations(0), false));
     }
 }
   
