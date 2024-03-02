@@ -5,11 +5,11 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.intakeroller.IntakeRoller;
 
-class SetOutput extends Command{
+class SetOutputIntakeRoller extends Command{
     private final DoubleSupplier supplier;
     private final IntakeRoller roller;
 
-    public SetOutput(DoubleSupplier supplier) {
+    public SetOutputIntakeRoller(DoubleSupplier supplier) {
         roller = IntakeRoller.getInstance();
         this.supplier = supplier;
         addRequirements(roller);
@@ -18,6 +18,11 @@ class SetOutput extends Command{
     @Override
     public void execute() {
         roller.setOutput(supplier.getAsDouble());
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 
     @Override

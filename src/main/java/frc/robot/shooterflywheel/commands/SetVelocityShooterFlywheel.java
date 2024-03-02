@@ -30,4 +30,10 @@ public class SetVelocityShooterFlywheel extends Command {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public void end(boolean isInterrupted) {
+        flywheel.setRightFlywheelVelocity(Rotation2d.fromDegrees(0));
+        flywheel.setLeftFlywheelVelocity(Rotation2d.fromDegrees(0));
+    }
 }

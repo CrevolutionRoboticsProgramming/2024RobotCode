@@ -9,12 +9,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.elevator.ElevatorConfig.ElevatorState;
 import frc.robot.elevator.commands.ElevatorCommands;
-import frc.robot.elevator.commands.SetElevatorState;
 import frc.robot.indexer.Indexer;
 import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
 import frc.robot.intakepivot.commands.SetStatePivot;
-import frc.robot.intakeroller.commands.IntakeCommands;
+import frc.robot.intakeroller.commands.IntakeRollerCommands;
 import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
 import frc.robot.shooterpivot.commands.SetStateShooterPivot;
 import frc.robot.shooterpivot.commands.ShooterPivotCommands;
@@ -31,7 +30,7 @@ public class RobotCommands {
                 IndexerCommands.loadNote(),
                 new SequentialCommandGroup(
                     new WaitCommand(0.5),
-                    IntakeCommands.setOutput(() -> -1)
+                    IntakeRollerCommands.setOutput(() -> -1)
                 )
             )
         );
@@ -40,7 +39,7 @@ public class RobotCommands {
     public static Command spitNote() {
         return new SequentialCommandGroup(
             IntakePivotCommands.setPivotState(SetStatePivot.State.kSpit),
-            IntakeCommands.setOutput(() -> 1)
+            IntakeRollerCommands.setOutput(() -> 1)
         );
     }
 

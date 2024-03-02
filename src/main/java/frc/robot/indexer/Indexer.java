@@ -17,7 +17,9 @@ public class Indexer extends SubsystemBase{
     private final DigitalInput mBeamBreaker;
 
     public Indexer() {
-        mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushed);
+        mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushed) {{
+            setInverted(true);
+        }};
         mBeamBreaker = new DigitalInput(Settings.kBeamBreakerId);
     }
 
@@ -29,6 +31,7 @@ public class Indexer extends SubsystemBase{
     }
 
     public void setOutput(double percentOut) {
+        System.out.println(percentOut);
         mSpark.setVoltage(percentOut * Settings.kMaxVoltage);
     }
 

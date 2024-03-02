@@ -16,11 +16,11 @@ public class ShooterPivot extends SubsystemBase {
         static final double kV = 2.46; // V * sec / rad
         static final double kA = 0.01; // V * sec^2 / rad
 
-        static final double kPosP = 0.0;
+        static final double kPosP = 0.1; // V / rad
         static final double kPosI = 0.0;
         static final double kPosD = 0.0;
 
-        static final double kVelP = 0.0;
+        static final double kVelP = 0.0;//0.5;
         static final double kVelI = 0.0;
         static final double kVelD = 0.0;
 
@@ -31,23 +31,25 @@ public class ShooterPivot extends SubsystemBase {
 
         // kFFAngleOffset is the differnce between our zero point (handoff) and 'true' zero (parallel to the ground)
         private static final Rotation2d kFFAngleOffset = Rotation2d.fromDegrees(30);
-
-        private static final Rotation2d kEncoderOffset = Rotation2d.fromRotations(0.0);
     }
 
     private static ShooterPivot mInstance;
 
     private final CANSparkMax mSpark;
-    private final AbsoluteEncoder mEncoder;
+    private final SparkAbsoluteEncoder mEncoder;
     private final PIDController mPositionPIDController, mVelocityPIDController;
     private final ArmFeedforward mFFController;
 
+    private Rotation2d lastRequestedVelocity;
+
     private ShooterPivot() {
-        mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushless);
-        mSpark.setIdleMode(CANSparkBase.IdleMode.kBrake);
+        mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushless) {{
+            setIdleMode(IdleMode.kBrake);
+            setInverted(true);
+        }};
 
         mEncoder = mSpark.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
-        mEncoder.setZeroOffset(Settings.kEncoderOffset.getRotations());
+        mEncoder.setInverted(false);
 
         mPositionPIDController = new PIDController(Settings.kPosP, Settings.kPosI, Settings.kPosD);
         mVelocityPIDController= new PIDController(Settings.kVelP, Settings.kVelI, Settings.kVelD);
@@ -62,10 +64,12 @@ public class ShooterPivot extends SubsystemBase {
     }
 
     public void setAngularVelocity(Rotation2d velocity, boolean openLoop) {
+        lastRequestedVelocity = velocity;
         final var currentAngle = getAngle();
         final var currentVelocity = getAngularVelocity();
-        final var ffComponent = mFFController.calculate(currentAngle.getRadians() + Settings.kFFAngleOffset.getRadians(), velocity.getRadians());
+        final var ffComponent = mFFController.calculate(currentAngle.getRadians() - Settings.kFFAngleOffset.getRadians(), velocity.getRadians());
         final var pidComponent = (openLoop) ? 0.0 : mVelocityPIDController.calculate(currentVelocity.getRadians(), velocity.getRadians());
+        System.out.println("ff: " + ffComponent + ", pid: " + pidComponent);
         mSpark.setVoltage(ffComponent + pidComponent);
     }
 
@@ -76,7 +80,7 @@ public class ShooterPivot extends SubsystemBase {
     public void setAngle(Rotation2d angle) {
         // Our target velocity should always be zero when holding an angle, use positional PID to compensate for error
         final var currentAngle = getAngle();
-        final var ffComponent = mFFController.calculate(currentAngle.getRadians() + Settings.kFFAngleOffset.getRadians(), 0);
+        final var ffComponent = mFFController.calculate(currentAngle.getRadians() - Settings.kFFAngleOffset.getRadians(), 0);
         final var pidComponent = mPositionPIDController.calculate(currentAngle.getRadians(), angle.getRadians());
         mSpark.setVoltage(ffComponent + pidComponent);
     }
@@ -98,6 +102,9 @@ public class ShooterPivot extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Shooter Pivot Angle (degrees)", getAngle().getDegrees());
         SmartDashboard.putNumber("Shooter Pivot Angular Velocity (degrees / sec)", getAngularVelocity().getDegrees());
-        SmartDashboard.putNumber("Shooter Pivot Angular Velocity (raw)", getAngularVelocity().getRotations());
+        SmartDashboard.putNumber("Shooter Pivot Angle (raw)", getAngle().getRotations());
+        if (lastRequestedVelocity != null) {
+            SmartDashboard.putNumber("Shooter Pivot Angular Velocity Requested (degrees / sec)", lastRequestedVelocity.getDegrees());
+        }
     }
 }

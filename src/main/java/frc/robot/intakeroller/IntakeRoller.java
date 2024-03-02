@@ -24,7 +24,7 @@ public class IntakeRoller extends SubsystemBase {
     }
 
     public void setOutput(double percentOutput) {
-        m_Roller.set(percentOutput);
+        m_Roller.setVoltage(12.0 * percentOutput);
     }
 
     public double getIntakeRollerPercentOutput() {
