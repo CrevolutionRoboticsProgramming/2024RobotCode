@@ -22,14 +22,14 @@ public class Elevator extends SubsystemBase {
 
         static final CANSparkBase.IdleMode kIdleMode = CANSparkBase.IdleMode.kCoast;
 
-        static final double kG = 0.0;
-        static final double kS = 0.0;
-        static final double kV = 0.0;
-        static final double kA = 0.0;
+        public static final double kG = 0.0;
+        public static final double kS = 0.0;
+        public static final double kV = 0.0;
+        public static final double kA = 0.0;
 
-        static final double kP = 0.0;
-        static final double kI = 0.0;
-        static final double kD = 0.0;
+        public static final double kP = 0.0;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
 
         static final double kMaxVelocity = 0.0;
         static final double kMaxAcceleration = 0.0;
@@ -43,7 +43,7 @@ public class Elevator extends SubsystemBase {
     private final CANSparkMax mSparkLeader;
     private final CANSparkMax mSparkFollower;
     private final RelativeEncoder mEncoder;
-//    private final DigitalInput mLowerLimitSwitch, mUpperLimitSwitch;
+   private final DigitalInput mLowerLimitSwitch, mUpperLimitSwitch;
                 
     private ElevatorState currentState;
 
@@ -57,8 +57,8 @@ public class Elevator extends SubsystemBase {
             setIdleMode(Settings.kIdleMode);
             follow(mSparkLeader, true);
         }};
-//        mLowerLimitSwitch = new DigitalInput(Settings.kLowerLimitSwitch);
-//        mUpperLimitSwitch = new DigitalInput(Settings.kUpperLimitSwitch);
+       mLowerLimitSwitch = new DigitalInput(Settings.kLowerLimitSwitch);
+       mUpperLimitSwitch = new DigitalInput(Settings.kUpperLimitSwitch);
 
         //these 2 lines of code need reviewing
         mEncoder = mSparkLeader.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192);
@@ -82,20 +82,28 @@ public class Elevator extends SubsystemBase {
 
     }
 
-//    public boolean getLowerLimitState() {
-//        return !mLowerLimitSwitch.get();
-//    }
-//
-//    public boolean getUpperLimitState() {
-//        return !mUpperLimitSwitch.get();
-//    }
-//
+    public boolean[] getLimitStates() {
+        return new boolean[]{!mLowerLimitSwitch.get(), !mUpperLimitSwitch.get()};
+    }
+
     public double getPosition() {
         return rotationsToMeters(mEncoder.getPosition());
+    }
+
+    public void zero() {
+        mEncoder.setPosition(0);
     }
     
     public double getOutputCurrent() {
         return Math.abs(mSparkLeader.getOutputCurrent());
+    }
+
+    public void setState(ElevatorState state) {
+        currentState = state;
+    }
+
+    public ElevatorState getState() {
+        return currentState;
     }
 
     /**
@@ -111,6 +119,12 @@ public class Elevator extends SubsystemBase {
 
     @Override
     public void periodic() {
+        final var states = getLimitStates();
+        if (getLimitStates()[0]) {
+            currentState = ElevatorState.kZero;
+            zero();
+        }
+
          SmartDashboard.putNumber("Elevator Position (m)", getPosition());
          SmartDashboard.putNumber("Elevator Velocity (m/s): ", getVelocityMps());
     }
