@@ -19,6 +19,7 @@ import frc.robot.driver.Driver;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
 import frc.robot.intakepivot.IntakePivot;
+import frc.robot.intakepivot.commands.IntakePivotCommands;
 import frc.robot.shooterpivot.ShooterPivot;
 import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 import frc.robot.vision.Vision;
@@ -70,7 +71,8 @@ public class RobotContainer {
             driver::getDriveTranslation,
             driver::getDriveRotation
         ));
-        ShooterPivot.getInstance().setDefaultCommand(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRotations(0), false));
+        ShooterPivot.getInstance().setDefaultCommand(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRotations(0), true));
+        IntakePivot.getInstance().setDefaultCommand(IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromDegrees(0), true));
     }
 }
   

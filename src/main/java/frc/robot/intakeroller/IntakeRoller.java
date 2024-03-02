@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeRoller extends SubsystemBase {
     private static IntakeRoller mInstance;
 
-    private final CANSparkMax m_Roller;
+    public final CANSparkMax m_Roller;
 
     public IntakeRoller() {
         m_Roller = new CANSparkMax(IntakeConfig.kIntakeSparkID, MotorType.kBrushless);
@@ -52,5 +52,6 @@ public class IntakeRoller extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Intake Roller Percent Output", getIntakeRollerPercentOutput());
+        // System.out.println("Intake Roller Current: " + m_Roller.getOutputCurrent());
     }
 }

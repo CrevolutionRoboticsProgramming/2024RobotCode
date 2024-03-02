@@ -6,12 +6,18 @@ import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
 import frc.robot.elevator.ElevatorConfig.ElevatorState;
 import frc.robot.elevator.commands.ElevatorCommands;
+import frc.robot.intakepivot.IntakePivot;
+import frc.robot.intakepivot.commands.IntakePivotCommands;
+import frc.robot.intakeroller.IntakeRoller;
+import frc.robot.intakeroller.commands.IntakeRollerCommands;
 import frc.robot.shooterflywheel.ShooterFlywheel;
 import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
 import frc.robot.shooterpivot.ShooterPivot;
+import frc.robot.shooterpivot.commands.SetPosition;
+import frc.robot.shooterpivot.commands.SetStateShooterPivot;
 import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 
-public class Operator extends Gamepad{
+public class Operator extends Gamepad {
     private static class Settings {
         static final int port = 1;
         static final String name = "operator";
@@ -22,6 +28,8 @@ public class Operator extends Gamepad{
     ExpCurve stickCurve;
     ExpCurve shooterPivotManualCurve;
     ExpCurve shooterFlywheelManualCurve;
+    ExpCurve intakePivotManualCurve;
+    ExpCurve positionTestCurve;
     private static Operator mInstance;
 
     private Operator() {
@@ -29,7 +37,8 @@ public class Operator extends Gamepad{
 
         stickCurve = new ExpCurve(1, 0, 1, Settings.kDeadzone);
         shooterPivotManualCurve = new ExpCurve(1, 0, ShooterPivot.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
-        shooterPivotManualCurve = new ExpCurve(1, 0, ShooterFlywheel.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
+        intakePivotManualCurve = new ExpCurve(1, 0, IntakePivot.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
+        positionTestCurve = new ExpCurve(1, 20, 15, Settings.kDeadzone);
     }
 
     public static Operator getInstance() {
@@ -41,24 +50,50 @@ public class Operator extends Gamepad{
 
     @Override
     public void setupTeleopButtons() {
+        //Intake Test Commands
+        // controller.R2().whileTrue(IntakePivotCommands.setAngularVelocity(() -> Rotationd.fromDegrees(45), false));
+        // controller.L2().whileTrue(IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromDegrees(-45), false));
+
+        // leftTriggerOnly().and(leftYTrigger(ThresholdType.ABS_GREATER_THAN, 0.1)).whileTrue(IntakePivotCommands.setAngularVelocity(
+        //     () -> Rotation2d.fromRadians(intakePivotManualCurve.calculate(controller.getLeftY())), false
+        // ));
+
+        // controller.R1().whileTrue(IntakeRollerCommands.setOutput(() -> 1));
+        // controller.L1().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
+
+        //Shooter Test Commands
+        // controller.cross().onTrue(ShooterPivotCommands.setState(SetStateShooterPivot.State.kHandoff));
+        // controller.triangle().onTrue(ShooterPivotCommands.setState(SetStateShooterPivot.State.kPrime));
+
+        // controller.R2().whileTrue(ShooterPivotCommands.setAngularVelocity(
+        //     () -> Rotation2d.fromRadians(shooterPivotManualCurve.calculate(controller.getRightX())), true
+        // ));
+
+        // controller.R2().negate().and(controller.R1()).whileTrue(
+        //     new SetPosition(() -> Rotation2d.fromDegrees(positionTestCurve.calculate(controller.getRightX()))
+        // ));
+
+        //Elevator Test Commands
+        
+
         // Eleveator set State
-        controller.triangle().onTrue(ElevatorCommands.setState(ElevatorState.kHigh));
-        controller.cross().onTrue(ElevatorCommands.setState(ElevatorState.kZero));
+        // controller.triangle().onTrue(ElevatorCommands.setState(ElevatorState.kHigh));
+        // controller.cross().onTrue(ElevatorCommands.setState(ElevatorState.kZero));
 
         // Manual Overrides
         /*Intake Manual Override */
         //leftTriggerOnly().and(rightXTrigger(ThresholdType.ABS_GREATER_THAN, 0.15).whileTrue(IntakePivotCommands.setPivotOutput(controller::getR2Axis)));
 
         /*Shooter Manual Override (Needs to change from Intake to Shooter) */
-        leftTriggerOnly().and(leftXTrigger(ThresholdType.ABS_GREATER_THAN, Settings.kDeadzone).whileTrue(
-            ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(shooterPivotManualCurve.calculate(controller.getLeftX())), true)
-        ));
-        controller.R2().whileTrue(
-            ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRadians(shooterFlywheelManualCurve.calculate(controller.getR2Axis())))
-        );
+        // leftTriggerOnly().and(leftXTrigger(ThresholdType.ABS_GREATER_THAN, Settings.kDeadzone).whileTrue(
+        //     ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(shooterPivotManualCurve.calculate(controller.getLeftX())), true)
+        // ));
+        // controller.R2().whileTrue(
+        //     ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRadians(shooterFlywheelManualCurve.calculate(controller.getR2Axis())))
+        // );
 
-        /*Elevator Manual Override */
-        leftBumperOnly().and(leftYTrigger(ThresholdType.ABS_GREATER_THAN, 0.15).whileFalse(ElevatorCommands.setOuput(controller::getL2Axis)));
+        // /*Elevator Manual Override */
+        // leftBumperOnly().and(leftYTrigger(ThresholdType.ABS_GREATER_THAN, 0.15).whileFalse(ElevatorCommands.setOuput(controller::getL2Axis)));
     }
 
     @Override

@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.intakeroller.IntakeRoller;
 
 public class IntakePivot extends SubsystemBase {
     public static class Settings {
@@ -19,7 +20,7 @@ public class IntakePivot extends SubsystemBase {
         static final double kEncoderZeroOffset = 0;
 
         // 45 degrees per second
-        static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(45);
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(180);
         static final double kMaxVoltage = 12.0;
 
         static final Rotation2d kFFAngleOffset = Rotation2d.fromDegrees(20);
@@ -46,10 +47,10 @@ public class IntakePivot extends SubsystemBase {
             setInverted(Settings.kSparkInverted);
             setIdleMode(Settings.kSparkIdleMode);
         }};
+        
 
 //        encoder = mSpark.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192);
-        encoder = mSpark.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
-        encoder.setZeroOffset(IntakePivotConfig.kPivotZeroOffset);
+        encoder = IntakeRoller.getInstance().m_Roller.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         encoder.setInverted(IntakePivotConfig.kPivotEncoderInverted);
 
         ffContoller = new ArmFeedforward(Settings.kS, Settings.kG, Settings.kV, Settings.kA);
@@ -78,11 +79,14 @@ public class IntakePivot extends SubsystemBase {
         final var pidComponent = (openLoop) ? 0.0 : pidController.calculate(getAngularVelocity().getRadians(), angularVelocity.getRadians());
 //        System.out.println("err: " + (angularVelocity.minus(getAngularVelocity()).getDegrees()));
         mSpark.setVoltage(ffComponent + pidComponent);
+
+        // System.out.println("FF Component: " + ffComponent);
+        // System.out.println("Intake Pivot Current: " + mSpark.getOutputCurrent());
     }
 
     public Rotation2d getAngle() {
-        final var pos = Rotation2d.fromRotations(encoder.getPosition());
-        if (pos.getDegrees() < 0.0) {
+        final var pos = Rotation2d.fromRotations(encoder.getPosition()* (2.0/3.0));
+        if (pos.getDegrees() > 200.0) {
             return Rotation2d.fromRotations(0);
         }
         return pos;

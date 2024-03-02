@@ -25,6 +25,21 @@ public class SetVelocityShooterPivot extends Command {
         pivot.setAngularVelocity(scaleVelocityRequest(velocitySupplier.get()), openLoop);
     }
 
+    @Override
+    public void initialize() {
+        System.out.println("[shooterpivot] init set vel");
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        System.out.println("[shooterpivot] end set vel");
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
     public Rotation2d scaleVelocityRequest(Rotation2d velocity) {
 //        final var currentAngle = pivot.getAngle();
 //        if (velocity.getDegrees() > 0) {

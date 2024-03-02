@@ -54,8 +54,8 @@ public class Driver extends Gamepad {
         ));
         controller.L2().whileTrue(IndexerCommands.setOutput(this::getLeftTriggerMagnitude));
 
-        controller.povRight().whileTrue(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromDegrees(45), false));
-        controller.povRight().whileTrue(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromDegrees(-45), false));
+        // controller.povRight().whileTrue(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromDegrees(45), false));
+        // controller.povLeft().whileTrue(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromDegrees(-45), false));
     }
 
     @Override

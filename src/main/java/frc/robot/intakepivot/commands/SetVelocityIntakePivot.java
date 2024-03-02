@@ -23,7 +23,8 @@ public class SetVelocityIntakePivot extends Command {
 
     @Override
     public void execute() {
-        pivot.setVelocity(scaleVelocityRequest(velocitySupplier.get()), openLoop);
+        // pivot.setVelocity(scaleVelocityRequest(velocitySupplier.get()), openLoop);
+        pivot.setVelocity(velocitySupplier.get(), openLoop);
     }
 
     public Rotation2d scaleVelocityRequest(Rotation2d velocity) {

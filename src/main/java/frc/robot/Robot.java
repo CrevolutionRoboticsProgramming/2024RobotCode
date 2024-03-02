@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 
 import frc.robot.driver.Driver;
 import frc.robot.drivetrain.Drivetrain;
+import frc.robot.operator.Operator;
+
 import org.littletonrobotics.junction.LoggedRobot;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,6 +40,7 @@ public class Robot extends LoggedRobot {
 
         // Reset Config for all gamepads and other button bindings
         Driver.getInstance().resetConfig();
+        Operator.getInstance().resetConfig();
     }
 
 

@@ -11,20 +11,20 @@ public class ShooterPivot extends SubsystemBase {
     public static class Settings {
         static final int kSparkId = 24;
 
-        static final double kG = 0.45; // V
+        static final double kG = 0.4; // V
         static final double kS = 0.0;  // V / rad
-        static final double kV = 2.46; // V * sec / rad
+        static final double kV = 2.6; // V * sec / rad
         static final double kA = 0.01; // V * sec^2 / rad
 
-        static final double kPosP = 0.1; // V / rad
+        static final double kPosP = 8.0; // V / rad
         static final double kPosI = 0.0;
         static final double kPosD = 0.0;
 
-        static final double kVelP = 0.0;//0.5;
+        static final double kVelP = 1.5;//0.5;
         static final double kVelI = 0.0;
         static final double kVelD = 0.0;
 
-        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(180);
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(45);
         public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(90);
         public static final Rotation2d kMaxAngle = Rotation2d.fromDegrees(180);
         public static final Rotation2d kMaxAnglePhysical = Rotation2d.fromDegrees(270);
@@ -69,7 +69,7 @@ public class ShooterPivot extends SubsystemBase {
         final var currentVelocity = getAngularVelocity();
         final var ffComponent = mFFController.calculate(currentAngle.getRadians() - Settings.kFFAngleOffset.getRadians(), velocity.getRadians());
         final var pidComponent = (openLoop) ? 0.0 : mVelocityPIDController.calculate(currentVelocity.getRadians(), velocity.getRadians());
-        System.out.println("ff: " + ffComponent + ", pid: " + pidComponent);
+        // System.out.println("ff: " + ffComponent + ", pid: " + pidComponent);
         mSpark.setVoltage(ffComponent + pidComponent);
     }
 
@@ -83,6 +83,9 @@ public class ShooterPivot extends SubsystemBase {
         final var ffComponent = mFFController.calculate(currentAngle.getRadians() - Settings.kFFAngleOffset.getRadians(), 0);
         final var pidComponent = mPositionPIDController.calculate(currentAngle.getRadians(), angle.getRadians());
         mSpark.setVoltage(ffComponent + pidComponent);
+
+        // System.out.println("FF component: " + ffComponent);
+        // System.out.println("PID componenet: " + pidComponent);
     }
 
     public Rotation2d getAngularVelocity() {
