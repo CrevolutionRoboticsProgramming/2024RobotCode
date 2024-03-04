@@ -4,16 +4,18 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
+import frc.robot.Robot;
 import frc.robot.commands.RobotCommands;
+import frc.robot.elevator.Elevator;
 import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.IntakePivot;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
-import frc.robot.intakepivot.commands.SetStatePivot;
 import frc.robot.intakeroller.commands.IntakeRollerCommands;
 import frc.robot.shooterflywheel.ShooterFlywheel;
 import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
 import frc.robot.shooterpivot.ShooterPivot;
+import frc.robot.shooterpivot.commands.SetAngleShooterPivot;
 import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 
 public class Operator extends Gamepad {
@@ -40,7 +42,7 @@ public class Operator extends Gamepad {
        shooterPivotManualCurve = new ExpCurve(1, 0, ShooterPivot.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
        intakePivotManualCurve = new ExpCurve(1, 0, IntakePivot.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
        positionTestCurve = new ExpCurve(1, 20, 15, Settings.kDeadzone);
-       elevatorCurve = new ExpCurve(1, 0, 0.8, Settings.kDeadzone);
+       elevatorCurve = new ExpCurve(1, 0, Elevator.Settings.kMaxVelocity, Settings.kDeadzone);
 
         shooterManualCurve = new ExpCurve(1, 0, ShooterFlywheel.Settings.kMaxAngularVelocity.getRadians(), 0.05);
     }
@@ -56,18 +58,22 @@ public class Operator extends Gamepad {
     public void setupTeleopButtons() {
 
         //Intake Roller Stuff
-         controller.R1().whileTrue(IntakeRollerCommands.setOutput(() -> 1));
-         controller.L1().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
+//         controller.R1().whileTrue(IntakeRollerCommands.setOutput(() -> 1));
+//         controller.L1().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
 
         // Shooter Test Commands
-        controller.cross().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> ShooterFlywheel.Settings.kMaxAngularVelocity));
-        controller.square().whileTrue(IndexerCommands.setOutput(() -> -1));
+        controller.cross().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
+        controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterFar));
+        controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
+//        controller.cross().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> ShooterFlywheel.Settings.kMaxAngularVelocity));
+//        controller.square().whileTrue(IndexerCommands.setOutput(() -> -1));
+//        controller.circle().whileTrue(IndexerCommands.setOutput(() -> 1));
 
-        controller.circle().onTrue(RobotCommands.handOff());
+//        controller.circle().onTrue(RobotCommands.handOff());
 
         //Elevator Manual Override
         controller.R2().whileTrue(
-            ElevatorCommands.setOutput(() -> elevatorCurve.calculate(controller.getRightY()))
+            ElevatorCommands.setVelocity(() -> elevatorCurve.calculate(-controller.getRightY()))
         );
 
         //Intake Pivot Mnaual Override
@@ -80,13 +86,14 @@ public class Operator extends Gamepad {
         //Shooter Pivot Manual Override
         controller.L2().whileTrue(
             ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-                shooterPivotManualCurve.calculate(controller.getRightX())), 
+                shooterPivotManualCurve.calculate(controller.getRightX())),
                 false)
         );
 
-        controller.povLeft().onTrue(IntakePivotCommands.setPivotState(SetStatePivot.State.kDeployed));
-        controller.povUp().onTrue(IntakePivotCommands.setPivotState(SetStatePivot.State.kSpit));
-        controller.povRight().onTrue(IntakePivotCommands.setPivotState(SetStatePivot.State.kStowed));
+        controller.povDown().onTrue(ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff));
+        controller.povRight().onTrue(ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kShooterNear));
+        controller.povUp().onTrue(ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kShooterFar));
+        controller.povLeft().onTrue(ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kAmp));
 
         //Shooter Test Commands
         // controller.cross().onTrue(ShooterPivotCommands.setState(SetStateShooterPivot.State.kHandoff));
@@ -119,9 +126,9 @@ public class Operator extends Gamepad {
         
 
         //Elevator Manual Override
-        controller.R2().and(rightYTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
-            ElevatorCommands.setOutput(() -> elevatorCurve.calculate(controller.getRightY())))
-        );
+//        controller.R2().and(rightYTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
+//            ElevatorCommands.setOutput(() -> elevatorCurve.calculate(controller.getRightY())))
+//        );
 
         //Intake Pivot Mnaual Override
         controller.L2().and(leftXTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(

@@ -3,7 +3,6 @@ package frc.robot.intakepivot.commands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.intakepivot.IntakePivot;
-import frc.robot.shooterpivot.ShooterPivot;
 
 import java.util.function.Supplier;
 
@@ -12,7 +11,7 @@ public class SetVelocityIntakePivot extends Command {
     private final Supplier<Rotation2d> velocitySupplier;
     private final boolean openLoop;
 
-    private final Rotation2d kScaleThreshold = Rotation2d.fromDegrees(10);
+    private final Rotation2d kScaleThreshold = Rotation2d.fromDegrees(20);
 
     SetVelocityIntakePivot(Supplier<Rotation2d> velocitySupplier, boolean openLoop) {
         pivot = IntakePivot.getInstance();
@@ -22,9 +21,15 @@ public class SetVelocityIntakePivot extends Command {
     }
 
     @Override
+    public void initialize() {
+        // Unset the requested angle so we don't snap back to set point
+        pivot.setRequestedAngle(null);
+    }
+
+    @Override
     public void execute() {
-        // pivot.setVelocity(scaleVelocityRequest(velocitySupplier.get()), openLoop);
-        pivot.setVelocity(velocitySupplier.get(), openLoop);
+        final var adjusted = scaleVelocityRequest(velocitySupplier.get());
+        pivot.setVelocity(adjusted, openLoop);
     }
 
     public Rotation2d scaleVelocityRequest(Rotation2d velocity) {
@@ -32,8 +37,8 @@ public class SetVelocityIntakePivot extends Command {
         if (velocity.getDegrees() > 0) {
             if (currentAngle.getDegrees() >= IntakePivot.Settings.kMaxAngle.getDegrees()) {
                 return Rotation2d.fromDegrees(0);
-            } else if (ShooterPivot.Settings.kMaxAngle.minus(currentAngle).getDegrees() < kScaleThreshold.getDegrees()) {
-                final var scaleFactor = ShooterPivot.Settings.kMaxAngle.minus(currentAngle).getDegrees() / kScaleThreshold.getDegrees();
+            } else if (IntakePivot.Settings.kMaxAngle.getDegrees() - currentAngle.getDegrees() < kScaleThreshold.getDegrees()) {
+                final var scaleFactor = (IntakePivot.Settings.kMaxAngle.getDegrees() - currentAngle.getDegrees()) / kScaleThreshold.getDegrees();
                 return velocity.times(scaleFactor);
             }
         }

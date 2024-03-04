@@ -14,14 +14,13 @@ public class IntakePivot extends SubsystemBase {
     public static class Settings {
         static final int kSparkID = 21;
         static final boolean kSparkInverted = true;
-        static final CANSparkBase.IdleMode kSparkIdleMode = CANSparkBase.IdleMode.kCoast;
+        static final CANSparkBase.IdleMode kSparkIdleMode = CANSparkBase.IdleMode.kBrake;
 
-        static final boolean kEncoderInverted = false;
-        static final double kEncoderZeroOffset = 0;
+        static final boolean kEncoderInverted = true;
 
         // 45 degrees per second
-        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(180);
-        public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(90);
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(480);
+        public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(420);
         static final double kMaxVoltage = 12.0;
 
         static final Rotation2d kFFAngleOffset = Rotation2d.fromDegrees(20);
@@ -30,7 +29,7 @@ public class IntakePivot extends SubsystemBase {
 
         static final double kG = 0.35; // V
         static final double kS = 0.0;  // V / rad
-        static final double kV = 1.7; // V * sec / rad
+        static final double kV = 1.75; // V * sec / rad (1.7)
         static final double kA = 0.0;  // V * sec^2 / rad
         static final double kP = 0.0;
         static final double kI = 0.0;
@@ -38,21 +37,29 @@ public class IntakePivot extends SubsystemBase {
     }
 
     private static IntakePivot mInstance;
+
     private final CANSparkMax mSpark;
-    private final AbsoluteEncoder encoder;
+    private final AbsoluteEncoder mPosEncoder;
+    private final RelativeEncoder mVelEncoder;
     private final ArmFeedforward ffContoller;
     private final PIDController pidController;
+
+    private Rotation2d lastRequestedVelocity;
+    private Rotation2d requestedAngle;
 
     public IntakePivot() {
         mSpark = new CANSparkMax(Settings.kSparkID, MotorType.kBrushless) {{
             setInverted(Settings.kSparkInverted);
             setIdleMode(Settings.kSparkIdleMode);
         }};
-        
 
-//        encoder = mSpark.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192);
-        encoder = IntakeRoller.getInstance().m_Roller.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
-        encoder.setInverted(IntakePivotConfig.kPivotEncoderInverted);
+//        mPosEncoder = IntakeRoller.getInstance().getPivotEncoder();
+        mPosEncoder = mSpark.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
+        mPosEncoder.setInverted(Settings.kEncoderInverted);
+        mPosEncoder.setZeroOffset(0.045);
+
+        mVelEncoder = IntakeRoller.getInstance().getPivotEncoder();
+        mVelEncoder.setInverted(Settings.kEncoderInverted);
 
         ffContoller = new ArmFeedforward(Settings.kS, Settings.kG, Settings.kV, Settings.kA);
         pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
@@ -72,22 +79,20 @@ public class IntakePivot extends SubsystemBase {
     public void setVelocity(Rotation2d angularVelocity) {
         setVelocity(angularVelocity, false);
     }
+
     /**
      * @param angularVelocity in units per second
      */
     public void setVelocity(Rotation2d angularVelocity, boolean openLoop) {
         final var ffComponent = ffContoller.calculate(getAngle().minus(Settings.kFFAngleOffset).getRadians(), angularVelocity.getRadians());
         final var pidComponent = (openLoop) ? 0.0 : pidController.calculate(getAngularVelocity().getRadians(), angularVelocity.getRadians());
-//        System.out.println("err: " + (angularVelocity.minus(getAngularVelocity()).getDegrees()));
         mSpark.setVoltage(ffComponent + pidComponent);
-
-         System.out.println("FF Component: " + ffComponent + ", PID: " + pidComponent);
-        // System.out.println("Intake Pivot Current: " + mSpark.getOutputCurrent());
+        lastRequestedVelocity = angularVelocity;
     }
 
     public Rotation2d getAngle() {
-        final var pos = Rotation2d.fromRotations(encoder.getPosition()* (2.0/3.0));
-        if (pos.getDegrees() > 200.0) {
+        final var pos = Rotation2d.fromRotations(mPosEncoder.getPosition());
+        if (pos.getDegrees() > 270.0) {
             return Rotation2d.fromRotations(0);
         }
         return pos;
@@ -97,13 +102,24 @@ public class IntakePivot extends SubsystemBase {
      * @return velocity in units per seconds
      */
     public Rotation2d getAngularVelocity() {
-        return Rotation2d.fromRotations(encoder.getVelocity() / 60.0);
+        // 2/3 factor to account for gearing difference in pos vs vel
+        return Rotation2d.fromRotations(mVelEncoder.getVelocity() / 60.0).times(2.0 / 3.0);
+    }
+
+    public void setRequestedAngle(Rotation2d angle) {
+        requestedAngle = angle;
+    }
+
+    public Rotation2d getRequestedAngle() {
+        return requestedAngle;
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Intake Pivot Angle (Degrees)", getAngle().getDegrees());
-        SmartDashboard.putNumber("Intake Pivot Angular Velocity (Degrees / Second)", getAngularVelocity().getDegrees());
-        SmartDashboard.putNumber("Intake Pivot Angle (Raw)", encoder.getPosition());
+        SmartDashboard.putNumber("[IntakePivot] Angle (deg)", getAngle().getDegrees());
+        SmartDashboard.putNumber("[IntakePivot] Velocity (deg/s)", getAngularVelocity().getDegrees());
+        if (lastRequestedVelocity != null) {
+            SmartDashboard.putNumber("[IntakePivot] Req Velocity (deg/s)", lastRequestedVelocity.getDegrees());
+        }
     }
 }

@@ -2,14 +2,15 @@ package frc.robot.driver;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
+import frc.robot.Robot;
 import frc.robot.commands.RobotCommands;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
+import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
-import frc.robot.intakepivot.commands.SetStatePivot;
+import frc.robot.intakepivot.commands.SetStateIntakePivot;
 import frc.robot.intakeroller.commands.IntakeRollerCommands;
 
 public class Driver extends Gamepad {
@@ -47,9 +48,12 @@ public class Driver extends Gamepad {
 
         // Intake Commands
         controller.R2().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
-        controller.R2().onTrue(IntakePivotCommands.setPivotState(SetStatePivot.State.kDeployed));
-        controller.R2().onFalse(IntakePivotCommands.setPivotState(SetStatePivot.State.kStowed));
+        controller.R2().onTrue(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed));
+        controller.R2().onFalse(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed));
+
         controller.R1().onTrue(RobotCommands.spitNote());
+
+        controller.circle().onTrue(RobotCommands.handOffNote());
     }
 
     @Override
