@@ -17,7 +17,7 @@ public class DrivetrainConfig {
         public static final int pigeonID = 13; 
 
         //SDS Constants Class Made to Easily Switch Module Gear Ratios
-        public static final SDSConstants chosenModule = SDSConstants.MK4i.Falcon500(SDSConstants.MK4i.driveRatios.L3); 
+        public static final SDSConstants chosenModule = SDSConstants.MK4i.Falcon500(SDSConstants.MK4i.driveRatios.L2);
 
         /* Drivetrain Constants */
         //TODO: Change Robot Frame's Width and Length Depending on Frame Size Design makes

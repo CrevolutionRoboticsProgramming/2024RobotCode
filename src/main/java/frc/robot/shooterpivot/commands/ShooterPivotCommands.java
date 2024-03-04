@@ -10,8 +10,12 @@ public class ShooterPivotCommands {
         return new SetVelocityShooterPivot(velocitySupplier, openLoop);
     }
 
-    public static Command setState(SetStateShooterPivot.State state) {
-        return new SetStateShooterPivot(state);
+    public static Command setState(SetAngleShooterPivot.Preset state) {
+        return new SetAngleShooterPivot(state, false);
+    }
+
+    public static Command holdState(SetAngleShooterPivot.Preset state) {
+        return new SetAngleShooterPivot(state, true);
     }
 
     public static Command holdState() {

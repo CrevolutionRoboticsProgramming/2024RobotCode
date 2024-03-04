@@ -1,15 +1,12 @@
 package frc.robot.elevator.commands;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.elevator.ElevatorConfig;
 
+import java.util.function.DoubleSupplier;
+
 public class ElevatorCommands{
-   public static Command setState(ElevatorConfig.ElevatorState state) {
-       return new SetElevatorState(state);
-   }
-    public static Command setOutput(DoubleSupplier output) {
-        return new SetOutputElevator(output);
+    public static Command setVelocity(DoubleSupplier velocitySupplier) {
+        return new SetVelocityElevator(velocitySupplier, false, false);
     }
 }

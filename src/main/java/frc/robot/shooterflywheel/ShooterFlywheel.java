@@ -34,6 +34,8 @@ public class ShooterFlywheel extends SubsystemBase {
         mFalconRight.setInverted(false);
     }
 
+    // 57 degreedf
+
     public static ShooterFlywheel getInstance() {
         if (mInstance == null) {
             mInstance = new ShooterFlywheel();
