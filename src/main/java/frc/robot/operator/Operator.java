@@ -8,6 +8,7 @@ import frc.robot.Robot;
 import frc.robot.commands.RobotCommands;
 import frc.robot.elevator.Elevator;
 import frc.robot.elevator.commands.ElevatorCommands;
+import frc.robot.elevator.commands.SetPositionElevator;
 import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.IntakePivot;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
@@ -79,7 +80,7 @@ public class Operator extends Gamepad {
         //Intake Pivot Mnaual Override
         controller.L2().whileTrue(
             IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-                intakePivotManualCurve.calculate(controller.getLeftX())), 
+                intakePivotManualCurve.calculate(controller.getLeftX())),
                 false)
         );
 
@@ -98,36 +99,6 @@ public class Operator extends Gamepad {
 
     @Override
     public void setupTestButtons() {
-//         //Shoot Manual
-//         controller.R2().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
-//             () -> Rotation2d.fromRadians(shooterManualCurve.calculate(getRightTriggerMagnitude()))
-//         ));
-
-//         // Indexer (Intake & OutTake)
-//         controller.cross().whileTrue(IndexerCommands.setOutput(() -> 1.0));
-//         controller.square().whileTrue(IndexerCommands.setOutput(() -> -1.0));
-        
-
-//         //Elevator Manual Override
-// //        controller.R2().and(rightYTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
-// //            ElevatorCommands.setOutput(() -> elevatorCurve.calculate(controller.getRightY())))
-// //        );
-
-//         //Intake Pivot Mnaual Override
-//         controller.L2().and(leftXTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
-//             IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-//                 intakePivotManualCurve.calculate(controller.getLeftX())), 
-//                 false)
-//             )
-//         );
-
-//         //Shooter Pivot Manual Override
-//         controller.L2().and(rightXTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
-//             ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-//                 shooterManualCurve.calculate(controller.getRightX())), 
-//                 false)
-//             )
-//         );
     }
 
 

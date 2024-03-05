@@ -34,7 +34,7 @@ public class Elevator extends SubsystemBase {
         public static final double kD = 0.0;
 
         public static final double kMaxVelocity = 0.15;
-        public static final double kMaxAcceleration = 1.0;
+        public static final double kMaxAcceleration = 0.5;
 
         public static final double kMaxVoltage = 10.0;
         static final double kSprocketDiameter = Units.inchesToMeters(1.432);
@@ -92,7 +92,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public double getPosition() {
-        return rotationsToMeters(mEncoder.getPosition() / 8192.0);
+        return rotationsToMeters(mEncoder.getPosition());
     }
 
     /**
@@ -115,8 +115,9 @@ public class Elevator extends SubsystemBase {
         SmartDashboard.putNumber("Elevator Position (m)", getPosition());
         SmartDashboard.putNumber("Elevator Velocity (ms^-1): ", getVelocity());
 
-        System.out.printf("Limits (bottom = %b, top = %b)%n", getLowerLimitState(), getUpperLimitState());
-
+        if (getLowerLimitState()) {
+            resetEncoder();
+        }
     }
 }
 
