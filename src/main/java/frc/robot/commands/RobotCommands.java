@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.indexer.Indexer;
 import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
@@ -58,35 +59,52 @@ public class RobotCommands {
 
     public static Command primeAmp() {
         return new SequentialCommandGroup(
-            new ConditionalCommand(null, handOffNote(), () -> Indexer.getInstance().hasNote()),
-            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kAmp)
-        );
-    }
-
-    public static Command shootNoteSpeaker() {
-        return new SequentialCommandGroup(
-            new ParallelRaceGroup(
-                /*Add set RPM for Shooter */
-                new SequentialCommandGroup(
-                    IndexerCommands.setOutput(() -> 1),
-                    new WaitCommand(1)
-                )
+            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
+            Commands.parallel(
+                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kAmp),
+                // ElevatorCommands.setState(SetPositionElevator.Preset.State.kAmp)
+                ShooterFlywheelCommands.setAngularVelocity(
+                    () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.4))
             )
         );
     }
 
-    public static Command shooterNoteAmp() {
-        return new SequentialCommandGroup(
-            new ParallelRaceGroup(
-                ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(4000)),
-                new WaitCommand(0.5),
-                new SequentialCommandGroup(
-                    new ParallelRaceGroup(
-                        IndexerCommands.setOutput(() -> 1),
-                        new WaitCommand(1)
-                    )
-                )
-            )
+    public static Command primeClimb() {
+        return Commands.parallel(
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap)
+            // ElevatorCommands.setState(SetPositionElevator.Preset.State.kClimb)
         );
     }
+
+    public static Command primeTrap() {
+        return null; //ElevaotrCommands.setState(SetPositionElevator.Preset.State.kTrap);
+    }
+
+    /*Not for WoodHaven unless Vision Done */
+    // public static Command shootNoteSpeaker() {
+    //     return new SequentialCommandGroup(
+    //         new ParallelRaceGroup(
+    //             /*Add set RPM for Shooter */
+    //             new SequentialCommandGroup(
+    //                 IndexerCommands.setOutput(() -> 1),
+    //                 new WaitCommand(1)
+    //             )
+    //         )
+    //     );
+    // }
+
+    // public static Command shooterNoteAmp() {
+    //     return new SequentialCommandGroup(
+    //         new ParallelRaceGroup(
+    //             ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(4000)),
+    //             new WaitCommand(0.5),
+    //             new SequentialCommandGroup(
+    //                 new ParallelRaceGroup(
+    //                     IndexerCommands.setOutput(() -> 1),
+    //                     new WaitCommand(1)
+    //                 )
+    //             )
+    //         )
+    //     );
+    // }
 }

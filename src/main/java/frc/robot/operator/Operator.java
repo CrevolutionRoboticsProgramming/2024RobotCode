@@ -56,20 +56,20 @@ public class Operator extends Gamepad {
 
     @Override
     public void setupTeleopButtons() {
-
-        //Intake Roller Stuff
-//         controller.R1().whileTrue(IntakeRollerCommands.setOutput(() -> 1));
-//         controller.L1().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
-
-        // Shooter Test Commands
+        // Shooter Commands
         controller.cross().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
         controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterFar));
-        controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
-//        controller.cross().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> ShooterFlywheel.Settings.kMaxAngularVelocity));
-//        controller.square().whileTrue(IndexerCommands.setOutput(() -> -1));
-//        controller.circle().whileTrue(IndexerCommands.setOutput(() -> 1));
 
-//        controller.circle().onTrue(RobotCommands.handOff());
+        controller.circle().whileTrue(RobotCommands.primeAmp());
+
+        controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
+
+        // Trap Command
+        controller.L1().whileTrue(IndexerCommands.setOutput(() -> -1.0));
+        controller.L1().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(2500)));
+
+        controller.povUp().whileTrue(RobotCommands.primeClimb());
+        controller.povDown().whileTrue(RobotCommands.primeTrap());
 
         //Elevator Manual Override
         controller.R2().whileTrue(
@@ -89,23 +89,6 @@ public class Operator extends Gamepad {
                 shooterPivotManualCurve.calculate(controller.getRightX())),
                 false)
         );
-
-        controller.povDown().onTrue(ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff));
-        controller.povRight().onTrue(ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kShooterNear));
-        controller.povUp().onTrue(ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kShooterFar));
-        controller.povLeft().onTrue(ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kAmp));
-
-        //Shooter Test Commands
-        // controller.cross().onTrue(ShooterPivotCommands.setState(SetStateShooterPivot.State.kHandoff));
-        // controller.triangle().onTrue(ShooterPivotCommands.setState(SetStateShooterPivot.State.kPrime));
-
-        //  controller.R2().whileTrue(ShooterPivotCommands.setAngularVelocity(
-        //      () -> Rotation2d.fromRadians(shooterPivotManualCurve.calculate(controller.getRightX())), true
-        //  ));
-
-        // controller.R2().negate().and(controller.R1()).whileTrue(
-        //     new SetPosition(() -> Rotation2d.fromDegrees(positionTestCurve.calculate(controller.getRightX()))
-        // ));
     }
 
     @Override
@@ -115,36 +98,36 @@ public class Operator extends Gamepad {
 
     @Override
     public void setupTestButtons() {
-        //Shoot Manual
-        controller.R2().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
-            () -> Rotation2d.fromRadians(shooterManualCurve.calculate(getRightTriggerMagnitude()))
-        ));
+//         //Shoot Manual
+//         controller.R2().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
+//             () -> Rotation2d.fromRadians(shooterManualCurve.calculate(getRightTriggerMagnitude()))
+//         ));
 
-        // Indexer (Intake & OutTake)
-        controller.cross().whileTrue(IndexerCommands.setOutput(() -> 1.0));
-        controller.square().whileTrue(IndexerCommands.setOutput(() -> -1.0));
+//         // Indexer (Intake & OutTake)
+//         controller.cross().whileTrue(IndexerCommands.setOutput(() -> 1.0));
+//         controller.square().whileTrue(IndexerCommands.setOutput(() -> -1.0));
         
 
-        //Elevator Manual Override
-//        controller.R2().and(rightYTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
-//            ElevatorCommands.setOutput(() -> elevatorCurve.calculate(controller.getRightY())))
-//        );
+//         //Elevator Manual Override
+// //        controller.R2().and(rightYTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
+// //            ElevatorCommands.setOutput(() -> elevatorCurve.calculate(controller.getRightY())))
+// //        );
 
-        //Intake Pivot Mnaual Override
-        controller.L2().and(leftXTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
-            IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-                intakePivotManualCurve.calculate(controller.getLeftX())), 
-                false)
-            )
-        );
+//         //Intake Pivot Mnaual Override
+//         controller.L2().and(leftXTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
+//             IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
+//                 intakePivotManualCurve.calculate(controller.getLeftX())), 
+//                 false)
+//             )
+//         );
 
-        //Shooter Pivot Manual Override
-        controller.L2().and(rightXTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
-            ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-                shooterManualCurve.calculate(controller.getRightX())), 
-                false)
-            )
-        );
+//         //Shooter Pivot Manual Override
+//         controller.L2().and(rightXTrigger(ThresholdType.ABS_GREATER_THAN, 0.1).whileTrue(
+//             ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
+//                 shooterManualCurve.calculate(controller.getRightX())), 
+//                 false)
+//             )
+//         );
     }
 
 
