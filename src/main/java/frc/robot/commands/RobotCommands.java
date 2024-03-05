@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.elevator.commands.SetPositionElevator;
@@ -19,7 +18,7 @@ public class RobotCommands {
         return new SequentialCommandGroup(
             new ParallelCommandGroup(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
-//                ElevatorCommands.setState(ElevatorState.kZero),
+                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero),
                 ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoffClear)
             ),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff),
@@ -63,7 +62,7 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
                 ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kAmp),
-                ElevatorCommands.setState(SetPositionElevator.Preset.kAmp),
+                ElevatorCommands.setPosition(SetPositionElevator.Preset.kAmp),
                 ShooterFlywheelCommands.setAngularVelocity(
                     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.4))
             )
@@ -73,13 +72,13 @@ public class RobotCommands {
     public static Command primeClimb() {
         return Commands.parallel(
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap),
-            ElevatorCommands.setState(SetPositionElevator.Preset.kClimb)
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kClimb)
         );
     }
 
     public static Command primeTrap() {
         return new ParallelCommandGroup(
-            ElevatorCommands.setState(SetPositionElevator.Preset.kTrap),
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kTrap),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap)
         );
     }

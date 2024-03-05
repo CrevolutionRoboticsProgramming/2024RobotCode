@@ -75,6 +75,7 @@ public class AutonMaster {
         autonChooser.setDefaultOption("RightSpeaker2PieceAuton", AutoBuilder.buildAuto("RightSpeaker2PieceAuton"));
         autonChooser.addOption("CenterSpeaker3PieceAuton", AutoBuilder.buildAuto("CenterSpeaker3PieceAuton"));
         autonChooser.addOption("CenterSpeaker4PieceAuton", AutoBuilder.buildAuto("CenterSpeaker4PieceAuton"));
+        autonChooser.addOption("test", AutoBuilder.buildAuto("Straight Path"));
         configurePathPlannerLogging();
     }
 
