@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.elevator.commands.ElevatorCommands;
+import frc.robot.elevator.commands.SetPositionElevator;
 import frc.robot.indexer.Indexer;
 import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
@@ -62,7 +63,7 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
                 ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kAmp),
-                // ElevatorCommands.setState(SetPositionElevator.Preset.State.kAmp)
+                ElevatorCommands.setState(SetPositionElevator.Preset.kAmp),
                 ShooterFlywheelCommands.setAngularVelocity(
                     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.4))
             )
@@ -71,13 +72,16 @@ public class RobotCommands {
 
     public static Command primeClimb() {
         return Commands.parallel(
-            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap)
-            // ElevatorCommands.setState(SetPositionElevator.Preset.State.kClimb)
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap),
+            ElevatorCommands.setState(SetPositionElevator.Preset.kClimb)
         );
     }
 
     public static Command primeTrap() {
-        return null; //ElevaotrCommands.setState(SetPositionElevator.Preset.State.kTrap);
+        return new ParallelCommandGroup(
+            ElevatorCommands.setState(SetPositionElevator.Preset.kTrap),
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap)
+        );
     }
 
     /*Not for WoodHaven unless Vision Done */

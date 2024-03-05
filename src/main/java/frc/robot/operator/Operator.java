@@ -2,6 +2,7 @@ package frc.robot.operator;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
 import frc.robot.Robot;
@@ -62,6 +63,11 @@ public class Operator extends Gamepad {
         controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterFar));
 
         controller.circle().whileTrue(RobotCommands.primeAmp());
+
+        controller.triangle().whileTrue(new SequentialCommandGroup(
+            IndexerCommands.unJamNote(),
+            RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear))
+        );
 
         controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
 

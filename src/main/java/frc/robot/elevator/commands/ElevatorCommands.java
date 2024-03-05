@@ -9,4 +9,8 @@ public class ElevatorCommands{
     public static Command setVelocity(DoubleSupplier velocitySupplier) {
         return new SetVelocityElevator(velocitySupplier, false, false);
     }
+
+    public static Command setState(SetPositionElevator.Preset state) {
+        return new SetPositionElevator(state);
+    }
 }

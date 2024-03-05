@@ -7,6 +7,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeRoller extends SubsystemBase {
+    public static class Settings {
+        public enum CurrentProfile {
+            kIntake(40, 45),
+            kOuttake(60, 60);
+
+            final int continuous, peak;
+            CurrentProfile(int continuous, int peak) {
+                this.continuous = continuous;
+                this.peak = peak;
+            }
+
+            void apply(CANSparkMax spark) {
+                spark.setSmartCurrentLimit(peak, continuous);
+            }
+        }
+
+    }
     private static IntakeRoller mInstance;
 
     private final CANSparkMax mSpark;
@@ -23,6 +40,10 @@ public class IntakeRoller extends SubsystemBase {
         return mInstance;
     }
 
+    public void setCurrentProfile() {
+
+    }
+
     public void setOutput(double percentOutput) {
         mSpark.setVoltage(12.0 * percentOutput);
     }
@@ -35,14 +56,13 @@ public class IntakeRoller extends SubsystemBase {
         mSpark.set(0);
     }
 
-    public void setCurrentLimit(int continuousLimit, int peakLimit) {
-        mSpark.setSmartCurrentLimit(continuousLimit, peakLimit);
+    public void setCurrentProfile(Settings.CurrentProfile profile) {
+        profile.apply(mSpark);
     }
 
     private void configureMotor() {
         mSpark.setInverted(IntakeConfig.kShooterMotorInverted);
         mSpark.setIdleMode(IntakeConfig.kRollerIdleMode);
-        mSpark.setSmartCurrentLimit(IntakeConfig.kDefaultContinuousCurrentLimit, IntakeConfig.kDefaultPeakCurrentLimit);
     }
 
     public RelativeEncoder getPivotEncoder() {

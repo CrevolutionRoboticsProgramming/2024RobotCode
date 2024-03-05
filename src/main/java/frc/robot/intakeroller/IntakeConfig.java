@@ -33,7 +33,7 @@ public class IntakeConfig {
     public static final double kMaxAngularAcceleration = 4.5;
     public static final double kMaxAngularVelocity = 3.0;
     
-    public static final int kDefaultContinuousCurrentLimit = 35;
+    public static final int kDefaultContinuousCurrentLimit = 60;
     public static final int kDefaultPeakCurrentLimit = 60;
 
 }

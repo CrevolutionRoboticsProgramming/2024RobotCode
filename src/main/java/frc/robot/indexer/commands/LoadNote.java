@@ -11,11 +11,24 @@ public class LoadNote extends Command {
         kLoading, kBackoff, kReverseBackoff, kDone
     }
 
+    public enum Profile{
+        kHighLoad(0.75),
+        kLowLoad(0.15);
+
+        double percent;
+        Profile(double percentOut) {
+            percent = percentOut;
+        }
+    }
+
     private State state;
     private static final boolean loggingEnabled = true;
+    private final Profile profile;
 
-    public LoadNote() {
+    public LoadNote(Profile profile) {
         indexer = Indexer.getInstance();
+        this.profile = profile;
+
         addRequirements(indexer);
     }
 
@@ -28,7 +41,7 @@ public class LoadNote extends Command {
     public void execute() {
         indexer.setOutput(switch (state) {
             case kLoading -> 1.0;
-            case kBackoff -> -0.15;
+            case kBackoff -> -profile.percent;
             case kReverseBackoff -> 0.15;
             default -> 0.0;
         });

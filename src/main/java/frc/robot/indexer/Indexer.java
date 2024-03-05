@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Indexer extends SubsystemBase{
-    static class Settings {
+    public static class Settings {
         static final int kSparkId = 25;
         static final int kBeamBreakerId = 0;
         static final double kMaxVoltage = 12.0;
