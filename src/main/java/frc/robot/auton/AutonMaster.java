@@ -25,11 +25,13 @@ public class AutonMaster {
     private static Field2d mGameField;
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
+    private final Drivetrain drivetrain;
+
     public AutonMaster() {
-        final var drivetrain = Drivetrain.getInstance();
+        drivetrain = Drivetrain.getInstance();
         /* Define Named Commands Here */
 
-        //Zero Heading -> use at the beginning and end of every auton
+//        Zero Heading -> use at the beginning and end of every auton
         NamedCommands.registerCommand("ZeroHeading", new InstantCommand(drivetrain::zeroHeading));
 
         NamedCommands.registerCommand("ResetFieldOrientation", new InstantCommand(() -> {
@@ -41,7 +43,7 @@ public class AutonMaster {
         //Wait Command -> Common Command for Robot to Wait
         NamedCommands.registerCommand("WaitCommand", new WaitCommand(5));
 
-        //Turn in place command -> enter custom angle 
+        //Turn in place command -> enter custom angle
         //This turns 45 deg.
         NamedCommands.registerCommand("TurnInPlace", new TurnInPlaceCommand(45, drivetrain));
 
@@ -100,5 +102,4 @@ public class AutonMaster {
             mGameField.getObject("path").setPoses(poses);
         });
     }
-
 }
