@@ -63,13 +63,13 @@ public class Driver extends Gamepad {
     public void setupTestButtons() {}
 
     public Translation2d getDriveTranslation() {
-        final var xComponent = translationStickCurve.calculate(controller.getLeftX());
-        final var yComponent = translationStickCurve.calculate(controller.getLeftY());
+        final var xComponent = translationStickCurve.calculate(-controller.getLeftX());
+        final var yComponent = translationStickCurve.calculate(-controller.getLeftY());
         // Components are reversed because field coordinates are opposite of joystick coordinates
         return new Translation2d(yComponent, xComponent);
     }
 
     public double getDriveRotation() {
-        return -rotationStickCurve.calculate(controller.getRightX());
+        return rotationStickCurve.calculate(-controller.getRightX());
     }
 }
