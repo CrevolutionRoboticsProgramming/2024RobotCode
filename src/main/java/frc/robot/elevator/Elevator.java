@@ -19,7 +19,7 @@ public class Elevator extends SubsystemBase {
         static final boolean kLeftSparkInverted = false;
         static final boolean kRightSparkInverted = false;
 
-        static final int kLowerLimitSwitch = 1;
+        static final int kLowerLimitSwitch = 0;
         static final int kUpperLimitSwitch = 2;
 
         static final CANSparkBase.IdleMode kIdleMode = CANSparkBase.IdleMode.kBrake;

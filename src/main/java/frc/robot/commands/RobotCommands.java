@@ -13,6 +13,8 @@ import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
 import frc.robot.shooterpivot.commands.SetAngleShooterPivot;
 import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 
+import java.util.concurrent.ConcurrentMap;
+
 public class RobotCommands {
     public static Command handOffNote() {
         return new SequentialCommandGroup(
@@ -82,6 +84,67 @@ public class RobotCommands {
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap)
         );
     }
+
+    public static Command shootNote(double targetRPM) {
+        return Commands.sequence(
+            // Wait until shooter RPM is within 250 RPM
+            new WaitUntilCommand(() -> Math.abs(ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() - targetRPM) < 250),
+            IndexerCommands.setOutput(() -> 1.0)
+        );
+    }
+
+    // AUTON COMMANDS
+    public static Command autoPrimeSpeakerAndShoot(SetAngleShooterPivot.Preset state, double targetRPM) {
+        return Commands.sequence(
+            new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
+            Commands.parallel(
+                IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
+                Commands.race(
+                    ShooterFlywheelCommands.setAngularVelocity(() -> switch (state) {
+                        case kShooterNear -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8);
+                        default -> ShooterFlywheel.Settings.kMaxAngularVelocity;
+                    }),
+                    Commands.sequence(
+                        ShooterPivotCommands.setState(state),
+                        new WaitUntilCommand(() -> Math.abs(ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() - targetRPM) < 250),
+                        Commands.race(
+                            IndexerCommands.setOutput(() -> 1.0),
+                            Commands.waitSeconds(0.5)
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    public static Command autoShootNote(double targetRPM) {
+        return Commands.sequence(
+            // Wait until shooter RPM is within 250 RPM
+            new WaitUntilCommand(() -> Math.abs(ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() - targetRPM) < 250),
+            IndexerCommands.setOutput(() -> 1.0)
+        );
+    }
+
+    public static Command autoHandOffNote() {
+        return new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
+                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
+                //ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoffClear)
+            ),
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff),
+            new ParallelRaceGroup(
+                IndexerCommands.loadNote(),
+                new SequentialCommandGroup(
+                    new WaitCommand(0.25),
+                    IntakeRollerCommands.setOutput(() -> 1)
+                ),
+                Commands.waitSeconds(3)
+            ),
+            new InstantCommand(() -> System.out.println("handoff complete"))
+        );
+    }
+
 
     /*Not for WoodHaven unless Vision Done */
     // public static Command shootNoteSpeaker() {
