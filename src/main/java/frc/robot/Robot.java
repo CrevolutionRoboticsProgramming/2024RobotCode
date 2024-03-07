@@ -13,6 +13,7 @@ import frc.robot.operator.Operator;
 
 import org.littletonrobotics.junction.LoggedRobot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.crevolib.configs.CTREConfigs;
@@ -53,6 +54,7 @@ public class Robot extends LoggedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         Logger logger = Logger.getLogger("Logger");
+        CameraServer.startAutomaticCapture();
         m_robotContainer = new RobotContainer();
     }
 
