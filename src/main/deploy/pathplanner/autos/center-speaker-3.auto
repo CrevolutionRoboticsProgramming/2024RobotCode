@@ -64,32 +64,7 @@
         {
           "type": "named",
           "data": {
-            "name": "autoPrimeSpeakerAndShootMid"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CS4P#3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoRunIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autoPrimeSpeakerAndShootMid"
+            "name": "autoPrimeSpeakerAndShootFar"
           }
         }
       ]
