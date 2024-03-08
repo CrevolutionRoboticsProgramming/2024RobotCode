@@ -2,6 +2,8 @@ package frc.robot.operator;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
@@ -79,9 +81,15 @@ public class Operator extends Gamepad {
         controller.povDown().whileTrue(RobotCommands.primeTrap());
 
         //Elevator Manual Override
-        controller.R2().whileTrue(
+        controller.R2().whileTrue( Commands.sequence(
+            // Ensure manual override doesn't overextend height extension
+            new ConditionalCommand(
+                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kClimb),
+                Commands.none(),
+                () -> elevatorCurve.calculate(-controller.getRightY()) > 0 && ShooterPivot.getInstance().getAngle().getDegrees() > SetAngleShooterPivot.Preset.kClimb.getDegrees()
+            ),
             ElevatorCommands.setVelocity(() -> elevatorCurve.calculate(-controller.getRightY()))
-        );
+        ));
 
         //Intake Pivot Mnaual Override
         controller.L2().whileTrue(
@@ -91,11 +99,11 @@ public class Operator extends Gamepad {
         );
 
         //Shooter Pivot Manual Override
-        controller.L2().whileTrue(
-            ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-                shooterPivotManualCurve.calculate(controller.getRightX())),
-                false)
-        );
+//        controller.L2().whileTrue(
+//            ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
+//                shooterPivotManualCurve.calculate(controller.getRightX())),
+//                false)
+//        );
     }
 
     @Override
