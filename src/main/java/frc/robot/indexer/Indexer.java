@@ -17,7 +17,7 @@ public class Indexer extends SubsystemBase{
     private final DigitalInput mBeamBreaker;
 
     public Indexer() {
-        mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushed) {{
+        mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushless) {{
             setInverted(true);
         }};
         mBeamBreaker = new DigitalInput(Settings.kBeamBreakerId);
