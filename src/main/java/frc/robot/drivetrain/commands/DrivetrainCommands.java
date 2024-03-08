@@ -37,6 +37,10 @@ public class DrivetrainCommands {
         );
     }
 
+    public static Command turnToAngle(Rotation2d target) {
+        return new TurnAngle(target);
+    }
+
     public static Command autoLineUp() {
         var robotPose = Vision.PoseEstimator.getInstance().getCurrentPose();
         // var currentAlliance = DriverStation.getAlliance();

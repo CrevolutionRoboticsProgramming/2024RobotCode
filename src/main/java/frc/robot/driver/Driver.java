@@ -1,5 +1,6 @@
 package frc.robot.driver;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.crevolib.util.ExpCurve;
@@ -54,6 +55,8 @@ public class Driver extends Gamepad {
         controller.R1().onTrue(RobotCommands.spitNote());
 
         controller.circle().onTrue(RobotCommands.handOffNote());
+
+        controller.povDown().whileTrue(DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(28.51)));
     }
 
     @Override

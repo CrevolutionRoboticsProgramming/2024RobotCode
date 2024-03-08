@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.elevator.commands.SetPositionElevator;
@@ -73,15 +74,15 @@ public class RobotCommands {
 
     public static Command primeClimb() {
         return Commands.parallel(
-            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap),
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kClimb),
             ElevatorCommands.setPosition(SetPositionElevator.Preset.kClimb)
         );
     }
 
     public static Command primeTrap() {
-        return new ParallelCommandGroup(
-            ElevatorCommands.setPosition(SetPositionElevator.Preset.kTrap),
-            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap)
+        return Commands.sequence(
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap),
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kTrap)
         );
     }
 
@@ -100,13 +101,10 @@ public class RobotCommands {
             Commands.parallel(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
                 Commands.race(
-                    ShooterFlywheelCommands.setAngularVelocity(() -> switch (state) {
-                        case kShooterNear -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8);
-                        default -> ShooterFlywheel.Settings.kMaxAngularVelocity;
-                    }),
+                    ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPM)),
                     Commands.sequence(
                         ShooterPivotCommands.setState(state),
-                        new WaitUntilCommand(() -> Math.abs(ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() - targetRPM) < 250),
+                        new WaitUntilCommand(() -> Math.abs((ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() / ShooterFlywheel.getInstance().getRightFlywheelVelocity().getRotations()) / 2.0 - targetRPM) < 250),
                         Commands.race(
                             IndexerCommands.setOutput(() -> 1.0),
                             Commands.waitSeconds(0.5)

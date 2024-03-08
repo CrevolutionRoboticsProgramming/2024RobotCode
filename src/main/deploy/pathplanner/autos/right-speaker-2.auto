@@ -18,7 +18,7 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -40,6 +40,25 @@
           "type": "named",
           "data": {
             "name": "autoPrimeSpeakerAndShootFar"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RS2P#2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
           }
         }
       ]

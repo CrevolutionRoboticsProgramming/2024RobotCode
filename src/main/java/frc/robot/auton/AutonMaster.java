@@ -68,10 +68,10 @@ public class AutonMaster {
                 new ReplanningConfig()
             ),
             () -> {
-//                var alliance = DriverStation.getAlliance();
-//                if (alliance.isPresent()) {
-//                    return alliance.get() == DriverStation.Alliance.Red;
-//                }
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
                 return false;
             },
             drivetrain
