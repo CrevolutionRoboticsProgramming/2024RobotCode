@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7233010829658023,
-      "y": 6.595423372664927
+      "x": 1.24,
+      "y": 5.53
     },
-    "rotation": 60.07
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RS2P#1"
+                  "pathName": "center-speaker-start-to-mid"
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "named",
           "data": {
-            "name": "autoPrimeSpeakerAndShootFar"
+            "name": "autoPrimeSpeakerAndShootMid"
           }
         }
       ]

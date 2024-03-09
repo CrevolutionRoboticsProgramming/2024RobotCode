@@ -78,15 +78,15 @@ public class AutonMaster {
         );
 
         /* Add all auton options here */
-        // autonChooser.setDefaultOption("CurveNoRotationAuto", AutoBuilder.buildAuto("CurveNoRotationAuto"));
-        // autonChooser.addOption("CurveWithRotationAuto", AutoBuilder.buildAuto("CurveWithRotationAuto"));
-        // autonChooser.addOption("2NoteAmpEndAuto", AutoBuilder.buildAuto("2NoteAmpEndAuto"));
-        autonChooser.addOption("center-speaker-3p [verified]", AutoBuilder.buildAuto("center-speaker-3"));
+        autonChooser.addOption("center-speaker-3p-right [verified]", AutoBuilder.buildAuto("center-speaker-3-right"));
+        autonChooser.addOption("center-speaker-3p-left", AutoBuilder.buildAuto("center-speaker-3-left"));
+        autonChooser.addOption("center-speaker-2p", AutoBuilder.buildAuto("center-speaker-2"));
+        autonChooser.addOption("right-speaker-2.5p [verified]", AutoBuilder.buildAuto("right-speaker-2.5"));
         autonChooser.addOption("right-speaker-2p", AutoBuilder.buildAuto("right-speaker-2"));
+        autonChooser.addOption("left-speaker-2.5p", AutoBuilder.buildAuto("right-speaker-2.5"));
+        autonChooser.addOption("left-speaker-2p", AutoBuilder.buildAuto("right-speaker-2"));
+        autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("right-speaker-1.5"));
 
-//        autonChooser.setDefaultOption("RightSpeaker2PieceAuton", AutoBuilder.buildAuto("RightSpeaker2PieceAuton"));
-//        autonChooser.addOption("CenterSpeaker4PieceAuton", AutoBuilder.buildAuto("CenterSpeaker4PieceAuton"));
-//        autonChooser.addOption("test", AutoBuilder.buildAuto("Straight Path"));
         configurePathPlannerLogging();
     }
 

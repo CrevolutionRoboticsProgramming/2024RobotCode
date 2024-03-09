@@ -4,11 +4,14 @@
   "holonomicMode": true,
   "pathFolders": [
     "CenterSpeaker3PiecePath",
-    "LeftSpeaker6PiecePath",
     "CenterSpeaker4PiecePath",
-    "RightSpeaker2PiecePath"
+    "LeftSpeaker6PiecePath",
+    "RightSpeaker2PiecePath",
+    "left-speaker"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Woodhaven"
+  ],
   "defaultMaxVel": 1.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

@@ -14,13 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CS3P#1"
+            "pathName": "center-speaker-start-to-mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "CS3P#2"
+            "pathName": "note-mid-to-right"
           }
         }
       ]
