@@ -17,7 +17,8 @@ public class SetAngleShooterPivot extends Command {
     }
 
     public enum Preset {
-        kHandoff(Rotation2d.fromDegrees(0)),
+        kZero(Rotation2d.fromDegrees(0)),
+        kHandoff(Rotation2d.fromDegrees(5)),
         kHandoffClear(Rotation2d.fromDegrees(10)),
         kShooterNear(Rotation2d.fromDegrees(5)),
         kShooterMid(Rotation2d.fromDegrees(22)),

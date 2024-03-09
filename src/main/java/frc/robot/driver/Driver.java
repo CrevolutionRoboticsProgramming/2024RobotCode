@@ -2,6 +2,8 @@ package frc.robot.driver;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
@@ -56,7 +58,17 @@ public class Driver extends Gamepad {
 
         controller.circle().onTrue(RobotCommands.handOffNote());
 
-        controller.povDown().whileTrue(DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(28.51)));
+        // controller.L1().whileTrue(new ConditionalCommand(
+        //     DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(28.51),
+        //     DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(-28.51),
+        //     () -> {
+        //         var alliance = DriverStation.getAlliance();
+        //         if (alliance.isPresent()) {
+        //             return alliance.get() == DriverStation.Alliance.Red;
+        //         }
+        //         return false;
+        //     }
+        // ));
     }
 
     @Override

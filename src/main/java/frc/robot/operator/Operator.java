@@ -78,7 +78,13 @@ public class Operator extends Gamepad {
         controller.L1().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(2500)));
 
         controller.povUp().whileTrue(RobotCommands.primeClimb());
-        controller.povDown().whileTrue(RobotCommands.primeTrap());
+        controller.povDown().whileTrue(
+            Commands.parallel(
+                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
+            )
+        );
+        // controller.povDown().whileTrue(RobotCommands.primeTrap());
 
         //Elevator Manual Override
         controller.R2().whileTrue( Commands.sequence(
