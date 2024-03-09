@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7233010829658023,
-      "y": 6.595423372664927
+      "x": 0.753909307563513,
+      "y": 4.526369318682515
     },
-    "rotation": 60.07
+    "rotation": -60.09650858200722
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "RS2P#1"
+                  "pathName": "left-speaker-start-to-podium"
                 }
               },
               {

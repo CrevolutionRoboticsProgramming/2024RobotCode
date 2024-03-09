@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.44,
+        "y": 5.527514849608872
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.0255408202142935,
+        "y": 5.0190310852560485
+      },
+      "isLocked": false,
+      "linkedName": "note-mid"
+    },
+    {
+      "anchor": {
+        "x": 2.25,
+        "y": 4.4
+      },
+      "prevControl": {
+        "x": 1.9849899215950382,
+        "y": 4.553003640105069
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "left-podium-shot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -21.418425620246442,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "CenterSpeaker3PiecePath",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
