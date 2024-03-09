@@ -86,6 +86,7 @@ public class AutonMaster {
         autonChooser.addOption("left-speaker-2.5p", AutoBuilder.buildAuto("right-speaker-2.5"));
         autonChooser.addOption("left-speaker-2p", AutoBuilder.buildAuto("right-speaker-2"));
         autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("right-speaker-1.5"));
+        autonChooser.addOption("Coyle's Stupid Auton", AutoBuilder.buildAuto("coyles-stupid-auton"));
 
         configurePathPlannerLogging();
     }
@@ -103,6 +104,10 @@ public class AutonMaster {
         NamedCommands.registerCommand("autoPrimeSpeakerAndShootFar", RobotCommands.autoPrimeSpeakerAndShoot(
             SetAngleShooterPivot.Preset.kShooterFarAuton,
             ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.8
+        ));
+        NamedCommands.registerCommand("autoPrimeAndPass", RobotCommands.autoPrimeSpeakerAndShoot(
+            SetAngleShooterPivot.Preset.kClimb,
+            ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.25
         ));
         NamedCommands.registerCommand("autoRunIntake", Commands.parallel(
             IntakeRollerCommands.setOutput(() -> -1.0),
