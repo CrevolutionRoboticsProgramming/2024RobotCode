@@ -58,17 +58,18 @@ public class Driver extends Gamepad {
 
         controller.circle().onTrue(RobotCommands.handOffNote());
 
-        // controller.L1().whileTrue(new ConditionalCommand(
-        //     DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(28.51),
-        //     DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(-28.51),
-        //     () -> {
-        //         var alliance = DriverStation.getAlliance();
-        //         if (alliance.isPresent()) {
-        //             return alliance.get() == DriverStation.Alliance.Red;
-        //         }
-        //         return false;
-        //     }
-        // ));
+        controller.L1().whileTrue(new ConditionalCommand(
+            DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(28.51)),
+            DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(-28.51)),
+            () -> {
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+
+                return false;
+            }
+        ));
     }
 
     @Override
