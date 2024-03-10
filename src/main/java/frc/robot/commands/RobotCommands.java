@@ -67,7 +67,7 @@ public class RobotCommands {
                 ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kAmp),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kAmp),
                 ShooterFlywheelCommands.setAngularVelocity(
-                    () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.4))
+                    () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1))
             )
         );
     }
@@ -104,7 +104,8 @@ public class RobotCommands {
                     ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPM)),
                     Commands.sequence(
                         ShooterPivotCommands.setState(state),
-                        new WaitUntilCommand(() -> Math.abs((ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() / ShooterFlywheel.getInstance().getRightFlywheelVelocity().getRotations()) / 2.0 - targetRPM) < 250),
+                        new WaitCommand(1),
+                        // new WaitUntilCommand(() -> Math.abs((ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() / ShooterFlywheel.getInstance().getRightFlywheelVelocity().getRotations()) / 2.0 - targetRPM) < 250),
                         Commands.race(
                             IndexerCommands.setOutput(() -> 1.0),
                             Commands.waitSeconds(0.5)
@@ -118,7 +119,7 @@ public class RobotCommands {
     public static Command autoShootNote(double targetRPM) {
         return Commands.sequence(
             // Wait until shooter RPM is within 250 RPM
-            new WaitUntilCommand(() -> Math.abs(ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() - targetRPM) < 250),
+            new WaitUntilCommand(() -> Math.abs(ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() - (targetRPM) / 60.0) < 4),
             IndexerCommands.setOutput(() -> 1.0)
         );
     }

@@ -85,7 +85,7 @@ public class AutonMaster {
         autonChooser.addOption("right-speaker-2p", AutoBuilder.buildAuto("right-speaker-2"));
         autonChooser.addOption("left-speaker-2.5p", AutoBuilder.buildAuto("right-speaker-2.5"));
         autonChooser.addOption("left-speaker-2p", AutoBuilder.buildAuto("right-speaker-2"));
-        autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("right-speaker-1.5"));
+        // autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("right-speaker-1.5"));
         autonChooser.addOption("Coyle's Stupid Auton", AutoBuilder.buildAuto("coyles-stupid-auton"));
 
         configurePathPlannerLogging();

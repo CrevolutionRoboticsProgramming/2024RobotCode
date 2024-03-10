@@ -13,9 +13,9 @@ public class ShooterFlywheel extends SubsystemBase {
         static final int kRightId = 9;
 
         static final Slot0Configs kFlywheelConfigs = new Slot0Configs()
-            .withKS(0.0)
-            .withKV(0.115)
-            .withKP(0.0);
+                .withKS(0.0)
+                .withKV(0.115)
+                .withKP(0.0);
 
         // 12000 RPM
         public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromRotations(5800.0 / 60.0);
@@ -52,16 +52,16 @@ public class ShooterFlywheel extends SubsystemBase {
     }
 
     public Rotation2d getLeftFlywheelVelocity() {
-        return new Rotation2d(mFalconLeft.getVelocity().getValueAsDouble());
+        return Rotation2d.fromRotations(mFalconLeft.getVelocity().getValueAsDouble());
     }
 
     public Rotation2d getRightFlywheelVelocity() {
-        return new Rotation2d(mFalconRight.getVelocity().getValueAsDouble());
+        return Rotation2d.fromRotations(mFalconRight.getVelocity().getValueAsDouble());
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Left Flywheel Velocity (RPM)", getLeftFlywheelVelocity().getRotations() / 60.0f);
-        SmartDashboard.putNumber("Right Flywheel Velocity (RPM)", getRightFlywheelVelocity().getRotations() / 60.0f);
+        SmartDashboard.putNumber("Left Flywheel Velocity (RPM)", mFalconLeft.getVelocity().getValueAsDouble() * 60);
+        SmartDashboard.putNumber("Right Flywheel Velocity (RPM)", mFalconRight.getVelocity().getValueAsDouble() * 60);
     }
 }
