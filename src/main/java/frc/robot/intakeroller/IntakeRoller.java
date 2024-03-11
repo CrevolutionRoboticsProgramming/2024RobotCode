@@ -1,8 +1,10 @@
 package frc.robot.intakeroller;
 
 import com.revrobotics.*;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -23,13 +25,18 @@ public class IntakeRoller extends SubsystemBase {
             }
         }
 
+        static final int kBeamBreakerId = 2;
     }
     private static IntakeRoller mInstance;
+    private static DigitalInput mBeamBreaker;
 
     private final CANSparkMax mSpark;
 
     public IntakeRoller() {
         mSpark = new CANSparkMax(IntakeConfig.kIntakeSparkID, MotorType.kBrushless);
+        mSpark.setIdleMode(IdleMode.kBrake);
+        mBeamBreaker = new DigitalInput(Settings.kBeamBreakerId);
+
         configureMotor();
     }
 
@@ -40,8 +47,8 @@ public class IntakeRoller extends SubsystemBase {
         return mInstance;
     }
 
-    public void setCurrentProfile() {
-
+    public boolean hasNote() {
+        return !mBeamBreaker.get();
     }
 
     public void setOutput(double percentOutput) {

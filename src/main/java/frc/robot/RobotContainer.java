@@ -54,10 +54,7 @@ public class RobotContainer {
         SmartDashboard.putData(mAutonChooser);
 
         ShuffleboardTab visionTab = Shuffleboard.getTab("Vision");
-//        Vision.PoseEstimator.getInstance().addDashboardWidgets(visionTab);
-//        final var pivot = ShooterPivot.getInstance();
-        final var ipivot = IntakePivot.getInstance();
-        final var indexer = Indexer.getInstance();
+        Vision.PoseEstimator.getInstance().addDashboardWidgets(visionTab);
     }
 
     /**

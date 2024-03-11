@@ -36,6 +36,17 @@ public class RobotCommands {
         );
     }
 
+    public static Command autoIntakeHandOff() {
+        return new SequentialCommandGroup(
+            IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
+            new ParallelRaceGroup(
+                new WaitCommand(1),
+                IntakeRollerCommands.setOutput(() -> -1)
+            ),
+            handOffNote()
+        );
+    }
+
     public static Command spitNote() {
         return new SequentialCommandGroup(
             IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kSpit),
