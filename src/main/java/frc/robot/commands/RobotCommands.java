@@ -95,17 +95,22 @@ public class RobotCommands {
     }
 
     // AUTON COMMANDS
-    public static Command autoPrimeSpeakerAndShoot(SetAngleShooterPivot.Preset state, double targetRPM) {
+    public static Command autoPrimeSpeakerAndShoot(SetAngleShooterPivot.Preset state, double targetRPS) {
         return Commands.sequence(
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
                 Commands.race(
-                    ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPM)),
+                    ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPS)),
                     Commands.sequence(
                         ShooterPivotCommands.setState(state),
-                        new WaitCommand(1),
-                        // new WaitUntilCommand(() -> Math.abs((ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() / ShooterFlywheel.getInstance().getRightFlywheelVelocity().getRotations()) / 2.0 - targetRPM) < 250),
+                        // new WaitCommand(1),
+                        new WaitUntilCommand(() -> {
+                            final var currentRPS = ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations();
+                            final var error = Math.abs(currentRPS - targetRPS);
+                            // System.out.printf("current: %d, setpoint: %d, err: %d%n", currentRPS, targetRPS, error);
+                            return error < 6;
+                        }),
                         Commands.race(
                             IndexerCommands.setOutput(() -> 1.0),
                             Commands.waitSeconds(0.5)

@@ -3,65 +3,65 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.753909307563513,
-        "y": 4.526369318682515
+        "x": 0.7233010829658023,
+        "y": 6.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.049807190520093,
-        "y": 3.227746091852348
-      },
-      "isLocked": false,
-      "linkedName": "left-start"
-    },
-    {
-      "anchor": {
-        "x": 2.8595839009826047,
-        "y": 0.9608608308090991
-      },
-      "prevControl": {
-        "x": 1.4322857736590775,
-        "y": 1.0448195441810713
-      },
-      "nextControl": {
-        "x": 4.212516478900184,
-        "y": 0.8812765615198297
+        "x": 0.9751772230817188,
+        "y": 7.239106841850047
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.5,
-        "y": 0.75
+        "x": 1.6748331678481538,
+        "y": 7.061860669175885
       },
       "prevControl": {
-        "x": 6.653715991970705,
-        "y": 0.75
+        "x": 1.7055869466057048,
+        "y": 6.631307766570175
+      },
+      "nextControl": {
+        "x": 1.6561756759877155,
+        "y": 7.323065555222019
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.6113561318031727,
+        "y": 7.257764333710486
+      },
+      "prevControl": {
+        "x": 1.6841619137783728,
+        "y": 7.183134366268733
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "note-left-centerline"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.5,
+    "maxVelocity": 2.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 4.398705354995436,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "left-speaker",
+  "folder": "RightSpeaker2PiecePath",
   "previewStartingState": {
-    "rotation": -60.15311904852601,
+    "rotation": 60.06848815949217,
     "velocity": 0
   },
   "useDefaultConstraints": false
