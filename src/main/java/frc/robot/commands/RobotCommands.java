@@ -45,27 +45,6 @@ public class RobotCommands {
         );
     }
 
-    public static Command turnToSpeaker() {
-        Pose2d goalPose;
-        var mPoseEstimator = Vision.PoseEstimator.getInstance();
-        var robotPose = mPoseEstimator.getCurrentPose();
-        var currentAlliance = DriverStation.getAlliance();
-        if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
-            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
-        }
-        else {
-            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
-        }
-
-        var startingAngle = robotPose.getRotation().getDegrees();
-        double adjacent = Math.abs((robotPose.getX()) - (goalPose.getX()));
-        double opposite = Math.abs((robotPose.getY()) - (goalPose.getY()));
-        var endAngle = Math.atan2(adjacent, opposite);
-        Rotation2d angleDiffrence =  new Rotation2d((endAngle - startingAngle));
-
-        return new TurnAngle(angleDiffrence);
-    }
-
     public static Command autoIntakeHandOff() {
         return new SequentialCommandGroup(
             new ConditionalCommand(

@@ -76,7 +76,7 @@ public class Operator extends Gamepad {
 
         controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
 
-        controller.square().whileTrue(RobotCommands.turnToSpeaker());
+        controller.square().whileTrue(DrivetrainCommands.autoLineUp());
 
         // Trap Command
         controller.L1().whileTrue(IndexerCommands.setOutput(() -> -1.0));
@@ -85,7 +85,6 @@ public class Operator extends Gamepad {
         controller.povUp().whileTrue(RobotCommands.primeClimb());
         controller.povDown().whileTrue(RobotCommands.climb());
         controller.povRight().whileTrue(RobotCommands.primeTrap());
-        // controller.povDown().whileTrue(RobotCommands.primeTrap());
 
         //Elevator Manual Override
         controller.R2().whileTrue( Commands.sequence(

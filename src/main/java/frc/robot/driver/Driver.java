@@ -50,26 +50,29 @@ public class Driver extends Gamepad {
         controller.L2().whileTrue(DrivetrainCommands.driveSlowMode(this::getDriveTranslation, this::getDriveRotation));
 
         // Intake Commands
-        controller.R2().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
-        controller.R2().onTrue(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed));
-        controller.R2().onFalse(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed));
+        controller.R2().whileTrue(RobotCommands.autoIntakeHandOff());
 
         controller.R1().onTrue(RobotCommands.spitNote());
 
         controller.circle().onTrue(RobotCommands.handOffNote());
 
-        controller.L1().whileTrue(new ConditionalCommand(
-            DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(28.51)),
-            DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(-28.51)),
-            () -> {
-                var alliance = DriverStation.getAlliance();
-                if (alliance.isPresent()) {
-                    return alliance.get() == DriverStation.Alliance.Red;
-                }
+        // Intake manual override Commands
+        controller.L1().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
+        controller.L1().onTrue(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed));
+        controller.L1().onFalse(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed));
 
-                return false;
-            }
-        ));
+        // controller.L1().whileTrue(new ConditionalCommand(
+        //     DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(28.51)),
+        //     DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(-28.51)),
+        //     () -> {
+        //         var alliance = DriverStation.getAlliance();
+        //         if (alliance.isPresent()) {
+        //             return alliance.get() == DriverStation.Alliance.Red;
+        //         }
+
+        //         return false;
+        //     }
+        // ));
     }
 
     @Override
