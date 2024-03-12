@@ -3,47 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.458447825986561,
+        "x": 1.2437546130441748,
         "y": 5.55
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0439886462008543,
-        "y": 5.041516235647176
+        "x": 2.2437546130441746,
+        "y": 5.55
       },
       "isLocked": false,
-      "linkedName": "note-mid"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.25,
-        "y": 4.4
+        "x": 2.458447825986561,
+        "y": 5.55
       },
       "prevControl": {
-        "x": 1.9849899215950382,
-        "y": 4.553003640105069
+        "x": 1.458447825986561,
+        "y": 5.55
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "left-podium-shot"
+      "linkedName": "note-mid"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -21.418425620246442,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterSpeaker3PiecePath",
-  "previewStartingState": null,
+  "folder": "CenterPaths",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }
