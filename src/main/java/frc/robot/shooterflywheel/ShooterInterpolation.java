@@ -28,16 +28,20 @@ public class ShooterInterpolation {
     // Method to set up data values for Angles in the TreeMap
     private void configureInterpolatingAngleTreeMap() {
         // Add data points to the TreeMap
-        dataAngle.put(10.0, 20.0);
-        dataAngle.put(20.0, 20.0);
-        dataAngle.put(30.0, 30.0);
-        dataAngle.put(40.0, 40.0);
-        dataAngle.put(50.0, 50.0);
+        dataAngle.put(1.0, 5.0);
+        dataAngle.put(2.0, 10.0);
+        dataAngle.put(3.0, 15.0);
+        dataAngle.put(4.0, 20.0);
+        dataAngle.put(5.0, 25.0);
+        dataAngle.put(6.0, 30.0);
+        dataAngle.put(7.0, 35.0);
+        dataAngle.put(8.0, 40.0);
+        dataAngle.put(9.0, 45.0);
+        dataAngle.put(10.0, 50.0);
     }
 
     // Method to interpolate the data point at a specific distance
     public double getInterpolatedPercentOutput(double distance) {
-
         /* Get the interpolated entry from the TreeMap for the specified distance */
         double shooterVelocity = dataPercentOutput.get(distance);
         // double shooterRightVelocity = data.get(distance).rightVelocity;
@@ -49,25 +53,20 @@ public class ShooterInterpolation {
         // System.out.println("Interpolated left velocity is " + shooterLeftVelocity);
         // System.out.println("Interpolated right velocity is " + shooterRightVelocity);
 
-    // Return the interpolated data point
+        // Return the interpolated data point
         return shooterVelocity;
     }
 
     // Method to interpolate the data point at a specific distance
     public double getInterpolatedAngle(double distance) {
-
         /* Get the interpolated entry from the TreeMap for the specified distance */
         double shooterPivotAngle = dataAngle.get(distance);
-        // double shooterRightVelocity = data.get(distance).rightVelocity;
-        // double shooterLeftVelocity = data.get(distance).leftVelocity;
 
         /* Print the interpolated values */
         System.out.println("At distance " + distance);
         System.out.println("Interpolated shooter pivot angle is " + shooterPivotAngle);
-        // System.out.println("Interpolated left velocity is " + shooterLeftVelocity);
-        // System.out.println("Interpolated right velocity is " + shooterRightVelocity);
 
-    // Return the interpolated data point
+        // Return the interpolated data point
         return shooterPivotAngle;
     }
 }
