@@ -78,6 +78,10 @@ public class Drivetrain extends SubsystemBase {
         setModuleStates(states);
     }
 
+    public Rotation2d getAngularVelocity() {
+        return  Rotation2d.fromRotations(gyro.getAngularVelocityZWorld().getValueAsDouble());
+    }
+
 
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return DriveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());

@@ -30,11 +30,6 @@ class SetOutputIntakeRoller extends Command{
             currentProfile = CurrentProfile.kOuttake;
         }
         roller.setOutput(supplier.getAsDouble());
-
-        // if(roller.hasNote()){
-        //     new WaitCommand(0.2);
-        //     roller.stop();
-        // }
     }
 
     @Override

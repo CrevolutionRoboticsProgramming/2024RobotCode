@@ -1,18 +1,27 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.estimator.PoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.drivetrain.Drivetrain;
+import frc.robot.drivetrain.commands.TurnAngle;
 import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.elevator.commands.SetPositionElevator;
 import frc.robot.indexer.Indexer;
 import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
 import frc.robot.intakepivot.commands.SetStateIntakePivot;
+import frc.robot.intakeroller.IntakeRoller;
 import frc.robot.intakeroller.commands.IntakeRollerCommands;
 import frc.robot.shooterflywheel.ShooterFlywheel;
 import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
 import frc.robot.shooterpivot.commands.SetAngleShooterPivot;
 import frc.robot.shooterpivot.commands.ShooterPivotCommands;
+import frc.robot.vision.Vision;
 
 import java.util.concurrent.ConcurrentMap;
 
@@ -36,12 +45,40 @@ public class RobotCommands {
         );
     }
 
+    public static Command turnToSpeaker() {
+        Pose2d goalPose;
+        var mPoseEstimator = Vision.PoseEstimator.getInstance();
+        var robotPose = mPoseEstimator.getCurrentPose();
+        var currentAlliance = DriverStation.getAlliance();
+        if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
+            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        }
+        else {
+            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+        }
+
+        var startingAngle = robotPose.getRotation().getDegrees();
+        double adjacent = Math.abs((robotPose.getX()) - (goalPose.getX()));
+        double opposite = Math.abs((robotPose.getY()) - (goalPose.getY()));
+        var endAngle = Math.atan2(adjacent, opposite);
+        Rotation2d angleDiffrence =  new Rotation2d((endAngle - startingAngle));
+
+        return new TurnAngle(angleDiffrence);
+    }
+
     public static Command autoIntakeHandOff() {
         return new SequentialCommandGroup(
-            IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
-            new ParallelRaceGroup(
-                new WaitCommand(1),
-                IntakeRollerCommands.setOutput(() -> -1)
+            new ConditionalCommand(
+                Commands.none(),
+                new ParallelRaceGroup(
+                    IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
+                    IntakeRollerCommands.setOutput(() -> -1),
+                    new SequentialCommandGroup(
+                        new WaitUntilCommand(() -> IntakeRoller.getInstance().hasNote()),
+                        new WaitCommand(0.2)
+                    )
+                ),
+                IntakeRoller.getInstance()::hasNote
             ),
             handOffNote()
         );
@@ -77,8 +114,11 @@ public class RobotCommands {
             Commands.parallel(
                 ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kAmp),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kAmp),
-                ShooterFlywheelCommands.setAngularVelocity(
-                    () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1))
+                new ParallelRaceGroup(
+                    ShooterFlywheelCommands.setAngularVelocity(
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1)),
+                    new WaitUntilCommand(() -> !Indexer.getInstance().hasNote())
+                )
             )
         );
     }
@@ -87,6 +127,16 @@ public class RobotCommands {
         return Commands.parallel(
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kClimb),
             ElevatorCommands.setPosition(SetPositionElevator.Preset.kClimb)
+        );
+    }
+
+    public static Command climb() {
+        return Commands.parallel(
+            new SequentialCommandGroup(
+                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap),
+                new WaitCommand(0.5)
+            ),
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
         );
     }
 

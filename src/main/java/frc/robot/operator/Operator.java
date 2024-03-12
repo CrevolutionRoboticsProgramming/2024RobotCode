@@ -1,5 +1,6 @@
 package frc.robot.operator;
 
+import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -9,6 +10,7 @@ import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
 import frc.robot.Robot;
 import frc.robot.commands.RobotCommands;
+import frc.robot.drivetrain.commands.DrivetrainCommands;
 import frc.robot.elevator.Elevator;
 import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.elevator.commands.SetPositionElevator;
@@ -21,6 +23,7 @@ import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
 import frc.robot.shooterpivot.ShooterPivot;
 import frc.robot.shooterpivot.commands.SetAngleShooterPivot;
 import frc.robot.shooterpivot.commands.ShooterPivotCommands;
+import frc.robot.vision.Vision;
 
 public class Operator extends Gamepad {
     private static class Settings {
@@ -62,7 +65,7 @@ public class Operator extends Gamepad {
     public void setupTeleopButtons() {
         // Shooter Commands
         controller.cross().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
-        controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterFar));
+        //controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterFar));
 
         controller.circle().whileTrue(RobotCommands.primeAmp());
 
@@ -73,17 +76,15 @@ public class Operator extends Gamepad {
 
         controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
 
+        controller.square().whileTrue(RobotCommands.turnToSpeaker());
+
         // Trap Command
         controller.L1().whileTrue(IndexerCommands.setOutput(() -> -1.0));
-        controller.L1().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(2500)));
+        controller.L1().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(75)));
 
         controller.povUp().whileTrue(RobotCommands.primeClimb());
-        controller.povDown().whileTrue(
-            Commands.parallel(
-                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
-                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
-            )
-        );
+        controller.povDown().whileTrue(RobotCommands.climb());
+        controller.povRight().whileTrue(RobotCommands.primeTrap());
         // controller.povDown().whileTrue(RobotCommands.primeTrap());
 
         //Elevator Manual Override

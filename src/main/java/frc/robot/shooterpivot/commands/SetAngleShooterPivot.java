@@ -49,7 +49,7 @@ public class SetAngleShooterPivot extends Command {
 
     private final ShooterPivot pivot;
     private State state;
-    private final Preset targetState;
+    private final Rotation2d targetState;
 
     private long startTs;
     private final TrapezoidProfile profile;
@@ -61,6 +61,18 @@ public class SetAngleShooterPivot extends Command {
     private final boolean indefinite;
 
     SetAngleShooterPivot(Preset target, boolean indefinite) {
+        pivot = ShooterPivot.getInstance();
+        targetState = target.target;
+        profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
+            ShooterPivot.Settings.kMaxAngularVelocity.getDegrees(),
+            ShooterPivot.Settings.kMaxAngularAcceleration.getDegrees()
+        ));
+        pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
+        this.indefinite = false;
+        addRequirements(pivot);
+    }
+
+    SetAngleShooterPivot(Rotation2d target, boolean indefinite) {
         pivot = ShooterPivot.getInstance();
         targetState = target;
         profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
@@ -92,7 +104,7 @@ public class SetAngleShooterPivot extends Command {
                 final var request = profile.calculate(
                     elapsedTime,
                     initialProfileState,
-                    new TrapezoidProfile.State(targetState.target.getDegrees(), 0.0)
+                    new TrapezoidProfile.State(targetState.getDegrees(), 0.0)
                 );
                 pivot.setAngularVelocity(Rotation2d.fromDegrees(request.velocity));
 
@@ -102,7 +114,7 @@ public class SetAngleShooterPivot extends Command {
                 }
 
                 final var currentAngle = pivot.getAngle().getDegrees();
-                final var profileDir = (initialProfileState.position > targetState.target.getDegrees()) ? ProfileDirection.kPositive : ProfileDirection.kNegative;
+                final var profileDir = (initialProfileState.position > targetState.getDegrees()) ? ProfileDirection.kPositive : ProfileDirection.kNegative;
                 if (profileDir == ProfileDirection.kPositive && currentAngle >= ShooterPivot.Settings.kMaxAngle.getDegrees()) {
                     changeState(State.kHold, "hit positive stop");
                     break;

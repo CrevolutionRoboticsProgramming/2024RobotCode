@@ -16,7 +16,7 @@ public class TurnAngle extends Command {
     private Long startTs;
 
     // Robot Radius (diagonal) in meters
-    private final double radius = 0.97 / 2.0; 
+    private final double radius = 0.7112 / 2.0; 
     
 
     public TurnAngle(Rotation2d deltaTheta) {
