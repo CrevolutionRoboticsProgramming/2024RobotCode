@@ -25,17 +25,17 @@ public class IntakeRoller extends SubsystemBase {
             }
         }
 
-        static final int kBeamBreakerId = 2;
+        //static final int kBeamBreakerId = 2;
     }
     private static IntakeRoller mInstance;
-    private static DigitalInput mBeamBreaker;
+    //private static DigitalInput mBeamBreaker;
 
     private final CANSparkMax mSpark;
 
     public IntakeRoller() {
         mSpark = new CANSparkMax(IntakeConfig.kIntakeSparkID, MotorType.kBrushless);
         mSpark.setIdleMode(IdleMode.kBrake);
-        mBeamBreaker = new DigitalInput(Settings.kBeamBreakerId);
+        //mBeamBreaker = new DigitalInput(Settings.kBeamBreakerId);
 
         configureMotor();
     }
@@ -47,9 +47,9 @@ public class IntakeRoller extends SubsystemBase {
         return mInstance;
     }
 
-    public boolean hasNote() {
-        return !mBeamBreaker.get();
-    }
+    // public boolean hasNote() {
+    //     return !mBeamBreaker.get();
+    // }
 
     public void setOutput(double percentOutput) {
         mSpark.setVoltage(12.0 * percentOutput);

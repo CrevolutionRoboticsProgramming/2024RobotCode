@@ -45,23 +45,23 @@ public class RobotCommands {
         );
     }
 
-    public static Command autoIntakeHandOff() {
-        return new SequentialCommandGroup(
-            new ConditionalCommand(
-                Commands.none(),
-                new ParallelRaceGroup(
-                    IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
-                    IntakeRollerCommands.setOutput(() -> -1),
-                    new SequentialCommandGroup(
-                        new WaitUntilCommand(() -> IntakeRoller.getInstance().hasNote()),
-                        new WaitCommand(0.2)
-                    )
-                ),
-                IntakeRoller.getInstance()::hasNote
-            ),
-            handOffNote()
-        );
-    }
+    // public static Command autoIntakeHandOff() {
+    //     return new SequentialCommandGroup(
+    //         new ConditionalCommand(
+    //             Commands.none(),
+    //             new ParallelRaceGroup(
+    //                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
+    //                 IntakeRollerCommands.setOutput(() -> -1),
+    //                 new SequentialCommandGroup(
+    //                     new WaitUntilCommand(() -> IntakeRoller.getInstance().hasNote()),
+    //                     new WaitCommand(0.2)
+    //                 )
+    //             ),
+    //             IntakeRoller.getInstance()::hasNote
+    //         ),
+    //         handOffNote()
+    //     );
+    // }
 
     public static Command spitNote() {
         return new SequentialCommandGroup(
