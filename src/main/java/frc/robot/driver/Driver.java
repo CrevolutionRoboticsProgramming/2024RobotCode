@@ -54,7 +54,7 @@ public class Driver extends Gamepad {
 
         controller.R1().onTrue(RobotCommands.spitNote());
 
-        controller.circle().onTrue(RobotCommands.handOffNote());
+        controller.cross().whileTrue(DrivetrainCommands.autoLineUp());
 
         // Intake manual override Commands
         controller.R2().whileTrue(IntakeRollerCommands.setOutput(() -> -1));

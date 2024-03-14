@@ -76,8 +76,6 @@ public class Operator extends Gamepad {
 
         controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
 
-        controller.square().whileTrue(DrivetrainCommands.autoLineUp());
-
         // Trap Command
         controller.L1().whileTrue(IndexerCommands.setOutput(() -> -1.0));
         controller.L1().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(75)));

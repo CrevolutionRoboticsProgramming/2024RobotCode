@@ -42,6 +42,9 @@ public class TurnAngle extends Command {
         }
 
         final var targetState = profile.calculate(getElapsedTime());
+
+        System.out.println("Distatnce: " + distance);
+        System.out.println("Target Velocity: " + targetState.velocity);
         mDrivetrain.setModuleStates(new SwerveModuleState[] {
             new SwerveModuleState(targetState.velocity, new Rotation2d(Units.degreesToRadians(-45))),
             new SwerveModuleState(targetState.velocity, new Rotation2d(Units.degreesToRadians(225))),

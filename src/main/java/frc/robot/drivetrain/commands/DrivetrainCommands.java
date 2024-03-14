@@ -47,22 +47,23 @@ public class DrivetrainCommands {
         var mPoseEstimator = Vision.PoseEstimator.getInstance();
         var robotPose = mPoseEstimator.getCurrentPose();
         var currentAlliance = DriverStation.getAlliance();
-        if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
-            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
-        }
-        else {
-            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
-        }
+        // if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
+        //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        // }
+        // else {
+        //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+        // }
 
-        final var startingAngle = robotPose.getRotation();
-        final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle();
-        final var deltaTheta = endAngle.minus(startingAngle).times(-1);
+        goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+        var startingAngle = robotPose.getRotation();
+        var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle();
+        var deltaTheta = endAngle.minus(startingAngle).times(-1);
 
         /*Other way to calculate */
-        // startingAngle = robotPose.getRotation().getRadians();
+        // var startingAngle = robotPose.getRotation().getRadians();
         // double adjacent = Math.abs(robotPose.getX() - goalPose.getX());
         // double opposite = Math.abs(robotPose.getY() - goalPose.getY());
-        // endAngle = Math.atan2(adjacent, opposite);
+        // var endAngle = Math.atan2(adjacent, opposite);
         // var deltaTheta = (endAngle - startingAngle);
         // deltaTheta *= Math.signum((robotPose.getX()) - (goalPose.getX()));
 
