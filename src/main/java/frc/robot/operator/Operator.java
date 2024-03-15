@@ -67,12 +67,18 @@ public class Operator extends Gamepad {
         controller.cross().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
         //controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterFar));
 
-        controller.circle().whileTrue(RobotCommands.primeAmp());
+        controller.square().whileTrue(RobotCommands.passNote());
+        controller.circle().whileTrue(RobotCommands.amp());
 
         controller.triangle().whileTrue(new SequentialCommandGroup(
             IndexerCommands.unJamNote(),
-            RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear))
+            IndexerCommands.loadNote())
         );
+
+        // controller.triangle().whileTrue(new SequentialCommandGroup(
+        //     IndexerCommands.unJamNote(),
+        //     RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear))
+        // );
 
         controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
 
@@ -83,6 +89,7 @@ public class Operator extends Gamepad {
         controller.povUp().whileTrue(RobotCommands.primeClimb());
         controller.povDown().whileTrue(RobotCommands.climb());
         controller.povRight().whileTrue(RobotCommands.primeTrap());
+        controller.povLeft().whileTrue(RobotCommands.trap());
 
         //Elevator Manual Override
         controller.R2().whileTrue( Commands.sequence(

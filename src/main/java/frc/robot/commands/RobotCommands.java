@@ -21,6 +21,7 @@ import frc.robot.shooterflywheel.ShooterFlywheel;
 import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
 import frc.robot.shooterpivot.commands.SetAngleShooterPivot;
 import frc.robot.shooterpivot.commands.ShooterPivotCommands;
+import frc.robot.shooterpivot.commands.SetAngleShooterPivot.Preset;
 import frc.robot.vision.Vision;
 
 import java.util.concurrent.ConcurrentMap;
@@ -45,23 +46,39 @@ public class RobotCommands {
         );
     }
 
-    // public static Command autoIntakeHandOff() {
-    //     return new SequentialCommandGroup(
-    //         new ConditionalCommand(
-    //             Commands.none(),
-    //             new ParallelRaceGroup(
-    //                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
-    //                 IntakeRollerCommands.setOutput(() -> -1),
-    //                 new SequentialCommandGroup(
-    //                     new WaitUntilCommand(() -> IntakeRoller.getInstance().hasNote()),
-    //                     new WaitCommand(0.2)
-    //                 )
-    //             ),
-    //             IntakeRoller.getInstance()::hasNote
-    //         ),
-    //         handOffNote()
-    //     );
-    // }
+    public static Command autoIntakeHandOff() {
+        return new SequentialCommandGroup(
+            new ConditionalCommand(
+                Commands.none(),
+                new ParallelRaceGroup(
+                    IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
+                    IntakeRollerCommands.setOutput(() -> -1),
+                    new SequentialCommandGroup(
+                        new WaitUntilCommand(() -> IntakeRoller.getInstance().hasNote()),
+                        new WaitCommand(0.2)
+                    )
+                ),
+                IntakeRoller.getInstance()::hasNote
+            ),
+            handOffNote()
+        );
+    }
+
+    public static Command passNote() {
+        return new SequentialCommandGroup(
+            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
+            new ParallelRaceGroup(
+                Commands.parallel(
+                    ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kPass),
+                    ShooterFlywheelCommands.setAngularVelocity(
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6)
+                    )
+                ),
+                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
+            )
+        );
+    }
 
     public static Command spitNote() {
         return new SequentialCommandGroup(
@@ -70,19 +87,25 @@ public class RobotCommands {
                 new WaitCommand(1.0),
                 IntakeRollerCommands.setOutput(() -> 1)
             ),
-            IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed)
+            IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
         );
     }
 
     public static Command primeSpeaker(SetAngleShooterPivot.Preset state) {
         return new SequentialCommandGroup(
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
-            Commands.parallel(
-                ShooterPivotCommands.setState(state),
-                ShooterFlywheelCommands.setAngularVelocity(() -> switch (state) {
-                    case kShooterNear -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8);
-                    default -> ShooterFlywheel.Settings.kMaxAngularVelocity;
-                })
+            new ParallelRaceGroup(
+                Commands.parallel(
+                    ShooterPivotCommands.setState(state),
+                    ShooterFlywheelCommands.setAngularVelocity(() -> switch (state) {
+                        case kShooterNear -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8);
+                        default -> ShooterFlywheel.Settings.kMaxAngularVelocity;
+                    })
+                ),
+                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
             )
         );
     }
@@ -98,6 +121,17 @@ public class RobotCommands {
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1)),
                     new WaitUntilCommand(() -> !Indexer.getInstance().hasNote())
                 )
+            )
+        );
+    }
+
+    public static Command amp() {
+        return new SequentialCommandGroup(
+            primeAmp(),
+            new ConditionalCommand(Commands.none(), primeAmp(), () -> !Indexer.getInstance().hasNote()),
+            Commands.parallel(
+                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
             )
         );
     }
@@ -124,6 +158,10 @@ public class RobotCommands {
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap),
             ElevatorCommands.setPosition(SetPositionElevator.Preset.kTrap)
         );
+    }
+
+    public static Command trap() {
+        return ElevatorCommands.setPosition(SetPositionElevator.Preset.kPostTrap);
     }
 
     public static Command shootNote(double targetRPM) {

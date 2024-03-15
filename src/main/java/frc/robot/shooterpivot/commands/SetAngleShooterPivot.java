@@ -26,6 +26,7 @@ public class SetAngleShooterPivot extends Command {
         kShooterFar(Rotation2d.fromDegrees(30.5)),
         kTrap(Rotation2d.fromDegrees(131)),
         kClimb(Rotation2d.fromDegrees(45)),
+        kPass(Rotation2d.fromDegrees(50)),
         kAmp(Rotation2d.fromDegrees(85));
 
         private final Rotation2d target;
