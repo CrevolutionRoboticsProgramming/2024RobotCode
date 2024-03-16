@@ -1,8 +1,9 @@
 Finished:
 
--Swerve Drivetrain Teleop (With Xbox and PS5 Controller Mappings)
+-A lot
 
 TODO: 
-Check all the comments Labeled "TODO:" in the code and work on those. These include motor ID's, cancoder ID's, angle offsets etc.
-
-Finish Auton With PathPlanner (Work in Progress)
+Tuning Constants for Pivots
+Vision auto align & interpolation
+Draw & Test more autons
+Test complex automated commands
