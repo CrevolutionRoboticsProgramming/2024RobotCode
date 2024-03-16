@@ -46,7 +46,7 @@ public class RobotCommands {
         );
     }
 
-    public static Command autoIntakeHandOff() {
+    public static Command autoIntake() {
         return new SequentialCommandGroup(
             new ConditionalCommand(
                 Commands.none(),
@@ -55,14 +55,24 @@ public class RobotCommands {
                     IntakeRollerCommands.setOutput(() -> -1),
                     new SequentialCommandGroup(
                         new WaitUntilCommand(() -> IntakeRoller.getInstance().hasNote()),
-                        new WaitCommand(0.2)
+                        new WaitCommand(0.1)
                     )
                 ),
                 IntakeRoller.getInstance()::hasNote
-            ),
-            handOffNote()
+            )
         );
     }
+
+    // public static Command autoIntakeHandOff() {
+    //     return new SequentialCommandGroup(
+    //         new ConditionalCommand(
+    //             Commands.none(), 
+    //             autoIntake(), 
+    //             IntakeRoller.getInstance()::hasNote()
+    //         )
+    //         handOffNote()
+    //     );
+    // }
 
     public static Command passNote() {
         return new SequentialCommandGroup(
@@ -73,10 +83,10 @@ public class RobotCommands {
                     ShooterFlywheelCommands.setAngularVelocity(
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6)
                     )
-                ),
-                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
-                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
-            )
+                )
+            ),
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
         );
     }
 
@@ -103,10 +113,10 @@ public class RobotCommands {
                         case kShooterNear -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8);
                         default -> ShooterFlywheel.Settings.kMaxAngularVelocity;
                     })
-                ),
-                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
-                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
-            )
+                )
+            ),
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
         );
     }
 

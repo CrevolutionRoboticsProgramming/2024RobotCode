@@ -47,7 +47,7 @@ public class Operator extends Gamepad {
 
        stickCurve = new ExpCurve(1, 0, 1, Settings.kDeadzone);
        shooterPivotManualCurve = new ExpCurve(1, 0, ShooterPivot.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
-       intakePivotManualCurve = new ExpCurve(1, 0, IntakePivot.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
+       intakePivotManualCurve = new ExpCurve(1, 0, IntakePivot.Settings.kMaxAngularVelocity.getRadians()*0.5, Settings.kDeadzone);
        positionTestCurve = new ExpCurve(1, 20, 15, Settings.kDeadzone);
        elevatorCurve = new ExpCurve(1, 0, Elevator.Settings.kMaxVelocity, Settings.kDeadzone);
 

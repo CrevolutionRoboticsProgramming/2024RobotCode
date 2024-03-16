@@ -9,7 +9,7 @@ public class SetStateIntakePivot extends Command {
     public enum State {
         kDeployed(Rotation2d.fromDegrees(0)),
         kSpit(Rotation2d.fromDegrees(90)),
-        kStowed(Rotation2d.fromDegrees(186));
+        kStowed(Rotation2d.fromDegrees(241));
 
         final Rotation2d target;
 
@@ -66,7 +66,7 @@ public class SetStateIntakePivot extends Command {
         initProfileState = getCurrentState();
         startTs = null;
         commandState = CommandState.kInit;
-        pivot.setRequestedAngle(targetState.target);
+        
     }
 
     @Override
@@ -79,6 +79,7 @@ public class SetStateIntakePivot extends Command {
             case kProfile:
                 final var setState = profile.calculate(getElapsedTime(), initProfileState, targetProfileState);
                 pivot.setVelocity(Rotation2d.fromDegrees(setState.velocity));
+                pivot.setRequestedAngle(Rotation2d.fromDegrees(setState.position));
                 break;
             case kSeek:
                 final var dir = getProfileDirection();

@@ -19,18 +19,18 @@ public class IntakePivot extends SubsystemBase {
         static final boolean kEncoderInverted = true;
 
         // 45 degrees per second
-        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(560); //720
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(600); //720
         public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(420);
         static final double kMaxVoltage = 12.0;
 
-        static final Rotation2d kFFAngleOffset = Rotation2d.fromDegrees(20);
+        static final Rotation2d kFFAngleOffset = Rotation2d.fromDegrees(20); 
 
-        public static final Rotation2d kMaxAngle = Rotation2d.fromDegrees(188.0);
+        public static final Rotation2d kMaxAngle = Rotation2d.fromDegrees(242.0); 
 
-        static final double kG = 0.35; // V
+        static final double kG = 0.65; // V
         static final double kS = 0.0;  // V / rad
-        static final double kV = 1.75; // V * sec / rad (1.7)
-        static final double kA = 0.0;  // V * sec^2 / rad
+        static final double kV = 1.215; // V * sec / rad (1.7)
+        static final double kA = 0.01;  // V * sec^2 / rad
         static final double kP = 0.0;
         static final double kI = 0.0;
         static final double kD = 0.0;
@@ -56,7 +56,7 @@ public class IntakePivot extends SubsystemBase {
 //        mPosEncoder = IntakeRoller.getInstance().getPivotEncoder();
         mPosEncoder = mSpark.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         mPosEncoder.setInverted(Settings.kEncoderInverted);
-        mPosEncoder.setZeroOffset(0.045);
+        //mPosEncoder.setZeroOffset(0.045);
 
         mVelEncoder = IntakeRoller.getInstance().getPivotEncoder();
         mVelEncoder.setInverted(Settings.kEncoderInverted);
@@ -103,7 +103,7 @@ public class IntakePivot extends SubsystemBase {
      */
     public Rotation2d getAngularVelocity() {
         // 2/3 factor to account for gearing difference in pos vs vel
-        return Rotation2d.fromRotations(mVelEncoder.getVelocity() / 60.0).times(2.0 / 3.0);
+        return Rotation2d.fromRotations(mVelEncoder.getVelocity() / 60.0);
     }
 
     public void setRequestedAngle(Rotation2d angle) {
@@ -120,6 +120,10 @@ public class IntakePivot extends SubsystemBase {
         SmartDashboard.putNumber("[IntakePivot] Velocity (deg/s)", getAngularVelocity().getDegrees());
         if (lastRequestedVelocity != null) {
             SmartDashboard.putNumber("[IntakePivot] Req Velocity (deg/s)", lastRequestedVelocity.getDegrees());
+        }
+
+        if (requestedAngle != null) {
+            SmartDashboard.putNumber("[IntakePivot] Req Angle (deg)", requestedAngle.getDegrees());
         }
     }
 }
