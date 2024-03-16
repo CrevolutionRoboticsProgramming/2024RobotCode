@@ -56,8 +56,15 @@ public class DrivetrainCommands {
 
         goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
         var startingAngle = robotPose.getRotation();
+        if (startingAngle.getDegrees() < 0) {
+            startingAngle = Rotation2d.fromDegrees(startingAngle.getDegrees() + 360);
+        }
         var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle();
         var deltaTheta = endAngle.minus(startingAngle).times(-1);
+
+        System.out.println("Starting Angle: " + startingAngle);
+        System.out.println("End Angle: " + startingAngle);
+        System.out.println("DeltaTheta Angle: " + startingAngle);
 
         /*Other way to calculate */
         // var startingAngle = robotPose.getRotation().getRadians();

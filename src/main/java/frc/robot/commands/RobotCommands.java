@@ -118,7 +118,7 @@ public class RobotCommands {
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kAmp),
                 new ParallelRaceGroup(
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1)),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)),
                     new WaitUntilCommand(() -> !Indexer.getInstance().hasNote())
                 )
             )

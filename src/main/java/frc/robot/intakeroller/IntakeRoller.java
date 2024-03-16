@@ -25,7 +25,7 @@ public class IntakeRoller extends SubsystemBase {
             }
         }
 
-        static final int kBeamBreakerId = 2;
+        static final int kBeamBreakerId = 3;
     }
     private static IntakeRoller mInstance;
     private static DigitalInput mBeamBreaker;

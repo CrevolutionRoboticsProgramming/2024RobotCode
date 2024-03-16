@@ -21,7 +21,10 @@ public class VisionConfig{
         public static PhotonCamera shooterCam2 = new PhotonCamera(shooterCam2Name);
 
         //Robot to Cam 1 constants
-        public static final Transform3d cam1ToRobot = new Transform3d(new Translation3d(Units.inchesToMeters(11.25), Units.inchesToMeters(1.25), 0.0), new Rotation3d());
+        public static final Transform3d cam1ToRobot = new Transform3d(
+            new Translation3d(Units.inchesToMeters(13), Units.inchesToMeters(0), Units.inchesToMeters(19)), 
+            new Rotation3d(0, Units.degreesToRadians(15), Units.degreesToRadians(180))
+        );
         public static final Transform3d robotToCam1 = cam1ToRobot.inverse();
 
         //Robot to Cam 2 constants
