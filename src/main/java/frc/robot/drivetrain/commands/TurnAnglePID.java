@@ -49,14 +49,14 @@ public class TurnAnglePID extends Command {
         final var mPoseEstimator = Vision.PoseEstimator.getInstance();
         final var robotPose = mPoseEstimator.getCurrentPose();
         final var currentAlliance = DriverStation.getAlliance();
-        // if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
-        //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
-        // }
-        // else {
-        //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
-        // }
+        if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
+            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        }
+        else {
+            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+        }
 
-        goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        // goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
         final var startingAngle = robotPose.getRotation();
         final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle().plus(Rotation2d.fromDegrees(180.0));
         deltaTheta = endAngle.minus(startingAngle);
