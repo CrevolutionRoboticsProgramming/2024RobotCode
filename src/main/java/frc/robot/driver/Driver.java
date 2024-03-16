@@ -50,7 +50,8 @@ public class Driver extends Gamepad {
         controller.L2().whileTrue(DrivetrainCommands.driveSlowMode(this::getDriveTranslation, this::getDriveRotation));
 
         // Intake Commands
-        // controller.R2().whileTrue(RobotCommands.autoIntakeHandOff());
+        controller.R2().whileTrue(RobotCommands.autoIntake());
+        controller.R2().onFalse(RobotCommands.autoIntakeHandOff());
 
         controller.R1().onTrue(RobotCommands.spitNote());
 

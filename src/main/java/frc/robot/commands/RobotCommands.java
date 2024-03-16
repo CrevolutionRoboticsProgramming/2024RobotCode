@@ -63,16 +63,13 @@ public class RobotCommands {
         );
     }
 
-    // public static Command autoIntakeHandOff() {
-    //     return new SequentialCommandGroup(
-    //         new ConditionalCommand(
-    //             Commands.none(), 
-    //             autoIntake(), 
-    //             IntakeRoller.getInstance()::hasNote()
-    //         )
-    //         handOffNote()
-    //     );
-    // }
+    public static Command autoIntakeHandOff() {
+        return new SequentialCommandGroup(
+            new ConditionalCommand(
+                Commands.none(), autoIntake(), Indexer.getInstance()::hasNote),
+            handOffNote()
+        );
+    }
 
     public static Command passNote() {
         return new SequentialCommandGroup(
