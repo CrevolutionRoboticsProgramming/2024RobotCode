@@ -8,7 +8,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.drivetrain.Drivetrain;
-import frc.robot.drivetrain.commands.TurnAngle;
+import frc.robot.drivetrain.commands.TurnAngleProfile;
 import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.elevator.commands.SetPositionElevator;
 import frc.robot.indexer.Indexer;
@@ -43,31 +43,6 @@ public class RobotCommands {
                 )
             ),
             new InstantCommand(() -> System.out.println("handoff complete"))
-        );
-    }
-
-    public static Command autoIntake() {
-        return new SequentialCommandGroup(
-            new ConditionalCommand(
-                Commands.none(),
-                new ParallelRaceGroup(
-                    IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
-                    IntakeRollerCommands.setOutput(() -> -1),
-                    new SequentialCommandGroup(
-                        new WaitUntilCommand(() -> IntakeRoller.getInstance().hasNote()),
-                        new WaitCommand(0.1)
-                    )
-                ),
-                IntakeRoller.getInstance()::hasNote
-            )
-        );
-    }
-
-    public static Command autoIntakeHandOff() {
-        return new SequentialCommandGroup(
-            new ConditionalCommand(
-                Commands.none(), autoIntake(), Indexer.getInstance()::hasNote),
-            handOffNote()
         );
     }
 

@@ -3,6 +3,7 @@ package frc.robot.indexer;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Indexer extends SubsystemBase{
@@ -38,8 +39,8 @@ public class Indexer extends SubsystemBase{
         return !mBeamBreaker.get();
     }
 
-//    @Override
-//    public void periodic() {
-//        System.out.println("beam break state: " + hasNote());
-//    }
+   @Override
+   public void periodic() {
+       SmartDashboard.putBoolean("Indexer Has Note", hasNote());
+   }
 }

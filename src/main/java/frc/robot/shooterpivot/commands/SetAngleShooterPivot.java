@@ -3,6 +3,7 @@ package frc.robot.shooterpivot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.shooterpivot.ShooterPivot;
 
@@ -61,6 +62,8 @@ public class SetAngleShooterPivot extends Command {
     private final Rotation2d kAllowedError = Rotation2d.fromDegrees(1);
     private final boolean indefinite;
 
+    private final String kPivotAtAngleKey = "[ShooterPivot] AtAngle";
+
     SetAngleShooterPivot(Preset target, boolean indefinite) {
         pivot = ShooterPivot.getInstance();
         targetState = target.target;
@@ -71,6 +74,7 @@ public class SetAngleShooterPivot extends Command {
         pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
         this.indefinite = false;
         addRequirements(pivot);
+        SmartDashboard.putBoolean(kPivotAtAngleKey, false);
     }
 
     SetAngleShooterPivot(Rotation2d target, boolean indefinite) {
@@ -83,6 +87,7 @@ public class SetAngleShooterPivot extends Command {
         pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
         this.indefinite = false;
         addRequirements(pivot);
+        SmartDashboard.putBoolean(kPivotAtAngleKey, false);
     }
 
     @Override
@@ -95,6 +100,7 @@ public class SetAngleShooterPivot extends Command {
         startTs = System.currentTimeMillis();
         initialProfileState = new TrapezoidProfile.State(pivot.getAngle().getDegrees(), pivot.getAngularVelocity().getDegrees());
         changeState(State.kProfile);
+
     }
 
     @Override
@@ -129,6 +135,7 @@ public class SetAngleShooterPivot extends Command {
                 if (!indefinite && isWithinAllowedError()) {
                     changeState(State.kDone, "within allowed error");
                 }
+                break;
         }
     }
 
@@ -141,6 +148,7 @@ public class SetAngleShooterPivot extends Command {
     public void end(boolean interrupted) {
         log("end (interrupted = %b)".formatted(interrupted));
         pivot.setAngularVelocity(Rotation2d.fromDegrees(0));
+        SmartDashboard.putBoolean(kPivotAtAngleKey, !interrupted);
     }
 
     public boolean isWithinAllowedError() {

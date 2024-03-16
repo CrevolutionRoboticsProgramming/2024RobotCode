@@ -15,6 +15,7 @@ import frc.robot.indexer.commands.IndexerCommands;
 import frc.robot.intakepivot.commands.IntakePivotCommands;
 import frc.robot.intakepivot.commands.SetStateIntakePivot;
 import frc.robot.intakeroller.commands.IntakeRollerCommands;
+import frc.robot.shooterpivot.commands.SetAngleShooterPivot;
 
 public class Driver extends Gamepad {
     private static class Settings {
@@ -50,8 +51,12 @@ public class Driver extends Gamepad {
         controller.L2().whileTrue(DrivetrainCommands.driveSlowMode(this::getDriveTranslation, this::getDriveRotation));
 
         // Intake Commands
-        controller.R2().whileTrue(RobotCommands.autoIntake());
-        controller.R2().onFalse(RobotCommands.autoIntakeHandOff());
+        controller.R2().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
+        controller.R2().onTrue(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed));
+        controller.R2().onFalse(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed));
+        
+
+        controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
 
         controller.R1().onTrue(RobotCommands.spitNote());
 

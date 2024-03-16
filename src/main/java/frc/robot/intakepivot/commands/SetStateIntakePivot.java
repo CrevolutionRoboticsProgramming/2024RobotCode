@@ -9,7 +9,7 @@ public class SetStateIntakePivot extends Command {
     public enum State {
         kDeployed(Rotation2d.fromDegrees(0)),
         kSpit(Rotation2d.fromDegrees(90)),
-        kStowed(Rotation2d.fromDegrees(241));
+        kStowed(Rotation2d.fromDegrees(182));
 
         final Rotation2d target;
 

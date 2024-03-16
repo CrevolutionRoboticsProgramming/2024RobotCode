@@ -80,6 +80,6 @@ public class IntakeRoller extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Intake Roller Percent Output", getIntakeRollerPercentOutput());
         // System.out.println("Intake Roller Current: " + m_Roller.getOutputCurrent());
-        System.out.println("Beam Breaker: " + hasNote());
+        SmartDashboard.putBoolean("Intake Has Note", hasNote());
     }
 }

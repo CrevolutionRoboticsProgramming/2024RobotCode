@@ -38,15 +38,15 @@ public class DrivetrainCommands {
         );
     }
 
-    public static Command turnToAngle(Rotation2d target) {
-        return new TurnAngle(target);
+    public static Command turnToAngle() {
+        return new TurnAnglePID();
     }
 
     public static Command autoLineUp() {
-        Pose2d goalPose;
-        var mPoseEstimator = Vision.PoseEstimator.getInstance();
-        var robotPose = mPoseEstimator.getCurrentPose();
-        var currentAlliance = DriverStation.getAlliance();
+        // Pose2d goalPose;
+        // var mPoseEstimator = Vision.PoseEstimator.getInstance();
+        // var robotPose = mPoseEstimator.getCurrentPose();
+        // var currentAlliance = DriverStation.getAlliance();
         // if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
         //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
         // }
@@ -54,17 +54,28 @@ public class DrivetrainCommands {
         //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
         // }
 
-        goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
-        var startingAngle = robotPose.getRotation();
-        if (startingAngle.getDegrees() < 0) {
-            startingAngle = Rotation2d.fromDegrees(startingAngle.getDegrees() + 360);
-        }
-        var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle();
-        var deltaTheta = endAngle.minus(startingAngle).times(-1);
+        // goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        // var startingAngle = robotPose.getRotation();
+        // if (startingAngle.getDegrees() < 0) {
+        //     startingAngle = Rotation2d.fromDegrees(startingAngle.getDegrees() + 360);
+        // }
+        // var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle();
+        // var deltaTheta = endAngle.minus(startingAngle).times(-1);
 
-        System.out.println("Starting Angle: " + startingAngle);
-        System.out.println("End Angle: " + startingAngle);
-        System.out.println("DeltaTheta Angle: " + startingAngle);
+        // System.out.println("Starting Angle: " + startingAngle);
+        // System.out.println("End Angle: " + startingAngle);
+        // System.out.println("DeltaTheta Angle: " + startingAngle);
+
+        // goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        // var a = goalPose.getTranslation();
+
+        // // vector calc
+        // var b = robotPose.getTranslation();
+        // double ab = (a.getX() * b.getX()) + (a.getY() * b.getY());
+        // double magA = Math.sqrt( (Math.pow(a.getX(), 2) + Math.pow(a.getY(), 2)) );
+        // double magB = Math.sqrt( (Math.pow(b.getX(), 2) + Math.pow(b.getY(), 2)) );
+
+        // double deltaTheta = Math.acos(ab / (magA * magB));
 
         /*Other way to calculate */
         // var startingAngle = robotPose.getRotation().getRadians();
@@ -73,7 +84,7 @@ public class DrivetrainCommands {
         // var endAngle = Math.atan2(adjacent, opposite);
         // var deltaTheta = (endAngle - startingAngle);
         // deltaTheta *= Math.signum((robotPose.getX()) - (goalPose.getX()));
-
-        return new TurnAngle(deltaTheta);
+        
+        return new TurnAnglePID();
     }
 }
