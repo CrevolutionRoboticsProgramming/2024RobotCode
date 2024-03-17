@@ -188,6 +188,24 @@ public class RobotCommands {
     }
 
     // AUTON COMMANDS
+    public static Command autoSpeakerLineUp() {
+        return Commands.sequence(
+            Commands.race(
+                prime()
+            ),
+            autoShootNote(ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.9).getRotations())
+        );
+    }
+
+    public static Command autoConstantlyRPM() {
+        return new RepeatCommand(
+            ShooterFlywheelCommands.setAngularVelocity(
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.5)
+            )
+        );
+    }
+
     public static Command autoPrimeSpeakerAndShoot(SetAngleShooterPivot.Preset state, double targetRPS) {
         return Commands.sequence(
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),

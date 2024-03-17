@@ -28,10 +28,9 @@ public class SetAngleShooterPivot extends Command {
         kTrap(Rotation2d.fromDegrees(131)),
         kClimb(Rotation2d.fromDegrees(45)),
         kPass(Rotation2d.fromDegrees(5)),
-        kSpeaker(Rotation2d.fromDegrees(ShooterPivot.getInstance().getDistanceFromSpeaker())),
         kAmp(Rotation2d.fromDegrees(85));
 
-        private final Rotation2d target;
+        private Rotation2d target;
 
         Preset(Rotation2d target) {
             this.target = target;
@@ -52,7 +51,7 @@ public class SetAngleShooterPivot extends Command {
 
     private final ShooterPivot pivot;
     private State state;
-    private final Rotation2d targetState;
+    private Rotation2d targetState;
 
     private long startTs;
     private final TrapezoidProfile profile;
