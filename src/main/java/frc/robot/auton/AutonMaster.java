@@ -1,5 +1,6 @@
 package frc.robot.auton;
 
+import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -36,22 +37,6 @@ public class AutonMaster {
     public AutonMaster() {
         drivetrain = Drivetrain.getInstance();
         /* Define Named Commands Here */
-
-//        Zero Heading -> use at the beginning and end of every auton
-        NamedCommands.registerCommand("ZeroHeading", new InstantCommand(drivetrain::zeroHeading));
-
-        NamedCommands.registerCommand("ResetFieldOrientation", new InstantCommand(() -> {
-            drivetrain.swerveOdometry.resetPosition(Rotation2d.fromDegrees(-180),
-                Drivetrain.getInstance().getModulePositions(),
-                new Pose2d(new Translation2d(1.89, 7.73), Rotation2d.fromDegrees(0)));
-        }));
-
-        //Wait Command -> Common Command for Robot to Wait
-        NamedCommands.registerCommand("WaitCommand", new WaitCommand(5));
-
-        //Turn in place command -> enter custom angle
-        //This turns 45 deg.
-        NamedCommands.registerCommand("TurnInPlace", new TurnInPlaceCommand(45, drivetrain));
         configureNamedCommands();
 
         //Configuring AutoBuilder
@@ -86,6 +71,7 @@ public class AutonMaster {
         autonChooser.addOption("right-speaker-1-temp", AutoBuilder.buildAuto("right-speaker-1-temp"));
         autonChooser.addOption("left-speaker-2.5p", AutoBuilder.buildAuto("right-speaker-2.5"));
         autonChooser.addOption("left-speaker-2p", AutoBuilder.buildAuto("right-speaker-2"));
+        autonChooser.addOption("TEST-center-speaker-3p-right", AutoBuilder.buildAuto("center-speaker-3-right-NEW"));
         // autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("right-speaker-1.5"));
         autonChooser.addOption("Coyle's Stupid Auton", AutoBuilder.buildAuto("coyles-stupid-auton"));
 
@@ -114,6 +100,10 @@ public class AutonMaster {
             IntakeRollerCommands.setOutput(() -> -1.0),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff)
         ));
+
+        //TESTING (post-vision) Auton - Satchit
+        NamedCommands.registerCommand("PerpetualRPM", RobotCommands.autoConstantlyRPM());
+        NamedCommands.registerCommand("AutoLineupShoot", RobotCommands.autoLineupAndShoot());
     }
 
 

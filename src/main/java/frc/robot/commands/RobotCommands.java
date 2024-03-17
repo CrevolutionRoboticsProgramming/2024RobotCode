@@ -188,7 +188,7 @@ public class RobotCommands {
     }
 
     // AUTON COMMANDS
-    public static Command autoSpeakerLineUp() {
+    public static Command autoLineupAndShoot() {
         return Commands.sequence(
             Commands.race(
                 prime()
