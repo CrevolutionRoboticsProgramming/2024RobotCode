@@ -22,59 +22,66 @@
                 }
               },
               {
-                "type": "named",
-                "data": {
-                  "name": "AutoLineupShoot"
-                }
-              },
-              {
-                "type": "race",
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "center-speaker-start-to-mid"
+                        "name": "AutoLineupShoot"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "center-speaker-start-to-mid"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "autoRunIntake"
+                        "name": "AutoLineupShoot"
                       }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoLineupShoot"
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
+                    },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "note-mid-to-right"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "note-mid-to-right"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "autoRunIntake"
+                        "name": "AutoLineupShoot"
                       }
                     }
                   ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoLineupShoot"
                 }
               }
             ]
