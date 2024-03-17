@@ -3,6 +3,7 @@ package frc.robot.shooterflywheel;
 import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.math.interpolation.Interpolator;
 import edu.wpi.first.math.interpolation.InverseInterpolator;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterInterpolation {
     // Create an InterpolatingTreeMap to store data points with double keys
@@ -36,16 +37,17 @@ public class ShooterInterpolation {
     // Method to set up data values for Angles in the TreeMap
     private void configureInterpolatingAngleTreeMap() {
         // Add data points to the TreeMap
-        dataAngle.put(1.0, 5.0);
-        dataAngle.put(2.0, 10.0);
-        dataAngle.put(3.0, 15.0);
-        dataAngle.put(4.0, 20.0);
-        dataAngle.put(5.0, 25.0);
-        dataAngle.put(6.0, 30.0);
-        dataAngle.put(7.0, 35.0);
-        dataAngle.put(8.0, 40.0);
-        dataAngle.put(9.0, 45.0);
-        dataAngle.put(10.0, 50.0);
+        dataAngle.put(0.8288, 5.0);
+        dataAngle.put(1.0, 10.0);
+        dataAngle.put(1.5, 15.5);
+        dataAngle.put(2.0, 21.0);
+        dataAngle.put(2.5, 26.0);
+        dataAngle.put(3.0, 29.5);
+        dataAngle.put(3.5, 32.0);
+        dataAngle.put(4.0, 32.75);
+        dataAngle.put(4.5, 34.0);
+        dataAngle.put(5.0, 33.6);
+        dataAngle.put(5.5, 34.0);
     }
 
     // Method to interpolate the data point at a specific distance
@@ -71,8 +73,7 @@ public class ShooterInterpolation {
         double shooterPivotAngle = dataAngle.get(distance);
 
         /* Print the interpolated values */
-        System.out.println("At distance " + distance);
-        System.out.println("Interpolated shooter pivot angle is " + shooterPivotAngle);
+        SmartDashboard.putNumber("Interpolated Shooter Pivot Angle", shooterPivotAngle);
 
         // Return the interpolated data point
         return shooterPivotAngle;

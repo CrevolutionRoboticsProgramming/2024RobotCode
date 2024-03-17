@@ -78,8 +78,8 @@ public class RobotCommands {
                         )
                     ),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.9),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8)
                     )
                 )
             ),

@@ -33,7 +33,7 @@ public class Elevator extends SubsystemBase {
         public static final double kI = 0.0;
         public static final double kD = 0.0;
 
-        public static final double kMaxVelocity = 0.15;
+        public static final double kMaxVelocity = 0.3; //0.15
         public static final double kMaxAcceleration = 0.5;
 
         public static final double kMaxVoltage = 10.0;
