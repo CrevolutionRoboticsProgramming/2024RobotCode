@@ -40,7 +40,7 @@ public class LoadNote extends Command {
     @Override
     public void execute() {
         indexer.setOutput(switch (state) {
-            case kLoading -> 1.0;
+            case kLoading -> 0.60;
             case kBackoff -> -profile.percent;
             case kReverseBackoff -> 0.15;
             default -> 0.0;

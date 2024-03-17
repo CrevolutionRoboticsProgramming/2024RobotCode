@@ -1,14 +1,18 @@
 package frc.robot.drivetrain.commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.vision.Vision;
 
@@ -20,6 +24,29 @@ public class DrivetrainCommands {
             () -> Rotation2d.fromRadians(rotationSupplier.getAsDouble()).times(DriveConstants.MAX_ANGULAR_VELOCITY).times(rotationModifier),
             isFieldOriented,
             rotationOffset
+        );
+    }
+
+    public static Command driveAndLockTarget(Supplier<Translation2d> translationSupplier) {
+        final PIDController pidController = new PIDController(8.0, 0.0, 1.0);
+        final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(360.0);
+        final Rotation2d kAllowedError = Rotation2d.fromDegrees(1.0);
+        final Drivetrain drivetrain = Drivetrain.getInstance();
+        return drive(
+            translationSupplier, 
+            () -> {
+                final var deltaTheta = getRelativeAngleToSpeaker();
+                final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
+                    pidController.calculate(0.0, deltaTheta.getDegrees()),
+                    -kMaxAngularVelocity.getDegrees(),
+                    kMaxAngularVelocity.getDegrees()
+                ));
+                return requestedAngularVelocity.getRadians();
+            },
+            1.0,
+            1.0,
+            true,
+            new Translation2d(0, 0)
         );
     }
 
@@ -86,5 +113,22 @@ public class DrivetrainCommands {
         // deltaTheta *= Math.signum((robotPose.getX()) - (goalPose.getX()));
         
         return new TurnAnglePID();
+    }
+
+    private static Rotation2d getRelativeAngleToSpeaker() {
+        Pose2d goalPose;
+        final var mPoseEstimator = Vision.PoseEstimator.getInstance();
+        final var robotPose = mPoseEstimator.getCurrentPose();
+        final var currentAlliance = DriverStation.getAlliance();
+        if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
+            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+        }
+        else {
+            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        }
+        
+        final var startingAngle = robotPose.getRotation();
+        final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle().plus(Rotation2d.fromDegrees(180.0));
+        return endAngle.minus(startingAngle);
     }
 }

@@ -16,6 +16,7 @@ import frc.robot.intakepivot.commands.IntakePivotCommands;
 import frc.robot.intakepivot.commands.SetStateIntakePivot;
 import frc.robot.intakeroller.commands.IntakeRollerCommands;
 import frc.robot.shooterpivot.commands.SetAngleShooterPivot;
+import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 
 public class Driver extends Gamepad {
     private static class Settings {
@@ -57,8 +58,9 @@ public class Driver extends Gamepad {
         
 
         controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
-        controller.circle().whileTrue(RobotCommands.primeShoot());
-        controller.cross().whileTrue(DrivetrainCommands.autoLineUp());
+        controller.cross().whileTrue(RobotCommands.prime());
+        controller.circle().whileTrue(DrivetrainCommands.driveAndLockTarget(this::getDriveTranslation));
+        controller.povDown().whileTrue(ShooterPivotCommands.tuneLockSpeaker(() -> Rotation2d.fromDegrees(45)));
 
         controller.R1().onTrue(RobotCommands.spitNote());
 

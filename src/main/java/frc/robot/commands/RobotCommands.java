@@ -54,6 +54,7 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
             new ParallelRaceGroup(
                 Commands.parallel(
+                    ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero),
                     ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kPass),
                     ShooterFlywheelCommands.setAngularVelocity(
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6)
@@ -71,15 +72,15 @@ public class RobotCommands {
             new ParallelRaceGroup(
                 Commands.parallel(
                     ShooterPivotCommands.setSpeakerAngle(
-                        Rotation2d.fromDegrees(
+                        () -> Rotation2d.fromDegrees(
                             ShooterInterpolation.getInstance().getInterpolatedAngle(
                                 ShooterPivot.getInstance().getDistanceFromSpeaker()
                             )
                         )
                     ),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.9),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7)
                     )
                 )
             ),
@@ -193,15 +194,15 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
-                Commands.race(
+                new ParallelRaceGroup(
                     DrivetrainCommands.autoLineUp(),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.9),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7)
                     ),
                     Commands.sequence(
                         ShooterPivotCommands.setSpeakerAngle(
-                            Rotation2d.fromDegrees(
+                            () -> Rotation2d.fromDegrees(
                                 ShooterInterpolation.getInstance().getInterpolatedAngle(
                                     ShooterPivot.getInstance().getDistanceFromSpeaker()
                                 )

@@ -1,5 +1,7 @@
 package frc.robot.shooterpivot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -19,7 +21,7 @@ public class SetAngleShooterPivot extends Command {
 
     public enum Preset {
         kZero(Rotation2d.fromDegrees(0)),
-        kHandoff(Rotation2d.fromDegrees(5)),
+        kHandoff(Rotation2d.fromDegrees(0)),
         kHandoffClear(Rotation2d.fromDegrees(10)),
         kShooterNear(Rotation2d.fromDegrees(5)),
         kShooterMid(Rotation2d.fromDegrees(22.25)),
@@ -30,7 +32,7 @@ public class SetAngleShooterPivot extends Command {
         kPass(Rotation2d.fromDegrees(5)),
         kAmp(Rotation2d.fromDegrees(85));
 
-        private Rotation2d target;
+        Rotation2d target;
 
         Preset(Rotation2d target) {
             this.target = target;
@@ -50,8 +52,9 @@ public class SetAngleShooterPivot extends Command {
     }
 
     private final ShooterPivot pivot;
+    private final Supplier<Rotation2d> targetSupplier;
+    private Rotation2d target;
     private State state;
-    private Rotation2d targetState;
 
     private long startTs;
     private final TrapezoidProfile profile;
@@ -65,34 +68,51 @@ public class SetAngleShooterPivot extends Command {
     private final String kPivotAtAngleKey = "[ShooterPivot] AtAngle";
 
     SetAngleShooterPivot(Preset target, boolean indefinite) {
-        pivot = ShooterPivot.getInstance();
-        targetState = target.target;
-        profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
-            ShooterPivot.Settings.kMaxAngularVelocity.getDegrees(),
-            ShooterPivot.Settings.kMaxAngularAcceleration.getDegrees()
-        ));
-        pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
-        this.indefinite = false;
-        addRequirements(pivot);
-        SmartDashboard.putBoolean(kPivotAtAngleKey, false);
+        // pivot = ShooterPivot.getInstance();
+        // targetState = target.target;
+        // profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
+        //     ShooterPivot.Settings.kMaxAngularVelocity.getDegrees(),
+        //     ShooterPivot.Settings.kMaxAngularAcceleration.getDegrees()
+        // ));
+        // pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
+        // this.indefinite = false;
+        // addRequirements(pivot);
+        // SmartDashboard.putBoolean(kPivotAtAngleKey, false);
+        this(() -> target.target, indefinite);
     }
 
     SetAngleShooterPivot(Rotation2d target, boolean indefinite) {
-        pivot = ShooterPivot.getInstance();
-        targetState = target;
-        profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
+        // pivot = ShooterPivot.getInstance();
+        // targetState = target;
+        // profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
+        //     ShooterPivot.Settings.kMaxAngularVelocity.getDegrees(),
+        //     ShooterPivot.Settings.kMaxAngularAcceleration.getDegrees()
+        // ));
+        // pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
+        // this.indefinite = false;
+        // addRequirements(pivot);
+        // SmartDashboard.putBoolean(kPivotAtAngleKey, false);
+        this(() -> target, indefinite);
+    }
+
+    SetAngleShooterPivot(Supplier<Rotation2d> targetSupplier, boolean indefinite) {
+        this.pivot = ShooterPivot.getInstance();
+        this.targetSupplier = targetSupplier;
+        this.indefinite = indefinite;
+        this.profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
             ShooterPivot.Settings.kMaxAngularVelocity.getDegrees(),
             ShooterPivot.Settings.kMaxAngularAcceleration.getDegrees()
         ));
-        pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
-        this.indefinite = false;
+        this.pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
+
         addRequirements(pivot);
-        SmartDashboard.putBoolean(kPivotAtAngleKey, false);
     }
 
     @Override
     public void initialize() {
-        log("init (angle = %.2f)".formatted(targetState.getDegrees()));
+        target = targetSupplier.get();
+        log("init (angle = %.2f)".formatted(target.getDegrees()));
+        SmartDashboard.putBoolean(kPivotAtAngleKey, false);
         if (isWithinProfileThreshold()) {
             changeState(State.kHold, "within error threshold");
             return;
@@ -100,7 +120,6 @@ public class SetAngleShooterPivot extends Command {
         startTs = System.currentTimeMillis();
         initialProfileState = new TrapezoidProfile.State(pivot.getAngle().getDegrees(), pivot.getAngularVelocity().getDegrees());
         changeState(State.kProfile);
-
     }
 
     @Override
@@ -111,7 +130,7 @@ public class SetAngleShooterPivot extends Command {
                 final var request = profile.calculate(
                     elapsedTime,
                     initialProfileState,
-                    new TrapezoidProfile.State(targetState.getDegrees(), 0.0)
+                    new TrapezoidProfile.State(target.getDegrees(), 0.0)
                 );
                 pivot.setAngularVelocity(Rotation2d.fromDegrees(request.velocity));
 
@@ -121,7 +140,7 @@ public class SetAngleShooterPivot extends Command {
                 }
 
                 final var currentAngle = pivot.getAngle().getDegrees();
-                final var profileDir = (initialProfileState.position > targetState.getDegrees()) ? ProfileDirection.kPositive : ProfileDirection.kNegative;
+                final var profileDir = (initialProfileState.position > target.getDegrees()) ? ProfileDirection.kPositive : ProfileDirection.kNegative;
                 if (profileDir == ProfileDirection.kPositive && currentAngle >= ShooterPivot.Settings.kMaxAngle.getDegrees()) {
                     changeState(State.kHold, "hit positive stop");
                     break;
@@ -131,10 +150,14 @@ public class SetAngleShooterPivot extends Command {
                 }
                 break;
             case kHold:
-                pivot.setAngularVelocity(Rotation2d.fromDegrees(pidController.calculate(pivot.getAngle().getDegrees(), targetState.getDegrees())));
-                if (!indefinite && isWithinAllowedError()) {
+                pivot.setAngularVelocity(Rotation2d.fromDegrees(pidController.calculate(pivot.getAngle().getDegrees(), target.getDegrees())));
+                final var isWithinAllowedError = isWithinAllowedError();
+                SmartDashboard.putBoolean(kPivotAtAngleKey, isWithinAllowedError);
+                if (!indefinite && isWithinAllowedError) {
                     changeState(State.kDone, "within allowed error");
                 }
+                break;
+            case kDone:
                 break;
         }
     }
@@ -152,7 +175,7 @@ public class SetAngleShooterPivot extends Command {
     }
 
     public boolean isWithinAllowedError() {
-        return Math.abs(pivot.getAngle().getDegrees() - targetState.getDegrees()) < kAllowedError.getDegrees();
+        return Math.abs(pivot.getAngle().getDegrees() - target.getDegrees()) < kAllowedError.getDegrees();
     }
 
     private double getElapsedTime() {
@@ -160,7 +183,7 @@ public class SetAngleShooterPivot extends Command {
     }
 
     private boolean isWithinProfileThreshold() {
-        return Math.abs(pivot.getAngle().getDegrees() - targetState.getDegrees()) < kProfileThreshold.getDegrees();
+        return Math.abs(pivot.getAngle().getDegrees() - target.getDegrees()) < kProfileThreshold.getDegrees();
     }
 
     private void changeState(State newState) {

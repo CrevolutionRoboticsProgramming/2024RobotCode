@@ -4,12 +4,14 @@ import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.math.interpolation.Interpolator;
 import edu.wpi.first.math.interpolation.InverseInterpolator;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ShooterInterpolation {
+public class ShooterInterpolation extends SubsystemBase{
     // Create an InterpolatingTreeMap to store data points with double keys
     private static InterpolatingTreeMap<Double, Double> dataPercentOutput = new InterpolatingTreeMap<>(InverseInterpolator.forDouble(), Interpolator.forDouble());
     private static InterpolatingTreeMap<Double, Double> dataAngle = new InterpolatingTreeMap<>(InverseInterpolator.forDouble(), Interpolator.forDouble());
     private static ShooterInterpolation mInstance;
+    private double shooterPivotAngle;
     // private static InterpolatingDoubleTreeMap data = new InterpolatingDoubleTreeMap();
     public ShooterInterpolation() {
         // Configures the TreeMap
@@ -46,9 +48,13 @@ public class ShooterInterpolation {
         dataAngle.put(3.5, 32.0);
         dataAngle.put(4.0, 32.75);
         dataAngle.put(4.5, 34.0);
-        dataAngle.put(5.0, 33.6);
-        dataAngle.put(5.5, 34.0);
+        dataAngle.put(4.7, 35.0);
+        dataAngle.put(4.829, 34.0);
+        dataAngle.put(4.9, 33.75);
+        dataAngle.put(4.954, 34.4);
+        dataAngle.put(5.1, 34.8);
     }
+
 
     // Method to interpolate the data point at a specific distance
     public double getInterpolatedPercentOutput(double distance) {
@@ -70,13 +76,18 @@ public class ShooterInterpolation {
     // Method to interpolate the data point at a specific distance
     public double getInterpolatedAngle(double distance) {
         /* Get the interpolated entry from the TreeMap for the specified distance */
-        double shooterPivotAngle = dataAngle.get(distance);
+        shooterPivotAngle = dataAngle.get(distance);
 
         /* Print the interpolated values */
         SmartDashboard.putNumber("Interpolated Shooter Pivot Angle", shooterPivotAngle);
 
         // Return the interpolated data point
         return shooterPivotAngle;
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("[Interpolate Angle]", shooterPivotAngle);
     }
 }
 

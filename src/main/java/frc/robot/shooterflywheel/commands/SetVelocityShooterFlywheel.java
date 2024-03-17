@@ -11,7 +11,7 @@ public class SetVelocityShooterFlywheel extends Command {
     private final ShooterFlywheel flywheel;
     private final Supplier<Rotation2d> leftVelocitySupplier, rightVelocitySupplier;
 
-    private final Rotation2d kAllowedError = Rotation2d.fromRotations(4); // 240 RPM
+    private final Rotation2d kAllowedError = Rotation2d.fromRotations(5); // 300 RPM
 
     SetVelocityShooterFlywheel(Supplier<Rotation2d> leftVelocitySupplier, Supplier<Rotation2d> rightVelocitySupplier) {
         flywheel = ShooterFlywheel.getInstance();

@@ -14,8 +14,16 @@ public class ShooterPivotCommands {
         return new SetAngleShooterPivot(state, false);
     }
 
-    public static Command setSpeakerAngle(Rotation2d state) {
-        return new SetAngleShooterPivot(state, false);
+    public static Command setSpeakerAngle(Supplier<Rotation2d> targetSupplier) {
+        return new SetAngleShooterPivot(targetSupplier, false);
+    }
+
+    public static Command tuneLockSpeaker(Supplier<Rotation2d> targetSupplier) {
+        return new LockSpeaker(targetSupplier);
+    }
+
+    public static Command lockSpeaker() {
+        return new LockSpeaker();
     }
 
     public static Command holdState(SetAngleShooterPivot.Preset state) {
