@@ -189,11 +189,33 @@ public class RobotCommands {
 
     // AUTON COMMANDS
     public static Command autoLineupAndShoot() {
-        return Commands.sequence(
-            Commands.race(
-                prime()
+        return new SequentialCommandGroup(
+            new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
+            Commands.parallel(
+                IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
+                Commands.race(
+                    DrivetrainCommands.autoLineUp(),
+                    ShooterFlywheelCommands.setAngularVelocity(
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.9),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8)
+                    ),
+                    Commands.sequence(
+                        ShooterPivotCommands.setSpeakerAngle(
+                            Rotation2d.fromDegrees(
+                                ShooterInterpolation.getInstance().getInterpolatedAngle(
+                                    ShooterPivot.getInstance().getDistanceFromSpeaker()
+                                )
+                            )
+                        ),
+                        new WaitUntilCommand(() -> Math.abs(
+                            ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() - 
+                            (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.9) / 60.0) < 6),
+                        IndexerCommands.setOutput(() -> 1.0)
+                    )
+                )
             ),
-            autoShootNote(ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.9).getRotations())
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
         );
     }
 
