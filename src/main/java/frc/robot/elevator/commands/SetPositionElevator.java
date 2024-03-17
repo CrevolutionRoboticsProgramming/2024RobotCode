@@ -44,10 +44,17 @@ public class SetPositionElevator extends Command {
     public SetPositionElevator(Preset preset) {
         this.elevator = Elevator.getInstance();
         this.preset = preset;
-        this.profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
-            Elevator.Settings.kMaxVelocity,
+        if(this.preset == preset.kAmp) {
+            this.profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
+            0.35,
             Elevator.Settings.kMaxAcceleration
         ));
+        } else {
+            this.profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
+                Elevator.Settings.kMaxVelocity,
+                Elevator.Settings.kMaxAcceleration
+            ));
+        }
         addRequirements(elevator);
     }
 
