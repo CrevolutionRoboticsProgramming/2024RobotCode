@@ -8,6 +8,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.drivetrain.Drivetrain;
+import frc.robot.drivetrain.commands.DrivetrainCommands;
 import frc.robot.drivetrain.commands.TurnAngleProfile;
 import frc.robot.elevator.commands.ElevatorCommands;
 import frc.robot.elevator.commands.SetPositionElevator;
@@ -18,7 +19,9 @@ import frc.robot.intakepivot.commands.SetStateIntakePivot;
 import frc.robot.intakeroller.IntakeRoller;
 import frc.robot.intakeroller.commands.IntakeRollerCommands;
 import frc.robot.shooterflywheel.ShooterFlywheel;
+import frc.robot.shooterflywheel.ShooterInterpolation;
 import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
+import frc.robot.shooterpivot.ShooterPivot;
 import frc.robot.shooterpivot.commands.SetAngleShooterPivot;
 import frc.robot.shooterpivot.commands.ShooterPivotCommands;
 import frc.robot.shooterpivot.commands.SetAngleShooterPivot.Preset;
@@ -59,6 +62,36 @@ public class RobotCommands {
             ),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
             ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
+        );
+    }
+
+    public static Command primeShoot() {
+        return new SequentialCommandGroup(
+            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
+            new ParallelRaceGroup(
+                Commands.parallel(
+                    ShooterPivotCommands.setSpeakerAngle(
+                        Rotation2d.fromDegrees(
+                            ShooterInterpolation.getInstance().getInterpolatedAngle(
+                                ShooterPivot.getInstance().getDistanceFromSpeaker()
+                            )
+                        )
+                    ),
+                    ShooterFlywheelCommands.setAngularVelocity(
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7)
+                    )
+                )
+            ),
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
+        );
+    }
+
+    public static Command prime() {
+        return new ParallelCommandGroup(
+            primeShoot(),
+            DrivetrainCommands.autoLineUp()
         );
     }
 

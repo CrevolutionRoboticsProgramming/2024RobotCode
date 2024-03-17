@@ -51,7 +51,7 @@ public class Operator extends Gamepad {
        positionTestCurve = new ExpCurve(1, 20, 15, Settings.kDeadzone);
        elevatorCurve = new ExpCurve(1, 0, Elevator.Settings.kMaxVelocity, Settings.kDeadzone);
 
-        shooterManualCurve = new ExpCurve(1, 0, ShooterFlywheel.Settings.kMaxAngularVelocity.getRadians()*0.5, 0.05);
+        shooterManualCurve = new ExpCurve(1, 0, ShooterFlywheel.Settings.kMaxAngularVelocity.getRadians()*0.3, 0.05);
     }
 
     public static Operator getInstance() {

@@ -8,11 +8,19 @@ public class ShooterInterpolation {
     // Create an InterpolatingTreeMap to store data points with double keys
     private static InterpolatingTreeMap<Double, Double> dataPercentOutput = new InterpolatingTreeMap<>(InverseInterpolator.forDouble(), Interpolator.forDouble());
     private static InterpolatingTreeMap<Double, Double> dataAngle = new InterpolatingTreeMap<>(InverseInterpolator.forDouble(), Interpolator.forDouble());
+    private static ShooterInterpolation mInstance;
     // private static InterpolatingDoubleTreeMap data = new InterpolatingDoubleTreeMap();
     public ShooterInterpolation() {
         // Configures the TreeMap
         configureInterpolatingPercentOutputTreeMap();
         configureInterpolatingAngleTreeMap();
+    }
+
+    public static ShooterInterpolation getInstance() {
+        if (mInstance == null) {
+            mInstance = new ShooterInterpolation();
+        }
+        return mInstance;
     }
 
     // Method to set up data values for RPM in the TreeMap

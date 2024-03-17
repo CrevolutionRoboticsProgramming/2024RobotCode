@@ -57,10 +57,10 @@ public class Driver extends Gamepad {
         
 
         controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
+        controller.circle().whileTrue(RobotCommands.primeShoot());
+        controller.cross().whileTrue(DrivetrainCommands.autoLineUp());
 
         controller.R1().onTrue(RobotCommands.spitNote());
-
-        controller.cross().whileTrue(DrivetrainCommands.autoLineUp());
 
         // Intake manual override Commands
         controller.L1().whileTrue(IntakeRollerCommands.setOutput(() -> -1));

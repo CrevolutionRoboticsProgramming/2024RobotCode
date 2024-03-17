@@ -28,6 +28,7 @@ public class SetAngleShooterPivot extends Command {
         kTrap(Rotation2d.fromDegrees(131)),
         kClimb(Rotation2d.fromDegrees(45)),
         kPass(Rotation2d.fromDegrees(5)),
+        kSpeaker(Rotation2d.fromDegrees(ShooterPivot.getInstance().getDistanceFromSpeaker())),
         kAmp(Rotation2d.fromDegrees(85));
 
         private final Rotation2d target;

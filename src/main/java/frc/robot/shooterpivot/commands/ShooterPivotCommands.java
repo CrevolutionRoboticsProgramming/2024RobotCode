@@ -14,6 +14,10 @@ public class ShooterPivotCommands {
         return new SetAngleShooterPivot(state, false);
     }
 
+    public static Command setSpeakerAngle(Rotation2d state) {
+        return new SetAngleShooterPivot(state, false);
+    }
+
     public static Command holdState(SetAngleShooterPivot.Preset state) {
         return new SetAngleShooterPivot(state, true);
     }

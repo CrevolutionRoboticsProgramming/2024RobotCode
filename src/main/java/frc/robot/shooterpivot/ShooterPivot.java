@@ -1,11 +1,18 @@
 package frc.robot.shooterpivot;
 
 import com.revrobotics.*;
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.vision.Vision;
 
 public class ShooterPivot extends SubsystemBase {
     public static class Settings {
@@ -80,6 +87,24 @@ public class ShooterPivot extends SubsystemBase {
         setAngularVelocity(velocity, false);
     }
 
+    public double getDistanceFromSpeaker() {
+        Pose2d goalPose;
+        final var mPoseEstimator = Vision.PoseEstimator.getInstance();
+        final var robotPose = mPoseEstimator.getCurrentPose();
+        final var currentAlliance = DriverStation.getAlliance();
+        if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
+            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        }
+        else {
+            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+        }
+
+        var xDiff = Math.pow((robotPose.getX() - goalPose.getX()), 2);
+        var yDiff = Math.pow((robotPose.getY() - goalPose.getY()), 2);
+        var diff = Math.sqrt((xDiff + yDiff));
+        return diff;
+    }
+
     public void setAngle(Rotation2d angle) {
         // Our target velocity should always be zero when holding an angle, use positional PID to compensate for error
         final var currentAngle = getAngle();
@@ -109,5 +134,6 @@ public class ShooterPivot extends SubsystemBase {
         if (lastRequestedVelocity != null) {
             SmartDashboard.putNumber("Shooter Pivot Angular Velocity Requested (degrees / sec)", lastRequestedVelocity.getDegrees());
         }
+        SmartDashboard.putNumber("Estimated Disp. Speaker-Robot", getDistanceFromSpeaker());
     }
 }
