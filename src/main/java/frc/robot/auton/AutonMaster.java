@@ -73,6 +73,7 @@ public class AutonMaster {
         autonChooser.addOption("left-speaker-2p", AutoBuilder.buildAuto("right-speaker-2"));
         autonChooser.addOption("TEST-center-speaker-3p-right", AutoBuilder.buildAuto("center-speaker-3-right-NEW"));
         autonChooser.addOption("TEST-center-speaker-4.5p-under-stage", AutoBuilder.buildAuto("CenterSpeaker4.5PieceAuton"));
+        autonChooser.addOption("TEST-center-speaker-4p", AutoBuilder.buildAuto("CenterSpeaker4PieceAuton"));
         autonChooser.addOption("TEST-feed-4p-auton", AutoBuilder.buildAuto("Feed4PieceAuton"));
         // autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("right-speaker-1.5"));
         autonChooser.addOption("Coyle's Stupid Auton", AutoBuilder.buildAuto("coyles-stupid-auton"));
