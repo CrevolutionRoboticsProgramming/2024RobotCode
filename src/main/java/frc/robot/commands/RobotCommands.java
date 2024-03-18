@@ -83,9 +83,7 @@ public class RobotCommands {
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7)
                     )
                 )
-            ),
-            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
-            ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
+            )
         );
     }
 
@@ -180,6 +178,13 @@ public class RobotCommands {
         return ElevatorCommands.setPosition(SetPositionElevator.Preset.kPostTrap);
     }
 
+    public static Command zero() {
+        return Commands.parallel(
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero),
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero)
+        );
+    }
+
     public static Command shootNote(double targetRPM) {
         return Commands.sequence(
             // Wait until shooter RPM is within 250 RPM
@@ -214,9 +219,7 @@ public class RobotCommands {
                         IndexerCommands.setOutput(() -> 1.0)
                     )
                 )
-            ),
-            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
-            ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
+            )
         );
     }
 

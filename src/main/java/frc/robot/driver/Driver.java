@@ -59,15 +59,14 @@ public class Driver extends Gamepad {
 
         controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
         controller.cross().whileTrue(RobotCommands.prime());
-        controller.circle().whileTrue(DrivetrainCommands.driveAndLockTarget(this::getDriveTranslation));
-        controller.povDown().whileTrue(ShooterPivotCommands.tuneLockSpeaker(() -> Rotation2d.fromDegrees(45)));
+        //controller.circle().whileTrue(DrivetrainCommands.driveAndLockTarget(this::getDriveTranslation));
+        //controller.povDown().whileTrue(ShooterPivotCommands.tuneLockSpeaker(() -> Rotation2d.fromDegrees(45)));
 
         controller.R1().onTrue(RobotCommands.spitNote());
 
-        // Intake manual override Commands
-        controller.L1().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
-        controller.L1().onTrue(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed));
-        controller.L1().onFalse(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed));
+        controller.L1().whileTrue(RobotCommands.zero());
+
+        
 
         // controller.L1().whileTrue(new ConditionalCommand(
         //     DrivetrainCommands.turnToAngle(Rotation2d.fromDegrees(28.51)),
