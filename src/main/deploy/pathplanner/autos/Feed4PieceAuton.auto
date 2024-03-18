@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.5093218186436375,
+      "y": 4.173567013800695
+    },
+    "rotation": 0.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "F4P#1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "F4P#2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "F4P#3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
