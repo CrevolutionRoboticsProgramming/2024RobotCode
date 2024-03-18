@@ -3,10 +3,10 @@
   "robotLength": 0.7112,
   "holonomicMode": true,
   "pathFolders": [
+    "CenterPaths",
     "CenterSpeaker3PiecePath",
     "CenterSpeaker4PiecePath",
     "LeftSpeaker6PiecePath",
-    "CenterPaths",
     "RightSpeaker2PiecePath",
     "left-speaker"
   ],
