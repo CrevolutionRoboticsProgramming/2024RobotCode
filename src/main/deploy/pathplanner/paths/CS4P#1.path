@@ -12,27 +12,43 @@
         "y": 5.53
       },
       "isLocked": false,
+      "linkedName": "Mid-Start"
+    },
+    {
+      "anchor": {
+        "x": 2.4741850817034967,
+        "y": 5.53
+      },
+      "prevControl": {
+        "x": 2.5979188891711114,
+        "y": 5.5297623507747025
+      },
+      "nextControl": {
+        "x": 2.350451274235882,
+        "y": 5.530237649225298
+      },
+      "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.2,
+        "x": 1.24,
         "y": 5.53
       },
       "prevControl": {
-        "x": 1.2000000000000002,
-        "y": 5.53
+        "x": 2.246753026839387,
+        "y": 5.531267462534925
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid-Start"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
