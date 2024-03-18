@@ -12,90 +12,116 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "autoPrimeSpeakerAndShootNear"
-          }
-        },
-        {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "CS4P#1"
+                  "name": "PerpetualRPM"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "autoRunIntake"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "autoPrimeSpeakerAndShootNear"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "CS4P#1"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "autoPrimeSpeakerAndShootNear"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "CS4P#3"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "autoPrimeSpeakerAndShootNear"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "CS4P#2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "autoPrimeSpeakerAndShootNear"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "CS4P#4"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
+                    }
+                  ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autoPrimeSpeakerAndShootMid"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CS4P#3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoRunIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autoPrimeSpeakerAndShootMid"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CS4P#2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoRunIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "autoPrimeSpeakerAndShootMid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "CS4P#4"
           }
         }
       ]

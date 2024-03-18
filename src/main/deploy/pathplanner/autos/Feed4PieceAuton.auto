@@ -5,28 +5,111 @@
       "x": 1.5093218186436375,
       "y": 4.173567013800695
     },
-    "rotation": 0.0
+    "rotation": -34.784446501661265
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "F4P#1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "F4P#2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "F4P#3"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PerpetualRPM"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "F4P#1"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "F4P#2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "F4P#3"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

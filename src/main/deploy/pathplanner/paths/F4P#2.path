@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.324172381678099,
-        "y": 1.9078164422995512
+        "x": 5.438443953810986,
+        "y": 1.4997753072429225
       },
       "isLocked": false,
       "linkedName": "LowFarShoot"
@@ -20,12 +20,12 @@
         "y": 2.264516129032258
       },
       "prevControl": {
-        "x": 7.3949877233087795,
-        "y": 2.1955973245279816
+        "x": 7.579570543756473,
+        "y": 2.2397960180535748
       },
       "nextControl": {
-        "x": 8.110067978146148,
-        "y": 2.310932849501752
+        "x": 8.112286983930726,
+        "y": 2.2940525592381453
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 2.5884345102023536
       },
       "prevControl": {
-        "x": 5.337956142578953,
-        "y": 1.8871408009482689
+        "x": 5.132568726675916,
+        "y": 1.4997753072429225
       },
       "nextControl": null,
       "isLocked": false,
@@ -70,7 +70,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Feed4PieceAuton",
+  "folder": null,
   "previewStartingState": {
     "rotation": -20.888282621692337,
     "velocity": 0
