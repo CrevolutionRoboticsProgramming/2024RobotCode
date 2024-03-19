@@ -31,8 +31,8 @@ public class ShooterPivot extends SubsystemBase {
         static final double kVelI = 0.0;
         static final double kVelD = 0.0;
 
-        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(217); //120
-        public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(90);
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(160); //120
+        public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(140);
         public static final Rotation2d kMaxAngle = Rotation2d.fromDegrees(180);
         public static final Rotation2d kMaxAnglePhysical = Rotation2d.fromDegrees(270);
 
