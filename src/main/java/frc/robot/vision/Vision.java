@@ -3,6 +3,7 @@ package frc.robot.vision;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
+import frc.robot.driver.Driver;
 import frc.robot.drivetrain.Drivetrain;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
@@ -89,7 +90,8 @@ public class Vision extends SubsystemBase {
         private final Notifier photonNotifier = new Notifier(photonEstimator);
         private final ShuffleboardTab visionTab = Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName);
 
-        private OriginPosition originPosition = OriginPosition.kBlueAllianceWallRightSide;
+        private OriginPosition originPosition;
+        private boolean allianceChanged;
         private boolean sawTag = false;
 
         private PoseEstimator(
@@ -105,6 +107,23 @@ public class Vision extends SubsystemBase {
 
             photonNotifier.setName("PhotonRunnable");
             photonNotifier.startPeriodic(0.02);
+
+            var currAlliance = DriverStation.getAlliance();
+            if(currAlliance.equals(DriverStation.Alliance.Blue)) {
+                allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+                originPosition = OriginPosition.kBlueAllianceWallRightSide;
+            }
+            else {
+                allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+                originPosition = OriginPosition.kBlueAllianceWallRightSide;
+            }
+
+            if (allianceChanged && sawTag) {
+                //alliance determines coordinate system,
+                //if it changes the coordinate system also has to change
+                var newPose = flipAlliance(getCurrentPose());
+                poseEstimator.resetPosition(rotationSupplier.get(), modSupplier.get(), newPose);
+            }
         }
 
         public static PoseEstimator getInstance() {
@@ -120,27 +139,27 @@ public class Vision extends SubsystemBase {
             tab.addString("Pose", this::getFormattedPose).withPosition(6, 2).withSize(2, 1);
         }
 
-        public void setAlliance(Alliance alliance) {
-            boolean allianceChanged = false;
-            switch (alliance) {
-                case Blue:
-                    allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
-                    originPosition = OriginPosition.kBlueAllianceWallRightSide;
-                    break;
-                case Red:
-                    allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
-                    originPosition = OriginPosition.kBlueAllianceWallRightSide;
-                    break;
-                default:
-                    //no default, has to be either blue or red
-            }
-            if (allianceChanged && sawTag) {
-                //alliance determines coordinate system,
-                //if it changes the coordinate system also has to change
-                var newPose = flipAlliance(getCurrentPose());
-                poseEstimator.resetPosition(rotationSupplier.get(), modSupplier.get(), newPose);
-            }
-        }
+        // public void setAlliance(DriverStation.Alliance alliance) {
+        //     boolean allianceChanged = false;
+        //     switch (alliance) {
+        //         case Blue:
+        //             allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+        //             originPosition = OriginPosition.kBlueAllianceWallRightSide;
+        //             break;
+        //         case Red:
+        //             allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+        //             originPosition = OriginPosition.kBlueAllianceWallRightSide;
+        //             break;
+        //         default:
+        //             //no default, has to be either blue or red
+        //     }
+        //     if (allianceChanged && sawTag) {
+        //         //alliance determines coordinate system,
+        //         //if it changes the coordinate system also has to change
+        //         var newPose = flipAlliance(getCurrentPose());
+        //         poseEstimator.resetPosition(rotationSupplier.get(), modSupplier.get(), newPose);
+        //     }
+        // }
 
         private String getFormattedPose() {
             var pose = getCurrentPose();
