@@ -64,7 +64,9 @@ public class Driver extends Gamepad {
 
         controller.R1().onTrue(RobotCommands.spitNote());
 
-        controller.L1().whileTrue(RobotCommands.zero());
+        controller.L1().onTrue(RobotCommands.zero());
+
+        controller.circle().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
 
         
 

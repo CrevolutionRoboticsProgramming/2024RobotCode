@@ -81,6 +81,8 @@ public class Operator extends Gamepad {
 
         controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
 
+        controller.R3().onTrue(RobotCommands.zero());
+
         // ONlY For Testing
         // controller.square().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
         //     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
