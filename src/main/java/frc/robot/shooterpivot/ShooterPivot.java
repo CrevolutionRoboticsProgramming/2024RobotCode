@@ -1,5 +1,7 @@
 package frc.robot.shooterpivot;
 
+import java.util.Optional;
+
 import com.revrobotics.*;
 import com.revrobotics.CANSparkBase.IdleMode;
 
@@ -10,6 +12,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.vision.Vision;
@@ -31,10 +34,12 @@ public class ShooterPivot extends SubsystemBase {
         static final double kVelI = 0.0;
         static final double kVelD = 0.0;
 
-        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(160); //120
-        public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(140);
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(260); //120
+        public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(210);
         public static final Rotation2d kMaxAngle = Rotation2d.fromDegrees(180);
         public static final Rotation2d kMaxAnglePhysical = Rotation2d.fromDegrees(270);
+
+        public static final int KMaxVoltage = 30;
 
         // kFFAngleOffset is the differnce between our zero point (handoff) and 'true' zero (parallel to the ground)
         private static final Rotation2d kFFAngleOffset = Rotation2d.fromDegrees(30);
@@ -54,6 +59,7 @@ public class ShooterPivot extends SubsystemBase {
         mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushless) {{
             setIdleMode(IdleMode.kBrake);
             setInverted(true);
+            setSmartCurrentLimit(Settings.KMaxVoltage);
         }};
 
         mVelEncoder = mSpark.getEncoder();
@@ -88,17 +94,18 @@ public class ShooterPivot extends SubsystemBase {
     }
 
     public double getDistanceFromSpeaker() {
-        Pose2d goalPose;
+        Pose2d goalPose = new Pose2d();
         final var mPoseEstimator = Vision.PoseEstimator.getInstance();
         final var robotPose = mPoseEstimator.getCurrentPose();
-        final var currentAlliance = DriverStation.getAlliance();
-        if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
-            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+        Optional<Alliance> ally = DriverStation.getAlliance();
+        if (ally.isPresent()) {
+            if (ally.get() == Alliance.Blue) {
+                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+            }
+            if (ally.get() == Alliance.Red) {
+                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+            }
         }
-        else {
-            goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
-        }
-
         var xDiff = Math.pow((robotPose.getX() - goalPose.getX()), 2);
         var yDiff = Math.pow((robotPose.getY() - goalPose.getY()), 2);
         var diff = Math.sqrt((xDiff + yDiff));

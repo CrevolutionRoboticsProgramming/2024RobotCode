@@ -39,18 +39,21 @@ public class ShooterInterpolation extends SubsystemBase{
     // Method to set up data values for Angles in the TreeMap
     private void configureInterpolatingAngleTreeMap() {
         // Add data points to the TreeMap
-        dataAngle.put(0.8288, 5.0);
+        dataAngle.put(0.5, 5.0);
+        dataAngle.put(0.9, 5.0);
         dataAngle.put(1.0, 10.0);
         dataAngle.put(1.5, 15.5);
         dataAngle.put(2.0, 21.0);
-        dataAngle.put(2.5, 26.0);
-        dataAngle.put(3.0, 29.5);
-        dataAngle.put(3.5, 32.0);
-        dataAngle.put(4.0, 32.75);
-        dataAngle.put(4.5, 34.0);
+        dataAngle.put(2.5, 24.0);
+        dataAngle.put(3.0, 27.5);
+        dataAngle.put(3.5, 28.70);
+        dataAngle.put(4.0, 30.47);
+        dataAngle.put(4.23, 31.0);
+        dataAngle.put(4.5, 32.0);
+        dataAngle.put(4.65, 34.8);
         dataAngle.put(4.7, 35.0);
         dataAngle.put(4.829, 34.0);
-        dataAngle.put(4.9, 33.75);
+        dataAngle.put(4.9, 34.75);
         dataAngle.put(4.954, 34.4);
         dataAngle.put(5.1, 34.8);
     }

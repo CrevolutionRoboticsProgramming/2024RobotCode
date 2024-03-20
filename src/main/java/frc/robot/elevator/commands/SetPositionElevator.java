@@ -46,7 +46,7 @@ public class SetPositionElevator extends Command {
         this.preset = preset;
         if(this.preset == preset.kAmp) {
             this.profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
-            0.45,
+            0.55,
             Elevator.Settings.kMaxAcceleration
         ));
         } else {

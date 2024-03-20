@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeRoller extends SubsystemBase {
     public static class Settings {
         public enum CurrentProfile {
-            kIntake(40, 45),
+            kIntake(45, 50),
             kOuttake(60, 60);
 
             final int continuous, peak;

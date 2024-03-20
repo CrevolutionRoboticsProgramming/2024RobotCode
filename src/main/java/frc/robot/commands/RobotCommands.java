@@ -79,8 +79,8 @@ public class RobotCommands {
                         )
                     ),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
                     )
                 )
             )
@@ -202,8 +202,8 @@ public class RobotCommands {
                 new ParallelRaceGroup(
                     DrivetrainCommands.autoLineUp(),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
                     ),
                     Commands.sequence(
                         ShooterPivotCommands.setSpeakerAngle(
@@ -215,7 +215,7 @@ public class RobotCommands {
                         ),
                         new WaitUntilCommand(() -> Math.abs(
                             ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() - 
-                            (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.9)) < 6),
+                            (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.8)) < 6),
                         IndexerCommands.setOutput(() -> 1.0)
                     )
                 )

@@ -55,6 +55,8 @@ public class Driver extends Gamepad {
         controller.R2().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
         controller.R2().onTrue(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed));
         controller.R2().onFalse(IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed));
+
+        controller.circle().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
         
 
         controller.square().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
@@ -65,8 +67,6 @@ public class Driver extends Gamepad {
         controller.R1().onTrue(RobotCommands.spitNote());
 
         controller.L1().onTrue(RobotCommands.zero());
-
-        controller.circle().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
 
         
 

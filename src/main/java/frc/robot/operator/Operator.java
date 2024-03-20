@@ -46,12 +46,12 @@ public class Operator extends Gamepad {
         super(Settings.name, Settings.port);
 
        stickCurve = new ExpCurve(1, 0, 1, Settings.kDeadzone);
-       shooterPivotManualCurve = new ExpCurve(1, 0, ShooterPivot.Settings.kMaxAngularVelocity.getRadians(), Settings.kDeadzone);
+       shooterPivotManualCurve = new ExpCurve(1, 0, ShooterPivot.Settings.kMaxAngularVelocity.getRadians()*0.3, Settings.kDeadzone);
        intakePivotManualCurve = new ExpCurve(1, 0, IntakePivot.Settings.kMaxAngularVelocity.getRadians()*0.5, Settings.kDeadzone);
        positionTestCurve = new ExpCurve(1, 20, 15, Settings.kDeadzone);
        elevatorCurve = new ExpCurve(1, 0, Elevator.Settings.kMaxVelocity, Settings.kDeadzone);
 
-        shooterManualCurve = new ExpCurve(1, 0, ShooterFlywheel.Settings.kMaxAngularVelocity.getRadians()*0.3, 0.05);
+        shooterManualCurve = new ExpCurve(1, 0, ShooterFlywheel.Settings.kMaxAngularVelocity.getRadians(), 0.05);
     }
 
     public static Operator getInstance() {
@@ -66,7 +66,7 @@ public class Operator extends Gamepad {
         // Shooter Commands
         controller.cross().whileTrue(RobotCommands.handOffNote());
 
-        controller.square().whileTrue(RobotCommands.passNote());
+        //controller.square().whileTrue(RobotCommands.passNote());
         controller.circle().whileTrue(RobotCommands.amp());
 
         controller.triangle().whileTrue(new SequentialCommandGroup(
@@ -84,10 +84,10 @@ public class Operator extends Gamepad {
         controller.R3().onTrue(RobotCommands.zero());
 
         // ONlY For Testing
-        // controller.square().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
-        //     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
-        //     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6)
-        // ));
+        controller.square().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
+            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
+            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6)
+        ));
 
         // Trap Command
         controller.L1().whileTrue(IndexerCommands.setOutput(() -> -1.0));

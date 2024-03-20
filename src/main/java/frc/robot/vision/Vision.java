@@ -1,5 +1,6 @@
 package frc.robot.vision;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
@@ -109,7 +110,7 @@ public class Vision extends SubsystemBase {
             photonNotifier.startPeriodic(0.02);
 
             var currAlliance = DriverStation.getAlliance();
-            if(currAlliance.equals(DriverStation.Alliance.Blue)) {
+            if(DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
                 allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
                 originPosition = OriginPosition.kBlueAllianceWallRightSide;
             }
@@ -117,6 +118,20 @@ public class Vision extends SubsystemBase {
                 allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
                 originPosition = OriginPosition.kBlueAllianceWallRightSide;
             }
+
+            // Optional<Alliance> currentAlliance = DriverStation.getAlliance();
+            // Optional<Alliance> ally = DriverStation.getAlliance();
+            // if (ally.isPresent()) {
+            //     if (ally.get() == Alliance.Red) {
+            //         allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+            //         originPosition = OriginPosition.kBlueAllianceWallRightSide;
+            //     }
+            //     if (ally.get() == Alliance.Blue) {
+            //         allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+            //         originPosition = OriginPosition.kBlueAllianceWallRightSide;
+            //     }
+            // }
+
 
             if (allianceChanged && sawTag) {
                 //alliance determines coordinate system,

@@ -25,7 +25,7 @@ public class IntakePivot extends SubsystemBase {
 
         static final Rotation2d kFFAngleOffset = Rotation2d.fromDegrees(20); 
 
-        public static final Rotation2d kMaxAngle = Rotation2d.fromDegrees(242.0); 
+        public static final Rotation2d kMaxAngle = Rotation2d.fromDegrees(185.0); 
 
         static final double kG = 0.35; // V
         static final double kS = 0.0;  // V / rad
