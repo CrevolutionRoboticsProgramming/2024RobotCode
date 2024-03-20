@@ -57,7 +57,7 @@ public class RobotCommands {
                     ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero),
                     ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kPass),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0)
                     )
                 )
             ),
@@ -202,7 +202,7 @@ public class RobotCommands {
                 new ParallelRaceGroup(
                     DrivetrainCommands.autoLineUp(),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.8),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
                     ),
                     Commands.sequence(
@@ -279,8 +279,7 @@ public class RobotCommands {
                 new SequentialCommandGroup(
                     new WaitCommand(0.25),
                     IntakeRollerCommands.setOutput(() -> 1)
-                ),
-                Commands.waitSeconds(3)
+                )
             ),
             new InstantCommand(() -> System.out.println("handoff complete"))
         );

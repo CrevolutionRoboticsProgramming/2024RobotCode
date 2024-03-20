@@ -1,5 +1,7 @@
 package frc.robot.auton;
 
+import java.security.AuthProvider;
+
 import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -71,11 +73,13 @@ public class AutonMaster {
         autonChooser.addOption("right-speaker-1-temp", AutoBuilder.buildAuto("right-speaker-1-temp"));
         autonChooser.addOption("left-speaker-2.5p", AutoBuilder.buildAuto("right-speaker-2.5"));
         autonChooser.addOption("left-speaker-2p", AutoBuilder.buildAuto("right-speaker-2"));
-        // autonChooser.addOption("TEST-center-speaker-3p-right", AutoBuilder.buildAuto("center-speaker-3-right-NEW"));
-        // autonChooser.addOption("TEST-center-speaker-4.5p-under-stage", AutoBuilder.buildAuto("CenterSpeaker4.5PieceAuton"));
-        // autonChooser.addOption("TEST-center-speaker-4p", AutoBuilder.buildAuto("CenterSpeaker4PieceAuton"));
-        // autonChooser.addOption("TEST-feed-4p-auton", AutoBuilder.buildAuto("Feed4PieceAuton"));
-        // autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("right-speaker-1.5"));
+        autonChooser.addOption("TEST-center-speaker-3p-right", AutoBuilder.buildAuto("center-speaker-3-right-NEW"));
+        autonChooser.addOption("center-speaker-3.5-neutral", AutoBuilder.buildAuto("center-speaker-3.5-neutral"));
+        autonChooser.addOption("TEST-center-speaker-4.5p-under-stage", AutoBuilder.buildAuto("CenterSpeaker4.5PieceAuton"));
+        autonChooser.addOption("TEST-center-speaker-4p", AutoBuilder.buildAuto("CenterSpeaker4PieceAuton"));
+        autonChooser.addOption("TEST-feed-4p-auton", AutoBuilder.buildAuto("Feed4PieceAuton"));
+        autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("left-speaker-1.5"));
+        autonChooser.addOption("center-speaker-4-neutral", AutoBuilder.buildAuto("center-speaker-4-neutral"));
         autonChooser.addOption("Coyle's Stupid Auton", AutoBuilder.buildAuto("coyles-stupid-auton"));
 
         configurePathPlannerLogging();
@@ -107,6 +111,7 @@ public class AutonMaster {
         //TESTING (post-vision) Auton - Satchit
         NamedCommands.registerCommand("PerpetualRPM", RobotCommands.autoConstantlyRPM());
         NamedCommands.registerCommand("AutoLineupShoot", RobotCommands.autoLineupAndShoot());   
+        NamedCommands.registerCommand("AutoHandOff", RobotCommands.autoHandOffNote());
     }
 
 

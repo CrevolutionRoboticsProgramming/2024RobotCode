@@ -66,7 +66,7 @@ public class Operator extends Gamepad {
         // Shooter Commands
         controller.cross().whileTrue(RobotCommands.handOffNote());
 
-        //controller.square().whileTrue(RobotCommands.passNote());
+        controller.square().whileTrue(RobotCommands.passNote());
         controller.circle().whileTrue(RobotCommands.amp());
 
         controller.triangle().whileTrue(new SequentialCommandGroup(
@@ -84,10 +84,10 @@ public class Operator extends Gamepad {
         controller.R3().onTrue(RobotCommands.zero());
 
         // ONlY For Testing
-        controller.square().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
-            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
-            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6)
-        ));
+        // controller.square().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
+        //     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
+        //     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6)
+        // ));
 
         // Trap Command
         controller.L1().whileTrue(IndexerCommands.setOutput(() -> -1.0));
