@@ -83,6 +83,12 @@
                     }
                   ]
                 }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "F4P#3"
+                }
               }
             ]
           }
