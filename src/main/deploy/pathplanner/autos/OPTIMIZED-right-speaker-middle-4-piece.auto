@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.24,
-      "y": 5.53
+      "x": 0.7512149690973084,
+      "y": 6.544373888747631
     },
-    "rotation": 0
+    "rotation": 60.802513954008695
   },
   "command": {
     "type": "sequential",
@@ -38,7 +38,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "CS4P#1"
+                              "pathName": "RunAmp4P#1"
                             }
                           },
                           {
@@ -59,7 +59,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "autoPrimeSpeakerAndShootNear"
+                        "name": "AutoLineupShoot"
                       }
                     },
                     {
@@ -69,7 +69,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "CS4P#3"
+                              "pathName": "RunAmp4P#2"
                             }
                           },
                           {
@@ -90,7 +90,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "autoPrimeSpeakerAndShootNear"
+                        "name": "AutoLineupShoot"
                       }
                     },
                     {
@@ -100,7 +100,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "CS4P#2"
+                              "pathName": "RUNCS4P#3"
                             }
                           },
                           {
@@ -121,7 +121,32 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "autoPrimeSpeakerAndShootNear"
+                        "name": "AutoLineupShoot"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "RUNCS4P#4"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoHandOff"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

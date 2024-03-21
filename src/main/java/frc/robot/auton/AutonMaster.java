@@ -88,6 +88,8 @@ public class AutonMaster {
         autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4-piece"));
         autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4.5p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4.5-piece"));
         autonChooser.addOption("OPTIMIZED-PRE-TROY-left-speaker-steal-center-fun", AutoBuilder.buildAuto("OPTIMIZED-left-speaker-steal-center-fun"));
+        autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-middle-4-piece", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-middle-4-piece"));
+        autonChooser.addOption("OPTIMZIED-PRE-TROY-right-speaker-middle-4-piece", AutoBuilder.buildAuto("OPTIMIZED-right-speaker-middle-4-piece"));
         configurePathPlannerLogging();
     }
 
