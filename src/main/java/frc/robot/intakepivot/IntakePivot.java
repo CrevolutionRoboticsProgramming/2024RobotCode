@@ -19,8 +19,8 @@ public class IntakePivot extends SubsystemBase {
         static final boolean kEncoderInverted = true;
 
         // 45 degrees per second
-        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(1000); //720
-        public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(800);
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(1600); //720
+        public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(1400);
         static final double kMaxVoltage = 12.0;
 
         static final Rotation2d kFFAngleOffset = Rotation2d.fromDegrees(20); 
