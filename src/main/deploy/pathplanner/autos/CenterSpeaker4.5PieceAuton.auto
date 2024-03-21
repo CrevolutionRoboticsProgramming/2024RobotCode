@@ -32,19 +32,32 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "race",
                             "data": {
-                              "pathName": "CS4P#1"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "CS4P#1"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "autoRunIntake"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "autoRunIntake"
+                              "name": "AutoHandOff"
                             }
                           }
                         ]
@@ -57,19 +70,32 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "race",
                             "data": {
-                              "pathName": "CS4P#3"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "CS4P#3"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "autoRunIntake"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "autoRunIntake"
+                              "name": "AutoHandOff"
                             }
                           }
                         ]
@@ -82,19 +108,32 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "race",
                             "data": {
-                              "pathName": "CS4P#2"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "CS4P#2"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "autoRunIntake"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "autoRunIntake"
+                              "name": "AutoHandOff"
                             }
                           }
                         ]
@@ -107,9 +146,35 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "sequential",
                       "data": {
-                        "pathName": "CS4P#4"
+                        "commands": [
+                          {
+                            "type": "race",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "CS4P#4"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "autoRunIntake"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoHandOff"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
