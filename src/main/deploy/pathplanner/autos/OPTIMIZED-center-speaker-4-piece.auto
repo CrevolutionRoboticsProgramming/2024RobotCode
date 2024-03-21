@@ -44,13 +44,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "autoRunIntake"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoHandOff"
+                              "name": "AutoIntakeAndHandoff"
                             }
                           }
                         ]
@@ -75,13 +69,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "autoRunIntake"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoHandOff"
+                              "name": "AutoIntakeAndHandoff"
                             }
                           }
                         ]
@@ -106,13 +94,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "autoRunIntake"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoHandOff"
+                              "name": "AutoIntakeAndHandoff"
                             }
                           }
                         ]

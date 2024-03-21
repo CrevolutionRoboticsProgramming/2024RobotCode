@@ -53,12 +53,6 @@
                                 }
                               ]
                             }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoHandOff"
-                            }
                           }
                         ]
                       }
@@ -91,12 +85,6 @@
                                 }
                               ]
                             }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoHandOff"
-                            }
                           }
                         ]
                       }
@@ -128,12 +116,6 @@
                                   }
                                 }
                               ]
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoHandOff"
                             }
                           }
                         ]
