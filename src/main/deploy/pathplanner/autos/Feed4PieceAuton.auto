@@ -5,7 +5,7 @@
       "x": 1.5093218186436375,
       "y": 4.173567013800695
     },
-    "rotation": -34.784446501661265
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -64,31 +64,6 @@
                             "type": "path",
                             "data": {
                               "pathName": "F4P#2"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "autoRunIntake"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "AutoLineupShoot"
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "F4P#3"
                             }
                           },
                           {
