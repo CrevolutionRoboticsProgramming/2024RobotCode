@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.driver.Driver;
+import frc.robot.driver.DriverXbox;
 import frc.robot.intakeroller.IntakeRoller;
 import frc.robot.intakeroller.IntakeRoller.Settings.CurrentProfile;
 
@@ -34,7 +35,7 @@ class SetOutputIntakeRoller extends Command{
         roller.setOutput(supplier.getAsDouble());
 
         if(roller.hasNote()) {
-            Driver.getInstance().controller.getHID().setRumble(RumbleType.kBothRumble, 1);
+            DriverXbox.getInstance().controller.getHID().setRumble(RumbleType.kBothRumble, 1);
         }
     }
 
@@ -47,6 +48,6 @@ class SetOutputIntakeRoller extends Command{
     @Override
     public void end(boolean interrupted) {
         roller.setOutput(0);
-        Driver.getInstance().controller.getHID().setRumble(RumbleType.kBothRumble, 0);
+        DriverXbox.getInstance().controller.getHID().setRumble(RumbleType.kBothRumble, 0);
     }
 }
