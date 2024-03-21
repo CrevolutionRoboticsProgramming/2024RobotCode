@@ -196,7 +196,7 @@ public class RobotCommands {
     // AUTON COMMANDS
     public static Command autoLineupAndShoot() {
         return new SequentialCommandGroup(
-            // new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
+            new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
                 new ParallelRaceGroup(
@@ -249,8 +249,7 @@ public class RobotCommands {
                             return error < 6;
                         }),
                         Commands.race(
-                            IndexerCommands.setOutput(() -> 1.0),
-                            Commands.waitSeconds(0.5)
+                            IndexerCommands.setOutput(() -> 1.0)
                         )
                     )
                 )
