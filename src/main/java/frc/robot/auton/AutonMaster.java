@@ -87,6 +87,7 @@ public class AutonMaster {
         //SATCHIT AUTOS PRE TROY PLEASE TEST ASAP. DO NOT RUN WITHOUT TESTING !!!!!
         autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4-piece"));
         autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4.5p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4.5-piece"));
+        autonChooser.addOption("OPTIMIZED-PRE-TROY-left-speaker-steal-center-fun", AutoBuilder.buildAuto("OPTIMIZED-left-speaker-steal-center-fun"));
         configurePathPlannerLogging();
     }
 

@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7443230886425006,
+      "y": 4.538836677668443
+    },
+    "rotation": -59.51502087148811
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "autoPrimeSpeakerAndShootNear"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FunPath"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "TEST PRE-TROY",
+  "choreoAuto": false
+}
