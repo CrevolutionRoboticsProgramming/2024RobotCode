@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.377698755397511,
-        "y": 5.6001862670392
+        "x": 2.24,
+        "y": 5.53
       },
       "isLocked": false,
       "linkedName": "Mid-Start"
     },
     {
       "anchor": {
-        "x": 2.6671577343154693,
-        "y": 6.4478875624417915
+        "x": 2.4741850817034967,
+        "y": 5.53
       },
       "prevControl": {
-        "x": 2.5982389298111936,
-        "y": 6.3031580729828125
+        "x": 2.5979188891711114,
+        "y": 5.5297623507747025
       },
       "nextControl": {
-        "x": 2.726418751069236,
-        "y": 6.572335697624702
+        "x": 2.350451274235882,
+        "y": 5.530237649225298
       },
       "isLocked": false,
       "linkedName": null
@@ -36,26 +36,15 @@
         "y": 5.53
       },
       "prevControl": {
-        "x": 2.446617559901787,
-        "y": 5.586402506138346
+        "x": 2.246753026839387,
+        "y": 5.531267462534925
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Mid-Start"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.55,
-      "rotationDegrees": 70.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.25,
-      "rotationDegrees": 70.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -66,11 +55,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterSpeaker4PiecePath",
+  "folder": "Center4PRun",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

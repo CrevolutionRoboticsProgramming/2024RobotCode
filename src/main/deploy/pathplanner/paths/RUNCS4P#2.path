@@ -8,69 +8,51 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.936532106566751,
-        "y": 5.258950294550337
+        "x": 3.244666956338988,
+        "y": 5.467308071671981
       },
       "isLocked": false,
       "linkedName": "Mid-Start"
     },
     {
       "anchor": {
-        "x": 7.725797984929304,
-        "y": 3.966810600287868
+        "x": 7.903546852778985,
+        "y": 7.267519266002999
       },
       "prevControl": {
-        "x": 6.303359124484746,
-        "y": 3.642093944086365
+        "x": 7.728526319996803,
+        "y": 7.192510466239207
       },
       "nextControl": {
-        "x": 7.938272401303817,
-        "y": 4.015314605579129
+        "x": 8.09564316278832,
+        "y": 7.349846256007
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.8780745987887912,
-        "y": 5.53
+        "x": 4.894860551142422,
+        "y": 6.217396069309905
       },
       "prevControl": {
-        "x": 4.728174329445105,
-        "y": 4.158821231348046
+        "x": 6.003323925429576,
+        "y": 6.575771445959134
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Center-Shoot-Far"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 15.708637829015741,
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 13.566487546636479,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Intake",
-      "waypointRelativePos": 0.55,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "autoRunIntake"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.5,
@@ -79,11 +61,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 2.290610042638481,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterSpeaker4PiecePath",
+  "folder": "Center4PRun",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

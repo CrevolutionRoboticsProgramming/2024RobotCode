@@ -3,56 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.24,
-        "y": 5.53
+        "x": 4.355668444670926,
+        "y": 6.7028871391074665
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.377698755397511,
-        "y": 5.6001862670392
+        "x": 5.355668444670926,
+        "y": 6.7028871391074665
       },
       "isLocked": false,
-      "linkedName": "Mid-Start"
+      "linkedName": "Amp-Shoot-Far"
     },
     {
       "anchor": {
-        "x": 2.6671577343154693,
-        "y": 6.4478875624417915
+        "x": 7.787824908978238,
+        "y": 7.371399542800471
       },
       "prevControl": {
-        "x": 2.5982389298111936,
-        "y": 6.3031580729828125
+        "x": 6.847108757416616,
+        "y": 7.173354037208547
       },
       "nextControl": {
-        "x": 2.726418751069236,
-        "y": 6.572335697624702
+        "x": 7.918770637536362,
+        "y": 7.398967064602181
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.24,
-        "y": 5.53
+        "x": 4.894860551142422,
+        "y": 6.217396069309905
       },
       "prevControl": {
-        "x": 2.446617559901787,
-        "y": 5.586402506138346
+        "x": 7.176411647577949,
+        "y": 6.599895434308635
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid-Start"
+      "linkedName": "Center-Shoot-Far"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.55,
-      "rotationDegrees": 70.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.25,
-      "rotationDegrees": 70.0,
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": 13.374909556183704,
       "rotateFast": false
     }
   ],
@@ -66,11 +61,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterSpeaker4PiecePath",
+  "folder": "Amp4PRUN",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

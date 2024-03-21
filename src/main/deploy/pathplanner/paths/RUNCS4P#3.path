@@ -3,56 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.24,
-        "y": 5.53
+        "x": 4.894860551142422,
+        "y": 6.217396069309905
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.377698755397511,
-        "y": 5.6001862670392
+        "x": 5.928315125665784,
+        "y": 6.284070557988832
       },
       "isLocked": false,
-      "linkedName": "Mid-Start"
+      "linkedName": "Center-Shoot-Far"
     },
     {
       "anchor": {
-        "x": 2.6671577343154693,
-        "y": 6.4478875624417915
+        "x": 8.003558585797373,
+        "y": 5.892357937000138
       },
       "prevControl": {
-        "x": 2.5982389298111936,
-        "y": 6.3031580729828125
+        "x": 6.970104011274013,
+        "y": 6.159055891715844
       },
       "nextControl": {
-        "x": 2.726418751069236,
-        "y": 6.572335697624702
+        "x": 8.210406979517202,
+        "y": 5.838977706362764
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.24,
-        "y": 5.53
+        "x": 4.894860551142422,
+        "y": 6.217396069309905
       },
       "prevControl": {
-        "x": 2.446617559901787,
-        "y": 5.586402506138346
+        "x": 5.969986681090114,
+        "y": 6.375747979922355
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid-Start"
+      "linkedName": "Center-Shoot-Far"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.55,
-      "rotationDegrees": 70.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.25,
-      "rotationDegrees": 70.0,
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": -13.977523602381622,
       "rotateFast": false
     }
   ],
@@ -66,11 +61,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterSpeaker4PiecePath",
+  "folder": "Center4PRun",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

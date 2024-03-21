@@ -3,59 +3,48 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.24,
-        "y": 5.53
+        "x": 4.894860551142422,
+        "y": 6.217396069309905
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.377698755397511,
-        "y": 5.6001862670392
+        "x": 7.02971805943612,
+        "y": 6.5926170519007705
       },
       "isLocked": false,
-      "linkedName": "Mid-Start"
+      "linkedName": "Center-Shoot-Far"
     },
     {
       "anchor": {
-        "x": 2.6671577343154693,
-        "y": 6.4478875624417915
+        "x": 7.0367784999529395,
+        "y": 4.350510386299961
       },
       "prevControl": {
-        "x": 2.5982389298111936,
-        "y": 6.3031580729828125
+        "x": 6.610859464043542,
+        "y": 5.090264501300507
       },
       "nextControl": {
-        "x": 2.726418751069236,
-        "y": 6.572335697624702
+        "x": 7.195130410565388,
+        "y": 4.075478120499388
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.24,
-        "y": 5.53
+        "x": 7.853540986269789,
+        "y": 4.1088153648388515
       },
       "prevControl": {
-        "x": 2.446617559901787,
-        "y": 5.586402506138346
+        "x": 7.45349405419623,
+        "y": 4.142152609178315
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Mid-Start"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.55,
-      "rotationDegrees": 70.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 1.25,
-      "rotationDegrees": 70.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -66,11 +55,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterSpeaker4PiecePath",
+  "folder": "Center4PRun",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

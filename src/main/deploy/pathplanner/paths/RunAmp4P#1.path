@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7512149690973084,
+        "y": 6.544373888747631
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.378376090086217,
+        "y": 6.7028871391074665
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.355668444670926,
+        "y": 6.7028871391074665
+      },
+      "prevControl": {
+        "x": 3.0806705613418264,
+        "y": 7.467885869104926
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Amp-Shoot-Far"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.45,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 13.134022306396371,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Amp4PRUN",
+  "previewStartingState": {
+    "rotation": 62.50086126895284,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
