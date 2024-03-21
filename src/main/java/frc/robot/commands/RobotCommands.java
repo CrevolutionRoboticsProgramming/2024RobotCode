@@ -267,7 +267,7 @@ public class RobotCommands {
     }
 
     public static Command autoHandOffNote() {
-        return new SequentialCommandGroup(
+        return Commands.either(new SequentialCommandGroup(
             new ParallelCommandGroup(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
@@ -282,7 +282,26 @@ public class RobotCommands {
                 )
             ),
             new InstantCommand(() -> System.out.println("handoff complete"))
-        );
+        ), Commands.none(), IntakeRoller.getInstance()::hasNote);
+    }
+
+    //SATCHIT COMMANDS FOR AUTON OPTIMIZATIONS
+
+    public static Command intakeStowBeamBreakControl() {
+        return Commands.either(stowIntake(), runIntake(), IntakeRoller.getInstance()::hasNote);
+    }
+
+
+    public static Command runIntake() {
+        return new ParallelCommandGroup(
+                IntakeRollerCommands.setOutput(() -> -1.0),
+                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff));
+    }
+
+    public static Command stowIntake() {
+        return new ParallelCommandGroup(
+                IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
+                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero));
     }
 
 

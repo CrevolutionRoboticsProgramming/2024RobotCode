@@ -12,7 +12,8 @@
     "left-speaker"
   ],
   "autoFolders": [
-    "Comp"
+    "Comp",
+    "TEST PRE-TROY"
   ],
   "defaultMaxVel": 1.0,
   "defaultMaxAccel": 3.0,

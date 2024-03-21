@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.auton.commands.TurnInPlaceCommand;
 import frc.robot.commands.RobotCommands;
@@ -82,6 +83,10 @@ public class AutonMaster {
         autonChooser.addOption("center-speaker-4-neutral", AutoBuilder.buildAuto("center-speaker-4-neutral"));
         autonChooser.addOption("Coyle's Stupid Auton", AutoBuilder.buildAuto("coyles-stupid-auton"));
 
+
+        //SATCHIT AUTOS PRE TROY PLEASE TEST ASAP. DO NOT RUN WITHOUT TESTING !!!!!
+        autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4-piece"));
+        autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4.5p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4.5-piece"));
         configurePathPlannerLogging();
     }
 
@@ -112,6 +117,7 @@ public class AutonMaster {
         NamedCommands.registerCommand("PerpetualRPM", RobotCommands.autoConstantlyRPM());
         NamedCommands.registerCommand("AutoLineupShoot", RobotCommands.autoLineupAndShoot());   
         NamedCommands.registerCommand("AutoHandOff", RobotCommands.autoHandOffNote());
+        NamedCommands.registerCommand("IntakeDeployStowBeamBreak", RobotCommands.intakeStowBeamBreakControl());
     }
 
 
