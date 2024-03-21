@@ -324,9 +324,8 @@ public class RobotCommands {
     // }
 
     public static Command autoIntakeAndHandoffSimulatenously() {
-        return null;    
-        // return new ConditionalCommand(
-        //     autoHandOffNote(), runIntake(), IntakeRoller.getInstance()::hasNote);
+        return new ConditionalCommand(
+            autoHandOffNote(), runIntake(), IntakeRoller.getInstance()::hasNote);
     }
 
     /*Not for WoodHaven unless Vision Done */

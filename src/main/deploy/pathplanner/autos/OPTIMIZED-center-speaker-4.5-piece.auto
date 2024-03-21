@@ -32,19 +32,26 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "parallel",
                             "data": {
-                              "pathName": "CS4P#1"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoIntakeAndHandoff"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "CS4P#1"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "AutoIntakeAndHandoff"
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -57,19 +64,26 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "parallel",
                             "data": {
-                              "pathName": "CS4P#3"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoIntakeAndHandoff"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "CS4P#3"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "AutoIntakeAndHandoff"
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -82,19 +96,26 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "parallel",
                             "data": {
-                              "pathName": "CS4P#2"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoIntakeAndHandoff"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "CS4P#2"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "AutoIntakeAndHandoff"
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -107,19 +128,26 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "parallel",
                             "data": {
-                              "pathName": "CS4P#4"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoIntakeAndHandoff"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "CS4P#4"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "AutoIntakeAndHandoff"
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
