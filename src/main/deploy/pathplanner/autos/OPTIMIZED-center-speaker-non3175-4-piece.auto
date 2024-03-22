@@ -12,78 +12,98 @@
     "data": {
       "commands": [
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "CS4P-N3175#1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoRunIntake"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "autoPrimeSpeakerAndShootNear"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "CS4P-N3175#1"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "CS4P-N3175#2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "CS4P-N3175#3"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "autoRunIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
+                    }
+                  ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoLineupShoot"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CS4P-N3175#2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoRunIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoLineupShoot"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CS4P-N3175#3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoRunIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoLineupShoot"
           }
         }
       ]

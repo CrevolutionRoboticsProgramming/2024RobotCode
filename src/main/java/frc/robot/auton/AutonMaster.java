@@ -25,6 +25,8 @@ import frc.robot.RobotContainer;
 import frc.robot.auton.commands.TurnInPlaceCommand;
 import frc.robot.commands.RobotCommands;
 import frc.robot.drivetrain.Drivetrain;
+import frc.robot.intakepivot.commands.IntakePivotCommands;
+import frc.robot.intakepivot.commands.SetStateIntakePivot;
 import frc.robot.intakeroller.commands.IntakeRollerCommands;
 import frc.robot.shooterflywheel.ShooterFlywheel;
 import frc.robot.shooterpivot.commands.SetAngleShooterPivot;
@@ -98,7 +100,7 @@ public class AutonMaster {
         NamedCommands.registerCommand("ZeroHeading", new InstantCommand(drivetrain::zeroHeading));
         NamedCommands.registerCommand("autoPrimeSpeakerAndShootNear", RobotCommands.autoPrimeSpeakerAndShoot(
             SetAngleShooterPivot.Preset.kShooterNear,
-            ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.65
+            ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.7
         ));
         NamedCommands.registerCommand("autoPrimeSpeakerAndShootMid", RobotCommands.autoPrimeSpeakerAndShoot(
             SetAngleShooterPivot.Preset.kShooterMid,
@@ -113,6 +115,7 @@ public class AutonMaster {
             ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.25
         ));
         NamedCommands.registerCommand("autoRunIntake", Commands.parallel(
+            IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
             IntakeRollerCommands.setOutput(() -> -1.0),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff)
         ));

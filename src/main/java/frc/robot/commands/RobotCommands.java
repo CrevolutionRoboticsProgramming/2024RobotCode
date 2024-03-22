@@ -199,8 +199,8 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
-                new ParallelRaceGroup(
-                    DrivetrainCommands.autoLineUp(),
+                DrivetrainCommands.autoLineUp(),
+                Commands.race(
                     ShooterFlywheelCommands.setAngularVelocity(
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
@@ -213,10 +213,16 @@ public class RobotCommands {
                                 )
                             )
                         ),
-                        new WaitUntilCommand(() -> Math.abs(
-                            ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations() - 
-                            (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.8)) < 6),
-                        IndexerCommands.setOutput(() -> 1.0)
+                        new WaitUntilCommand(() -> {
+                            final var currentRPS = ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations();
+                            final var error = Math.abs(currentRPS - (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.8));
+                            // System.out.printf("current: %d, setpoint: %d, err: %d%n", currentRPS, targetRPS, error);
+                            return error < 6;
+                        }),
+                        Commands.race(
+                            IndexerCommands.setOutput(() -> 1.0),
+                            Commands.waitSeconds(0.125)
+                        )
                     )
                 )
             )
@@ -249,7 +255,7 @@ public class RobotCommands {
                         }),
                         Commands.race(
                             IndexerCommands.setOutput(() -> 1.0),
-                            Commands.waitSeconds(0.125)
+                            Commands.waitSeconds(0.2)
                         )
                     )
                 )

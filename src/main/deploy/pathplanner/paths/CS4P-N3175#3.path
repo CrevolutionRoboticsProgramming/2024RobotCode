@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 2.44,
-        "y": 6.722020177278586
+        "y": 6.6047521185951465
       },
       "prevControl": {
-        "x": 1.325730468864645,
-        "y": 6.640044321458116
+        "x": 1.5255732329646479,
+        "y": 6.483478421502298
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 38.12817331388754,
+    "rotation": 31.44548870077577,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterSpeaker4Piece-non3175",
+  "folder": null,
   "previewStartingState": {
     "rotation": -20.48260572011751,
     "velocity": 0
