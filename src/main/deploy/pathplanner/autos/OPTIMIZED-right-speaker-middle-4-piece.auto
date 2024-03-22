@@ -126,32 +126,6 @@
                       "data": {
                         "name": "AutoLineupShoot"
                       }
-                    },
-                    {
-                      "type": "sequential",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "parallel",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "RUNCS4P#4"
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "AutoIntakeAndHandoff"
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
                     }
                   ]
                 }

@@ -42,7 +42,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "RUNCS4P#1"
+                                    "pathName": "CS4P-N3175#1"
                                   }
                                 },
                                 {
@@ -125,32 +125,6 @@
                       "type": "named",
                       "data": {
                         "name": "AutoLineupShoot"
-                      }
-                    },
-                    {
-                      "type": "sequential",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "parallel",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "RUNCS4P#4"
-                                  }
-                                },
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "AutoIntakeAndHandoff"
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
                       }
                     }
                   ]
