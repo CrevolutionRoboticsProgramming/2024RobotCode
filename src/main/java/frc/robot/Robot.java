@@ -43,9 +43,9 @@ public class Robot extends LoggedRobot {
 
         // Reset Config for all gamepads and other button bindings
         Driver.getInstance().resetConfig();
-//        Operator.getInstance().resetConfig();
-        DriverXbox.getInstance().resetConfig();
-        OperatorXbox.getInstance().resetConfig();
+        Operator.getInstance().resetConfig();
+        // DriverXbox.getInstance().resetConfig();
+        // OperatorXbox.getInstance().resetConfig();
     }
 
 

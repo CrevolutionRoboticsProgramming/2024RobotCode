@@ -39,7 +39,7 @@ public class RobotCommands {
             ),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff),
             new ParallelRaceGroup(
-                IndexerCommands.loadNote(),
+                IndexerCommands.grabNote(),
                 new SequentialCommandGroup(
                     new WaitCommand(0.25),
                     IntakeRollerCommands.setOutput(() -> 1)

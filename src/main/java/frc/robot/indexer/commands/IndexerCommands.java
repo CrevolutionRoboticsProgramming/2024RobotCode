@@ -17,4 +17,8 @@ public class IndexerCommands {
     public static Command unJamNote() {
         return new LoadNote(LoadNote.Profile.kHighLoad);
     }
+
+    public static Command grabNote() {
+        return new GrabNote(GrabNote.Profile.kLowLoad);
+    }
 }

@@ -41,8 +41,8 @@ public class LoadNote extends Command {
     public void execute() {
         indexer.setOutput(switch (state) {
             case kLoading -> 0.60;
-            // case kBackoff -> -profile.percent;
-            // case kReverseBackoff -> 0.15;
+            case kBackoff -> -profile.percent;
+            case kReverseBackoff -> 0.15;
             default -> 0.0;
         });
         transitionState();
@@ -59,23 +59,23 @@ public class LoadNote extends Command {
     }
 
     private void transitionState() {
-        // switch (state) {
-        //     case kLoading:
-        //         if (indexer.hasNote()) {
-        //             changeState(State.kBackoff, "detected note");
-        //         }
-        //         break;
-        //     case kBackoff:
-        //         if (!indexer.hasNote()) {
-        //             changeState(State.kReverseBackoff, "no longer detected note");
-        //         }
-        //         break;
-        //     case kReverseBackoff:
-        //         if (indexer.hasNote()) {
-        //             changeState(State.kDone, "detected note");
-        //         }
-        //         break;
-        // }
+        switch (state) {
+            case kLoading:
+                if (indexer.hasNote()) {
+                    changeState(State.kBackoff, "detected note");
+                }
+                break;
+            case kBackoff:
+                if (!indexer.hasNote()) {
+                    changeState(State.kReverseBackoff, "no longer detected note");
+                }
+                break;
+            case kReverseBackoff:
+                if (indexer.hasNote()) {
+                    changeState(State.kDone, "detected note");
+                }
+                break;
+        }
 
         switch (state) {
             case kLoading:
