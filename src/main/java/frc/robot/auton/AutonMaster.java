@@ -82,10 +82,11 @@ public class AutonMaster {
         autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("left-speaker-1.5"));
         autonChooser.addOption("center-speaker-4-neutral", AutoBuilder.buildAuto("center-speaker-4-neutral"));
         autonChooser.addOption("Coyle's Stupid Auton", AutoBuilder.buildAuto("coyles-stupid-auton"));
-
+        
 
         //SATCHIT AUTOS PRE TROY PLEASE TEST ASAP. DO NOT RUN WITHOUT TESTING !!!!!
-        autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4-piece"));
+        // autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4-piece"));
+        autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-non3175-4-piece"));
         // autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4.5p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4.5-piece"));
         // autonChooser.addOption("OPTIMIZED-PRE-TROY-left-speaker-steal-center-fun", AutoBuilder.buildAuto("OPTIMIZED-left-speaker-steal-center-fun"));
         // autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-middle-4-piece", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-middle-4-piece"));

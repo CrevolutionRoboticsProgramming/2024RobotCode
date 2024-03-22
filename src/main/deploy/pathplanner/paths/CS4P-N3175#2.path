@@ -8,45 +8,42 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.777346849239153,
-        "y": 4.397666991663902
+        "x": 1.1149354110405783,
+        "y": 5.328430628330586
       },
       "isLocked": false,
       "linkedName": "note-mid"
     },
     {
       "anchor": {
-        "x": 7.85046297365322,
-        "y": 4.1
+        "x": 2.36,
+        "y": 4.26
       },
       "prevControl": {
-        "x": 5.014524210866603,
-        "y": 3.9320825732560554
+        "x": 2.094989921595038,
+        "y": 4.413003640105068
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "left-podium-shot"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 4.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -21.418425620246442,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterPaths",
-  "previewStartingState": {
-    "rotation": 0,
-    "velocity": 0
-  },
+  "folder": "CenterSpeaker4Piece-non3175",
+  "previewStartingState": null,
   "useDefaultConstraints": false
 }
