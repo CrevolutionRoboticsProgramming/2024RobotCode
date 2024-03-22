@@ -83,12 +83,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "F4P#3"
-                }
               }
             ]
           }
@@ -96,6 +90,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "TEST PRE-TROY",
   "choreoAuto": false
 }

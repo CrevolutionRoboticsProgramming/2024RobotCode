@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.47972229277792,
-        "y": 2.5884345102023536
+        "x": 3.7280569992612063,
+        "y": 3.0336892348911606
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.244721022775379,
-        "y": 1.2996528659723983
+        "x": 4.6531655296813135,
+        "y": 1.2918182181542024
       },
       "isLocked": false,
       "linkedName": "LowFarShoot"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 4.47972229277792,
-        "y": 2.5884345102023536
+        "x": 3.7280569992612063,
+        "y": 3.0336892348911606
       },
       "prevControl": {
-        "x": 5.2378291423249514,
-        "y": 1.2996528659723983
+        "x": 4.594825352087252,
+        "y": 1.2001407962206787
       },
       "nextControl": null,
       "isLocked": false,
@@ -66,13 +66,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -21.74060668839884,
+    "rotation": -27.897271030947746,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Feed4PieceAuton",
   "previewStartingState": {
-    "rotation": -20.888282621692337,
+    "rotation": -29.357753542791453,
     "velocity": 0
   },
   "useDefaultConstraints": false
