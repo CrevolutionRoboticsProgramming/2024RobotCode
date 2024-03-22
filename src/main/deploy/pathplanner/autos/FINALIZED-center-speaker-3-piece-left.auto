@@ -1,0 +1,75 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.24,
+      "y": 5.527514849608872
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "autoPrimeSpeakerAndShootNear"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CS4P-N3175#1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoLineupShoot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "note-mid-to-left"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoLineupShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Troy-Comp-Autons",
+  "choreoAuto": false
+}

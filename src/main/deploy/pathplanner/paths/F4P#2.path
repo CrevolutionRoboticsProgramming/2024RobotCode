@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7280569992612063,
-        "y": 3.0336892348911606
+        "x": 2.5703927771491903,
+        "y": 3.274389821506916
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.6531655296813135,
-        "y": 1.2918182181542024
+        "x": 3.4099799108689126,
+        "y": 1.2500519546493647
       },
       "isLocked": false,
       "linkedName": "LowFarShoot"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 3.7280569992612063,
-        "y": 3.0336892348911606
+        "x": 2.5703927771491903,
+        "y": 3.274389821506916
       },
       "prevControl": {
-        "x": 4.594825352087252,
-        "y": 1.2001407962206787
+        "x": 3.4006511649386932,
+        "y": 1.2313944627889262
       },
       "nextControl": null,
       "isLocked": false,
@@ -52,14 +52,14 @@
     },
     {
       "waypointRelativePos": 1.35,
-      "rotationDegrees": 10.0,
+      "rotationDegrees": 8.453929018935758,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
+    "maxVelocity": 4.5,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
@@ -72,7 +72,7 @@
   "reversed": false,
   "folder": "Feed4PieceAuton",
   "previewStartingState": {
-    "rotation": -29.357753542791453,
+    "rotation": -27.8972710309476,
     "velocity": 0
   },
   "useDefaultConstraints": false

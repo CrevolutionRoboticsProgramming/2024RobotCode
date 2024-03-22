@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5093218186436375,
-        "y": 4.173567013800695
+        "x": 0.564712402152077,
+        "y": 4.431154316854089
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5017526035052073,
-        "y": 3.511946490559648
+        "x": 1.5571431870136494,
+        "y": 3.769533793613042
       },
       "isLocked": false,
       "linkedName": null
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 3.7280569992612063,
-        "y": 3.0336892348911606
+        "x": 2.5703927771491903,
+        "y": 3.274389821506916
       },
       "prevControl": {
-        "x": 4.7781801959543,
-        "y": 1.8002111943310177
+        "x": 3.6205159738422923,
+        "y": 2.0409117809467734
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,20 +59,20 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
+    "maxVelocity": 4.5,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -29.197486046064476,
+    "rotation": -41.760299703897786,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Feed4PieceAuton",
   "previewStartingState": {
-    "rotation": -2.0825652797309107,
+    "rotation": -60.06848815949223,
     "velocity": 0
   },
   "useDefaultConstraints": false
