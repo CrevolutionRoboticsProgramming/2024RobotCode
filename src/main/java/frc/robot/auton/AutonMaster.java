@@ -85,7 +85,7 @@ public class AutonMaster {
 
 
         //SATCHIT AUTOS PRE TROY PLEASE TEST ASAP. DO NOT RUN WITHOUT TESTING !!!!!
-        //autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4-piece"));
+        autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4-piece"));
         // autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-4.5p", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-4.5-piece"));
         // autonChooser.addOption("OPTIMIZED-PRE-TROY-left-speaker-steal-center-fun", AutoBuilder.buildAuto("OPTIMIZED-left-speaker-steal-center-fun"));
         // autonChooser.addOption("OPTIMIZED-PRE-TROY-center-speaker-middle-4-piece", AutoBuilder.buildAuto("OPTIMIZED-center-speaker-middle-4-piece"));
@@ -97,7 +97,7 @@ public class AutonMaster {
         NamedCommands.registerCommand("ZeroHeading", new InstantCommand(drivetrain::zeroHeading));
         NamedCommands.registerCommand("autoPrimeSpeakerAndShootNear", RobotCommands.autoPrimeSpeakerAndShoot(
             SetAngleShooterPivot.Preset.kShooterNear,
-            ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.8
+            ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.65
         ));
         NamedCommands.registerCommand("autoPrimeSpeakerAndShootMid", RobotCommands.autoPrimeSpeakerAndShoot(
             SetAngleShooterPivot.Preset.kShooterMid,
@@ -119,8 +119,8 @@ public class AutonMaster {
         //TESTING (post-vision) Auton - Satchit
         NamedCommands.registerCommand("PerpetualRPM", RobotCommands.autoConstantlyRPM());
         NamedCommands.registerCommand("AutoLineupShoot", RobotCommands.autoLineupAndShoot());   
-        // NamedCommands.registerCommand("AutoHandOff", RobotCommands.autoHandOffNote());
-        // NamedCommands.registerCommand("IntakeDeployStowBeamBreak", RobotCommands.intakeStowBeamBreakControl());
+        NamedCommands.registerCommand("AutoHandOff", RobotCommands.autoHandOffNote());
+        NamedCommands.registerCommand("IntakeDeployStowBeamBreak", RobotCommands.intakeStowBeamBreakControl());
         NamedCommands.registerCommand("AutoIntakeAndHandoff", RobotCommands.autoIntakeAndHandoffSimulatenously());
     }
 

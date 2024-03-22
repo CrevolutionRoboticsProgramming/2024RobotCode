@@ -12,15 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "PerpetualRPM"
-                }
-              },
               {
                 "type": "sequential",
                 "data": {
@@ -36,7 +30,7 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "parallel",
+                            "type": "deadline",
                             "data": {
                               "commands": [
                                 {
@@ -48,7 +42,7 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "AutoIntakeAndHandoff"
+                                    "name": "AutoHandOff"
                                   }
                                 }
                               ]
@@ -68,7 +62,7 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "parallel",
+                            "type": "deadline",
                             "data": {
                               "commands": [
                                 {
@@ -80,7 +74,7 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "AutoIntakeAndHandoff"
+                                    "name": "AutoHandOff"
                                   }
                                 }
                               ]
@@ -100,7 +94,7 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "parallel",
+                            "type": "deadline",
                             "data": {
                               "commands": [
                                 {
@@ -112,7 +106,7 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "AutoIntakeAndHandoff"
+                                    "name": "AutoHandOff"
                                   }
                                 }
                               ]

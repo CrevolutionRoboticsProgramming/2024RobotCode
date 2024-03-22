@@ -195,7 +195,7 @@ public class RobotCommands {
 
     // AUTON COMMANDS
     public static Command autoLineupAndShoot() {
-        return new SequentialCommandGroup(
+        return Commands.sequence(
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
@@ -236,7 +236,6 @@ public class RobotCommands {
         return Commands.sequence(
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
-                IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
                 Commands.race(
                     ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPS)),
                     Commands.sequence(
@@ -249,11 +248,13 @@ public class RobotCommands {
                             return error < 6;
                         }),
                         Commands.race(
-                            IndexerCommands.setOutput(() -> 1.0)
+                            IndexerCommands.setOutput(() -> 1.0),
+                            Commands.waitSeconds(0.125)
                         )
                     )
                 )
-            )
+            ),
+            new InstantCommand(() -> System.out.println("Auton Prime Speaker & Shooter Complete"))
         );
     }
 
@@ -265,12 +266,31 @@ public class RobotCommands {
         );
     }
 
+    // public static Command autoHandOffNote() {
+    //     return Commands.either(new SequentialCommandGroup(
+    //         new ParallelCommandGroup(
+    //             IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
+    //             ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
+    //             //ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoffClear)
+    //         ),
+    //         ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff),
+    //         new ParallelRaceGroup(
+    //             IndexerCommands.loadNote(),
+    //             new SequentialCommandGroup(
+    //                 new WaitCommand(0.25),
+    //                 IntakeRollerCommands.setOutput(() -> 1)
+    //             )
+    //         ),
+    //         new InstantCommand(() -> System.out.println("handoff complete"))),
+    //         Commands.none(), IntakeRoller.getInstance()::hasNote);
+    // }
+
     public static Command autoHandOffNote() {
         return new SequentialCommandGroup(
+            new ConditionalCommand(Commands.none(), runIntake() ,IntakeRoller.getInstance()::hasNote),
             new ParallelCommandGroup(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
-                //ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoffClear)
             ),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff),
             new ParallelRaceGroup(
@@ -299,34 +319,35 @@ public class RobotCommands {
 
     //SATCHIT COMMANDS FOR AUTON OPTIMIZATIONS
 
-    // public static Command intakeStowBeamBreakControl() {
-    //     return Commands.either(stowIntake(), runIntake(), IntakeRoller.getInstance()::hasNote);
-    // }
+    public static Command intakeStowBeamBreakControl() {
+        return Commands.either(autoHandOffNote(), runIntake(), IntakeRoller.getInstance()::hasNote);
+    }
 
 
     public static Command runIntake() {
         return new ParallelCommandGroup(
                 IntakeRollerCommands.setOutput(() -> -1.0),
+                IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
                 ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff));
     }
 
-    // public static Command stowIntake() {
-    //     return new ParallelCommandGroup(
-    //             IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
-    //             ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero));
-    // }
+    public static Command stowIntake() {
+        return new ParallelCommandGroup(
+                IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
+                ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero));
+    }
 
-
-    // public static Command autoIntakeAndHandoffSimulatenously() {
-    //     return new ConditionalCommand(new ParallelCommandGroup(stowIntake(), autoHandoffNote_OPTIMIZED()), 
-    //         runIntake(), 
-    //         IntakeRoller.getInstance()::hasNote);
-    // }
 
     public static Command autoIntakeAndHandoffSimulatenously() {
-        return new ConditionalCommand(
-            autoHandOffNote(), runIntake(), IntakeRoller.getInstance()::hasNote);
+        return new ConditionalCommand(new ParallelCommandGroup(stowIntake(), autoHandoffNote_OPTIMIZED()), 
+            runIntake(), 
+            IntakeRoller.getInstance()::hasNote);
     }
+
+    // public static Command autoIntakeAndHandoffSimulatenously() {
+    //     return new ConditionalCommand(
+    //         autoHandOffNote(), runIntake(), IntakeRoller.getInstance()::hasNote);
+    // }
 
     /*Not for WoodHaven unless Vision Done */
     // public static Command shootNoteSpeaker() {
