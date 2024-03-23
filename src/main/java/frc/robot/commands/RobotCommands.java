@@ -170,7 +170,7 @@ public class RobotCommands {
     public static Command primeTrap() {
         return Commands.sequence(
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap),
-            ElevatorCommands.setPosition(SetPositionElevator.Preset.kTrap)
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kPostTrap)
         );
     }
 

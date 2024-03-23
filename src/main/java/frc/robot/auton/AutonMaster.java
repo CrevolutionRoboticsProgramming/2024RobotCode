@@ -73,7 +73,7 @@ public class AutonMaster {
         // // autonChooser.addOption("TEST-feed-4p-auton", AutoBuilder.buildAuto("Feed4PieceAuton"));
         // autonChooser.addOption("left-speaker-1.5p", AutoBuilder.buildAuto("left-speaker-1.5"));
         // autonChooser.addOption("center-speaker-4-neutral", AutoBuilder.buildAuto("center-speaker-4-neutral"));
-        // autonChooser.addOption("Coyle's Stupid Auton", AutoBuilder.buildAuto("coyles-stupid-auton"));
+        // autonChooser.addOption("Coyle's Stupid Auton", AutoBuilder.buildAuto("coyles-stupid-auton"));++
         
 
         //SATCHIT AUTOS PRE TROY PLEASE TEST ASAP. DO NOT RUN WITHOUT TESTING !!!!!

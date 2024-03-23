@@ -51,11 +51,11 @@ public class ShooterInterpolation extends SubsystemBase{
         dataAngle.put(4.23, 31.0);
         dataAngle.put(4.5, 32.0);
         dataAngle.put(4.65, 34.8);
-        dataAngle.put(4.7, 35.0);
-        dataAngle.put(4.829, 34.0);
-        dataAngle.put(4.9, 34.75);
-        dataAngle.put(4.954, 34.4);
-        dataAngle.put(5.1, 34.8);
+        dataAngle.put(4.7, 34.50);
+        dataAngle.put(4.829, 32.75);
+        dataAngle.put(4.9, 33.50);
+        dataAngle.put(4.954, 33.15);
+        dataAngle.put(5.1, 33.65);
     }
 
 
