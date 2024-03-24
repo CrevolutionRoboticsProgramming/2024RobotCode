@@ -132,7 +132,7 @@ public class RobotCommands {
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kAmp),
                 new ParallelRaceGroup(
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.5)),
                     new WaitUntilCommand(() -> !Indexer.getInstance().hasNote())
                 )
             )
@@ -170,7 +170,7 @@ public class RobotCommands {
     public static Command primeTrap() {
         return Commands.sequence(
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kTrap),
-            ElevatorCommands.setPosition(SetPositionElevator.Preset.kPostTrap)
+            ElevatorCommands.setPosition(SetPositionElevator.Preset.kTrap)
         );
     }
 
@@ -221,7 +221,7 @@ public class RobotCommands {
                         }),
                         Commands.race(
                             IndexerCommands.setOutput(() -> 1.0),
-                            Commands.waitSeconds(0.125)
+                            Commands.waitSeconds(0.135)
                         )
                     )
                 )
