@@ -15,10 +15,10 @@ import edu.wpi.first.math.util.Units;
 public class VisionConfig{
     public class ShooterCamsConfig {
         public static final String shooterCam1Name = "Shooting-Cam";
-        public static final String shooterCam2Name = "Drive-Cam";
+        // public static final String shooterCam2Name = "Drive-Cam";
 
         public static PhotonCamera shooterCam1 = new PhotonCamera(shooterCam1Name);
-        public static PhotonCamera shooterCam2 = new PhotonCamera(shooterCam2Name);
+        // public static PhotonCamera shooterCam2 = new PhotonCamera(shooterCam2Name);
 
         //Robot to Cam 1 constants
         public static final Transform3d cam1ToRobot = new Transform3d(
