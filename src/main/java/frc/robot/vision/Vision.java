@@ -10,11 +10,14 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.proto.Photon;
+
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
@@ -33,30 +36,32 @@ public class Vision extends SubsystemBase {
     public static class PhotonRunnable implements Runnable {
 
         private final PhotonCamera photoncamera;
+        private final Transform3d robotToCam;
         private final PhotonPoseEstimator photonPoseEstimator;
         private final AtomicReference<EstimatedRobotPose> atomicEstimatedRobotPose = new AtomicReference<EstimatedRobotPose>();
 
-        public PhotonRunnable() {
+        public PhotonRunnable(PhotonCamera camName, Transform3d robotToCam) {
             //declare photoncamera
-            this.photoncamera = ShooterCamsConfig.shooterCam1;
-            PhotonPoseEstimator photonEstimator = null;
+            this.photoncamera = camName;
+            this.robotToCam = robotToCam;
+            PhotonPoseEstimator photonEstimator1 = null;
             try {
                 var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
                 layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
 
                 if (photoncamera != null) {
-                    photonEstimator = new PhotonPoseEstimator(
+                    photonEstimator1 = new PhotonPoseEstimator(
                         layout,
                         PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
                         photoncamera,
-                        ShooterCamsConfig.robotToCam1);
+                        robotToCam);
                 }
             } catch (Exception e) {
                 DriverStation.reportError("Failed to load AprilTagFieldLayout", e.getStackTrace());
-                photonEstimator = null;
+                photonEstimator1 = null;
             }
-            this.photonPoseEstimator = photonEstimator;
+            this.photonPoseEstimator = photonEstimator1;
         }
 
         @Override
@@ -83,12 +88,14 @@ public class Vision extends SubsystemBase {
     public static class PoseEstimator extends SubsystemBase {
         private static PoseEstimator mInstance;
 
+        private PhotonCamera shootingCam = ShooterCamsConfig.shooterCam;
+        private PhotonCamera poseCam = ShooterCamsConfig.poseCam;
         private final Supplier<Rotation2d> rotationSupplier;
         private final Supplier<SwerveModulePosition[]> modSupplier;
         private final SwerveDrivePoseEstimator poseEstimator;
         private final Field2d field2d = new Field2d();
-        private final PhotonRunnable photonEstimator = new PhotonRunnable();
-        private final Notifier photonNotifier = new Notifier(photonEstimator);
+        private final PhotonRunnable photonEstimator1 = new PhotonRunnable(shootingCam, ShooterCamsConfig.robotToShootingCam);
+        private final Notifier photonNotifier = new Notifier(photonEstimator1);
         private final ShuffleboardTab visionTab = Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName);
 
         private OriginPosition originPosition;
@@ -206,7 +213,7 @@ public class Vision extends SubsystemBase {
             poseEstimator.update(rotationSupplier.get(), modSupplier.get());
 
             //adding vision measurement
-            var visionPose = photonEstimator.getLatestEstimatedPose();
+            var visionPose = photonEstimator1.getLatestEstimatedPose();
             if (visionPose != null) {
                 sawTag = true;
                 var pose2d = visionPose.estimatedPose.toPose2d();
