@@ -30,13 +30,13 @@ import frc.robot.vision.VisionConfig.ShooterCamsConfig;
 public class Vision extends SubsystemBase {
 
     //this is how 7028 used PhotonPoseEstimator, so far easiest way i found to use it
-    public static class PhotonRunnable implements Runnable {
+    public static class PhotonRunnableCam1 implements Runnable {
 
         private final PhotonCamera photoncamera;
         private final PhotonPoseEstimator photonPoseEstimator;
         private final AtomicReference<EstimatedRobotPose> atomicEstimatedRobotPose = new AtomicReference<EstimatedRobotPose>();
 
-        public PhotonRunnable() {
+        public PhotonRunnableCam1() {
             //declare photoncamera
             this.photoncamera = ShooterCamsConfig.shooterCam1;
             PhotonPoseEstimator photonEstimator = null;
@@ -80,6 +80,56 @@ public class Vision extends SubsystemBase {
         }
     }
 
+    // public static class PhotonRunnableCam2 implements Runnable {
+
+    //     private final PhotonCamera photoncamera;
+    //     private final PhotonPoseEstimator photonPoseEstimator;
+    //     private final AtomicReference<EstimatedRobotPose> atomicEstimatedRobotPose = new AtomicReference<EstimatedRobotPose>();
+
+    //     public PhotonRunnableCam2() {
+    //         //declare photoncamera
+    //         this.photoncamera = ShooterCamsConfig.shooterCam2;
+    //         PhotonPoseEstimator photonEstimator = null;
+    //         try {
+    //             var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+
+    //             layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
+
+    //             if (photoncamera != null) {
+    //                 photonEstimator = new PhotonPoseEstimator(
+    //                     layout,
+    //                     PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+    //                     photoncamera,
+    //                     ShooterCamsConfig.robotToCam1);
+    //             }
+    //         } catch (Exception e) {
+    //             DriverStation.reportError("Failed to load AprilTagFieldLayout", e.getStackTrace());
+    //             photonEstimator = null;
+    //         }
+    //         this.photonPoseEstimator = photonEstimator;
+    //     }
+
+    //     @Override
+    //     public void run() {
+    //         if (photonPoseEstimator != null && photoncamera != null) {
+    //             var photonResults = photoncamera.getLatestResult();
+    //             if (photonResults.hasTargets()) {
+    //                 photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
+    //                     var estimatedPose = estimatedRobotPose.estimatedPose;
+    //                     if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= ShooterCamsConfig.fieldLength_m
+    //                         && estimatedPose.getY() > 0.0 && estimatedPose.getY() <= ShooterCamsConfig.fieldWidth_m) {
+    //                         atomicEstimatedRobotPose.set(estimatedRobotPose);
+    //                     }
+    //                 });
+    //             }
+    //         }
+    //     }
+
+    //     public EstimatedRobotPose getLatestEstimatedPose() {
+    //         return atomicEstimatedRobotPose.getAndSet(null);
+    //     }
+    // }
+
     public static class PoseEstimator extends SubsystemBase {
         private static PoseEstimator mInstance;
 
@@ -87,12 +137,16 @@ public class Vision extends SubsystemBase {
         private final Supplier<SwerveModulePosition[]> modSupplier;
         private final SwerveDrivePoseEstimator poseEstimator;
         private final Field2d field2d = new Field2d();
-        private final PhotonRunnable photonEstimator = new PhotonRunnable();
+        private final PhotonRunnableCam1 photonEstimator = new PhotonRunnableCam1();
         private final Notifier photonNotifier = new Notifier(photonEstimator);
-        private final ShuffleboardTab visionTab = Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName);
+
+        // private final PhotonRunnableCam2 photonEstimator2 = new PhotonRunnableCam2();
+        // private final Notifier photonNotifier2 = new Notifier(photonEstimator2);
+
+        // private final ShuffleboardTab visionTab = Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName);
 
         private OriginPosition originPosition;
-        private boolean allianceChanged;
+        // private boolean allianceChanged;
         private boolean sawTag = false;
 
         private PoseEstimator(
@@ -106,18 +160,20 @@ public class Vision extends SubsystemBase {
                 modSupplier.get(),
                 new Pose2d());
 
-            photonNotifier.setName("PhotonRunnable");
+            photonNotifier.setName("PhotonRunnableCam1");
             photonNotifier.startPeriodic(0.02);
+            // photonNotifier2.setName("PhotonRunnableCam2");
+            // photonNotifier2.startPeriodic(0.02);
 
-            var currAlliance = DriverStation.getAlliance();
-            if(DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
-                allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
-                originPosition = OriginPosition.kBlueAllianceWallRightSide;
-            }
-            else {
-                allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
-                originPosition = OriginPosition.kBlueAllianceWallRightSide;
-            }
+            // var currAlliance = DriverStation.getAlliance();
+            // if(DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
+            //     allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+            //     originPosition = OriginPosition.kBlueAllianceWallRightSide;
+            // }
+            // else {
+            //     allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+            //     originPosition = OriginPosition.kBlueAllianceWallRightSide;
+            // }
 
             // Optional<Alliance> currentAlliance = DriverStation.getAlliance();
             // Optional<Alliance> ally = DriverStation.getAlliance();
@@ -133,12 +189,12 @@ public class Vision extends SubsystemBase {
             // }
 
 
-            if (allianceChanged && sawTag) {
-                //alliance determines coordinate system,
-                //if it changes the coordinate system also has to change
-                var newPose = flipAlliance(getCurrentPose());
-                poseEstimator.resetPosition(rotationSupplier.get(), modSupplier.get(), newPose);
-            }
+            // if (allianceChanged && sawTag) {
+            //     //alliance determines coordinate system,
+            //     //if it changes the coordinate system also has to change
+            //     var newPose = flipAlliance(getCurrentPose());
+            //     poseEstimator.resetPosition(rotationSupplier.get(), modSupplier.get(), newPose);
+            // }
         }
 
         public static PoseEstimator getInstance() {
@@ -206,15 +262,18 @@ public class Vision extends SubsystemBase {
             poseEstimator.update(rotationSupplier.get(), modSupplier.get());
 
             //adding vision measurement
-            var visionPose = photonEstimator.getLatestEstimatedPose();
-            if (visionPose != null) {
+            var visionPose1 = photonEstimator.getLatestEstimatedPose();
+            // var visionPose2 = photonEstimator2.getLatestEstimatedPose();
+            if (visionPose1 != null) {
                 sawTag = true;
-                var pose2d = visionPose.estimatedPose.toPose2d();
+                var visionPose2d = visionPose1.estimatedPose.toPose2d();
+                // var visionPose2dCam2 = visionPose2.estimatedPose.toPose2d();
                 if (originPosition != OriginPosition.kBlueAllianceWallRightSide) {
-                    pose2d = flipAlliance(pose2d);
+                    visionPose2d = flipAlliance(visionPose2d);
                 }
-                poseEstimator.addVisionMeasurement(pose2d, visionPose.timestampSeconds);
-            }
+                poseEstimator.addVisionMeasurement(visionPose2d, visionPose1.timestampSeconds);
+                // poseEstimator.addVisionMeasurement(visionPose2dCam2, visionPose2.timestampSeconds);
+            } //TODO: add "&& visionPose2 != null" to if statement when we have two pose estimator cams
 
             //log to dashboard
             var dashboardPose = poseEstimator.getEstimatedPosition();
