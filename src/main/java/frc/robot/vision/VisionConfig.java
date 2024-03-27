@@ -14,22 +14,24 @@ import edu.wpi.first.math.util.Units;
 
 public class VisionConfig{
     public class ShooterCamsConfig {
-        public static final String shooterCam1Name = "Shooting-Cam";
-        // public static final String shooterCam2Name = "Drive-Cam";
+        //TODO: uncomment Pose-Cam related code when 2nd cam installed 
+        public static final String shooterCamName = "Shooting-Cam";
+        // public static final String poseCamName = "Pose-Cam";
 
-        public static PhotonCamera shooterCam1 = new PhotonCamera(shooterCam1Name);
-        // public static PhotonCamera shooterCam2 = new PhotonCamera(shooterCam2Name);
+        public static PhotonCamera shooterCam = new PhotonCamera(shooterCamName);
+        // public static PhotonCamera poseCam = new PhotonCamera(poseCamName);
 
-        //Robot to Cam 1 constants
-        public static final Transform3d cam1ToRobot = new Transform3d(
+        //Robot to Shooting-Cam constants
+        public static final Transform3d shootingCamToRobot = new Transform3d(
             new Translation3d(Units.inchesToMeters(13), Units.inchesToMeters(0), Units.inchesToMeters(19)), 
             new Rotation3d(0, Units.degreesToRadians(15), Units.degreesToRadians(180))
         );
-        public static final Transform3d robotToCam1 = cam1ToRobot.inverse();
+        public static final Transform3d robotToShootingCam = shootingCamToRobot.inverse();
 
-        //Robot to Cam 2 constants
-        public static final Transform3d cam2ToRobot = new Transform3d(new Translation3d(0.0, 0.0, 0.0), new Rotation3d());
-        public static final Transform3d robotToCam2 = cam2ToRobot.inverse();
+        //Robot to Pose-Cam constants
+        //TODO: add Pose cam Transform3d values
+        // public static final Transform3d poseCamToRobot = new Transform3d(new Translation3d(0.0, 0.0, 0.0), new Rotation3d());
+        // public static final Transform3d robotToPoseCam = poseCamToRobot.inverse();
         
 
         //PID Values for Vision
