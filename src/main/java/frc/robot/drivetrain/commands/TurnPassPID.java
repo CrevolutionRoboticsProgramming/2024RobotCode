@@ -1,32 +1,28 @@
 package frc.robot.drivetrain.commands;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.drivetrain.Drivetrain;
-import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.vision.Vision;
 
-public class DriveAndHoldAngle extends Command {
+public class TurnPassPID extends Command{
     private static class Settings {
         static final double kP = 8.0;
         static final double kI = 0.0;
         static final double kD = 1.0;
         
         static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(360.0);
+
         static final Rotation2d kAllowedError = Rotation2d.fromDegrees(1.0);
     }
 
@@ -37,7 +33,7 @@ public class DriveAndHoldAngle extends Command {
 
     private Rotation2d targetAngle;
 
-    public DriveAndHoldAngle(Supplier<Rotation2d> target) {
+    public TurnPassPID() {
         drivetrain = Drivetrain.getInstance();
         this.deltaTheta = null;
 
@@ -52,13 +48,14 @@ public class DriveAndHoldAngle extends Command {
         final var mPoseEstimator = Vision.PoseEstimator.getInstance();
         final var robotPose = mPoseEstimator.getCurrentPose();
         final var currentAlliance = DriverStation.getAlliance();
+
         Optional<Alliance> ally = DriverStation.getAlliance();
         if (ally.isPresent()) {
             if (ally.get() == Alliance.Blue) {
-                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(209.48), Units.inchesToMeters(161.62)), new Rotation2d(0));
             }
             if (ally.get() == Alliance.Red) {
-                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(441.74), Units.inchesToMeters(161.62)), new Rotation2d(Units.degreesToRadians(180)));
             }
         }
         final var startingAngle = robotPose.getRotation();
@@ -84,7 +81,8 @@ public class DriveAndHoldAngle extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        final var error = Math.abs(drivetrain.getGyroYaw().getDegrees() - targetAngle.getDegrees());
+        return error < Settings.kAllowedError.getDegrees();
     }
 
     @Override
