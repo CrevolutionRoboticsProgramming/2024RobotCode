@@ -109,12 +109,19 @@ public class Operator extends Gamepad {
             ElevatorCommands.setVelocity(() -> elevatorCurve.calculate(-controller.getRightY()))
         ));
 
-        //Intake Pivot Mnaual Override
+        
+        /*TESTING ONLY */
         controller.L2().whileTrue(
-            IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-                intakePivotManualCurve.calculate(controller.getLeftX())),
-                false)
+            IntakeRollerCommands.setOutput(() -> 
+                shooterManualCurve.calculate(controller.getLeftY()))
         );
+        
+        //Intake Pivot Mnaual Override
+        // controller.L2().whileTrue(
+        //     IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
+        //         intakePivotManualCurve.calculate(controller.getLeftX())),
+        //         false)
+        // );
 
         //Shooter Pivot Manual Override
         controller.L2().whileTrue(

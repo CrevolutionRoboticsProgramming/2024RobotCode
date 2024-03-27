@@ -29,11 +29,17 @@ public class ShooterInterpolation extends SubsystemBase{
     // Method to set up data values for RPM in the TreeMap
     private void configureInterpolatingPercentOutputTreeMap() {
         // Add data points to the TreeMap
-        dataPercentOutput.put(10.0, 0.2);
-        dataPercentOutput.put(20.0, 0.4);
-        dataPercentOutput.put(30.0, 0.6);
-        dataPercentOutput.put(40.0, 0.8);
-        dataPercentOutput.put(50.0, 1.0);
+        dataPercentOutput.put(0.5, 0.6);
+        dataPercentOutput.put(1.0, 0.6);
+        dataPercentOutput.put(1.5, 0.6);
+        dataPercentOutput.put(2.0, 0.65);
+        dataPercentOutput.put(2.5, 0.7);
+        dataPercentOutput.put(3.0, 0.75);
+        dataPercentOutput.put(3.5, 0.8);
+        dataPercentOutput.put(4.0, 0.85);
+        dataPercentOutput.put(4.5, 0.9);
+        dataPercentOutput.put(5.0, 0.95);
+        dataPercentOutput.put(5.5, 1.0);
     }
 
     // Method to set up data values for Angles in the TreeMap
