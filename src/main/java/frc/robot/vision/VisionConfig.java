@@ -14,11 +14,12 @@ import edu.wpi.first.math.util.Units;
 
 public class VisionConfig{
     public class ShooterCamsConfig {
+        //TODO: uncomment Pose-Cam related code when 2nd cam installed 
         public static final String shooterCamName = "Shooting-Cam";
-        public static final String poseCamName = "Pose-Cam";
+        // public static final String poseCamName = "Pose-Cam";
 
         public static PhotonCamera shooterCam = new PhotonCamera(shooterCamName);
-        public static PhotonCamera poseCam = new PhotonCamera(poseCamName);
+        // public static PhotonCamera poseCam = new PhotonCamera(poseCamName);
 
         //Robot to Shooting-Cam constants
         public static final Transform3d shootingCamToRobot = new Transform3d(
@@ -28,8 +29,9 @@ public class VisionConfig{
         public static final Transform3d robotToShootingCam = shootingCamToRobot.inverse();
 
         //Robot to Pose-Cam constants
-        public static final Transform3d poseCamToRobot = new Transform3d(new Translation3d(0.0, 0.0, 0.0), new Rotation3d());
-        public static final Transform3d robotToPoseCam = poseCamToRobot.inverse();
+        //TODO: add Pose cam Transform3d values
+        // public static final Transform3d poseCamToRobot = new Transform3d(new Translation3d(0.0, 0.0, 0.0), new Rotation3d());
+        // public static final Transform3d robotToPoseCam = poseCamToRobot.inverse();
         
 
         //PID Values for Vision

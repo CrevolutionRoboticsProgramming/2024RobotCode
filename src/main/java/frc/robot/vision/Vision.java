@@ -44,14 +44,14 @@ public class Vision extends SubsystemBase {
             //declare photoncamera
             this.photoncamera = camName;
             this.robotToCam = robotToCam;
-            PhotonPoseEstimator photonEstimator1 = null;
+            PhotonPoseEstimator photonEstimator = null;
             try {
                 var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
                 layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
 
                 if (photoncamera != null) {
-                    photonEstimator1 = new PhotonPoseEstimator(
+                    photonEstimator = new PhotonPoseEstimator(
                         layout,
                         PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
                         photoncamera,
@@ -59,9 +59,9 @@ public class Vision extends SubsystemBase {
                 }
             } catch (Exception e) {
                 DriverStation.reportError("Failed to load AprilTagFieldLayout", e.getStackTrace());
-                photonEstimator1 = null;
+                photonEstimator = null;
             }
-            this.photonPoseEstimator = photonEstimator1;
+            this.photonPoseEstimator = photonEstimator;
         }
 
         @Override
@@ -89,13 +89,18 @@ public class Vision extends SubsystemBase {
         private static PoseEstimator mInstance;
 
         private PhotonCamera shootingCam = ShooterCamsConfig.shooterCam;
-        private PhotonCamera poseCam = ShooterCamsConfig.poseCam;
+        // private PhotonCamera poseCam = ShooterCamsConfig.poseCam;
         private final Supplier<Rotation2d> rotationSupplier;
         private final Supplier<SwerveModulePosition[]> modSupplier;
         private final SwerveDrivePoseEstimator poseEstimator;
         private final Field2d field2d = new Field2d();
-        private final PhotonRunnable photonEstimator1 = new PhotonRunnable(shootingCam, ShooterCamsConfig.robotToShootingCam);
-        private final Notifier photonNotifier = new Notifier(photonEstimator1);
+        private final PhotonRunnable photonEstimatorShoot = new PhotonRunnable(shootingCam, ShooterCamsConfig.robotToShootingCam);
+        // private final PhotonRunnable photonEstimatorPose = new PhotonRunnable(poseCam, ShooterCamsConfig.robotToPoseCam);
+        private final Notifier allPhotonNotifier = new Notifier(
+            () -> {
+                photonEstimatorShoot.run();
+            // photonEstimatorPose.run();
+        });
         private final ShuffleboardTab visionTab = Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName);
 
         private OriginPosition originPosition;
@@ -113,8 +118,8 @@ public class Vision extends SubsystemBase {
                 modSupplier.get(),
                 new Pose2d());
 
-            photonNotifier.setName("PhotonRunnable");
-            photonNotifier.startPeriodic(0.02);
+            allPhotonNotifier.setName("runAll");
+            allPhotonNotifier.startPeriodic(0.02);
 
             var currAlliance = DriverStation.getAlliance();
             if(DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
@@ -207,13 +212,9 @@ public class Vision extends SubsystemBase {
             return poseToFlip.relativeTo(ShooterCamsConfig.flippingPose);
         }
 
-        @Override
-        public void periodic() {
-            //Update estimator every 20 ms
-            poseEstimator.update(rotationSupplier.get(), modSupplier.get());
-
+        private void estimatorUpdate(PhotonRunnable estimator) {
             //adding vision measurement
-            var visionPose = photonEstimator1.getLatestEstimatedPose();
+            var visionPose = estimator.getLatestEstimatedPose();
             if (visionPose != null) {
                 sawTag = true;
                 var pose2d = visionPose.estimatedPose.toPose2d();
@@ -222,6 +223,16 @@ public class Vision extends SubsystemBase {
                 }
                 poseEstimator.addVisionMeasurement(pose2d, visionPose.timestampSeconds);
             }
+        }
+
+        @Override
+        public void periodic() {
+            //Update estimator every 20 ms
+            poseEstimator.update(rotationSupplier.get(), modSupplier.get());
+
+            //add vision measurements
+            estimatorUpdate(photonEstimatorShoot);
+            // estimatorUpdate(photonEstimatorPose);
 
             //log to dashboard
             var dashboardPose = poseEstimator.getEstimatedPosition();
