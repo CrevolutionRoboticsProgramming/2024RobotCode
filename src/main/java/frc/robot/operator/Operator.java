@@ -66,7 +66,7 @@ public class Operator extends Gamepad {
         // Shooter Commands
         controller.cross().whileTrue(RobotCommands.handOffNote());
 
-        controller.square().whileTrue(RobotCommands.passNote());
+        controller.square().whileTrue(RobotCommands.pass());
         controller.circle().whileTrue(RobotCommands.amp());
 
         controller.triangle().whileTrue(new SequentialCommandGroup(

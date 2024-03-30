@@ -19,7 +19,7 @@ import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.vision.Vision;
 
 public class DrivetrainCommands {
-    private static Command drive(Supplier<Translation2d> translationSupplier, DoubleSupplier rotationSupplier, double translationModifier,
+    public static Command drive(Supplier<Translation2d> translationSupplier, DoubleSupplier rotationSupplier, double translationModifier,
                                  double rotationModifier, boolean isFieldOriented, Translation2d rotationOffset) {
         return new TeleopDrive(
             () -> translationSupplier.get().times(DriveConstants.MAX_SPEED).times(translationModifier),
@@ -29,27 +29,46 @@ public class DrivetrainCommands {
         );
     }
 
-    public static Command driveAndLockTarget(Supplier<Translation2d> translationSupplier) {
-        final PIDController pidController = new PIDController(8.0, 0.0, 1.0);
-        final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(360.0);
-        final Rotation2d kAllowedError = Rotation2d.fromDegrees(1.0);
-        final Drivetrain drivetrain = Drivetrain.getInstance();
+    public static Command stopSwerve(Supplier<Translation2d> translationSupplier) {
         return drive(
             translationSupplier, 
-            () -> {
-                final var deltaTheta = getRelativeAngleToSpeaker();
-                final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
-                    pidController.calculate(0.0, deltaTheta.getDegrees()),
-                    -kMaxAngularVelocity.getDegrees(),
-                    kMaxAngularVelocity.getDegrees()
-                ));
-                return requestedAngularVelocity.getRadians();
-            },
+            () -> 0.0,
             1.0,
             1.0,
             true,
             new Translation2d(0, 0)
         );
+    }
+
+    public static Command driveAndLockTarget(Supplier<Translation2d> translationSupplier) {
+        // final PIDController pidController = new PIDController(4.825, 0.0, 1.5);
+        // final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(360.0);
+        // final Rotation2d kAllowedError = Rotation2d.fromDegrees(2.0);
+        // final Drivetrain drivetrain = Drivetrain.getInstance();
+        // System.out.println("Is it gonna run???: true");
+        // if (getRelativeAngleToSpeaker().getDegrees() > kAllowedError.getDegrees()) {
+        //     System.out.println("Is it gonna work?: true");
+        //     return drive(
+        //     translationSupplier, 
+        //     () -> {
+        //         final var deltaTheta = getRelativeAngleToSpeaker();
+        //         final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
+        //             pidController.calculate(0.0, deltaTheta.getDegrees()),
+        //             -kMaxAngularVelocity.getDegrees(),
+        //             kMaxAngularVelocity.getDegrees()
+        //         ));
+        //         return requestedAngularVelocity.getRadians();
+        //     },
+        //     1.0,
+        //     1.0,
+        //     true,
+        //     new Translation2d(0, 0)
+        // );
+        // } else {
+        //     System.out.println("Is it gonna work?: False");
+        //     return stopSwerve(translationSupplier);
+        // }
+        return new DriveAndHoldAngle(translationSupplier);
     }
 
     private static Rotation2d getRelativeAngleToSpeaker() {
@@ -133,5 +152,9 @@ public class DrivetrainCommands {
         // deltaTheta *= Math.signum((robotPose.getX()) - (goalPose.getX()));
         
         return new TurnAnglePID();
+    }
+
+    public static Command holdPassPos() {
+        return new TurnPassPID();
     }
 }

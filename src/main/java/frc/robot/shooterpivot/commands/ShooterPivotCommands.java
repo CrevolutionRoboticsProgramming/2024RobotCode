@@ -22,8 +22,8 @@ public class ShooterPivotCommands {
         return new LockSpeaker(targetSupplier);
     }
 
-    public static Command lockSpeaker() {
-        return new LockSpeaker();
+    public static Command lockSpeaker(Supplier<Rotation2d> angleSupplier) {
+        return new LockSpeaker(angleSupplier);
     }
 
     public static Command holdState(SetAngleShooterPivot.Preset state) {

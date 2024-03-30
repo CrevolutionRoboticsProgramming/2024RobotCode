@@ -6,7 +6,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.driver.Driver;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
 import frc.robot.drivetrain.commands.TurnAngleProfile;
@@ -66,6 +68,13 @@ public class RobotCommands {
         );
     }
 
+    public static Command pass() {
+        return new ParallelCommandGroup(
+            passNote(),
+            DrivetrainCommands.holdPassPos()
+        );
+    }
+
     public static Command primeShoot() {
         return new SequentialCommandGroup(
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
@@ -79,8 +88,8 @@ public class RobotCommands {
                         )
                     ),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
                     )
                 )
             )
@@ -93,6 +102,25 @@ public class RobotCommands {
             DrivetrainCommands.autoLineUp()
         );
     }
+
+    // public static Command shoot() {
+    //     final Rotation2d kAllowedError = Rotation2d.fromRotations(5); // 300 RPM
+    //     final var leftVel = ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95);
+    //     final var rightVel = ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85);
+    //     var left = (Math.abs(leftVel.getRotations()) - 
+    //     (Math.abs(ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations()))) < kAllowedError.getRotations();
+    //     var right = (Math.abs(rightVel.getRotations()) - 
+    //     (Math.abs(ShooterFlywheel.getInstance().getRightFlywheelVelocity().getRotations()))) < kAllowedError.getRotations();
+    //     System.out.println("Is Left There??: " + left);
+    //     System.out.println("Is Right There??: " + right);
+    //     if((left == true) || (right == true)) {
+    //         System.out.println("Working???");
+    //         return IndexerCommands.setOutput(() ->1.0);
+    //     } else {
+    //         System.out.println("So sad not Working???");
+    //         return IndexerCommands.setOutput(() -> 0.0);
+    //     }
+    // }
 
     public static Command spitNote() {
         return new SequentialCommandGroup(

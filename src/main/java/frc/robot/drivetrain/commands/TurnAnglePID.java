@@ -52,14 +52,6 @@ public class TurnAnglePID extends Command {
         Pose2d goalPose = null;
         final var mPoseEstimator = Vision.PoseEstimator.getInstance();
         final var robotPose = mPoseEstimator.getCurrentPose();
-        final var currentAlliance = DriverStation.getAlliance();
-        // if(currentAlliance.equals(DriverStation.Alliance.Blue)) {
-        //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
-        // }
-        // else {
-        //     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
-        // }
-
         Optional<Alliance> ally = DriverStation.getAlliance();
         if (ally.isPresent()) {
             if (ally.get() == Alliance.Blue) {

@@ -121,17 +121,16 @@ public class Vision extends SubsystemBase {
             allPhotonNotifier.setName("runAll");
             allPhotonNotifier.startPeriodic(0.02);
 
-            // var currAlliance = DriverStation.getAlliance();
-            // if(DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
-            //     allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
-            //     originPosition = OriginPosition.kBlueAllianceWallRightSide;
-            // }
-            // else {
-            //     allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
-            //     originPosition = OriginPosition.kBlueAllianceWallRightSide;
-            // }
+            var currAlliance = DriverStation.getAlliance();
+            if(DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
+                allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+                originPosition = OriginPosition.kBlueAllianceWallRightSide;
+            }
+            else {
+                allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+                originPosition = OriginPosition.kBlueAllianceWallRightSide;
+            }
 
-            // Optional<Alliance> currentAlliance = DriverStation.getAlliance();
             // Optional<Alliance> ally = DriverStation.getAlliance();
             // if (ally.isPresent()) {
             //     if (ally.get() == Alliance.Red) {

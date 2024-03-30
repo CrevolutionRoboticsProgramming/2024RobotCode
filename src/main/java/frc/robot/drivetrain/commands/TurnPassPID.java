@@ -47,8 +47,6 @@ public class TurnPassPID extends Command{
         Pose2d goalPose = null;
         final var mPoseEstimator = Vision.PoseEstimator.getInstance();
         final var robotPose = mPoseEstimator.getCurrentPose();
-        final var currentAlliance = DriverStation.getAlliance();
-
         Optional<Alliance> ally = DriverStation.getAlliance();
         if (ally.isPresent()) {
             if (ally.get() == Alliance.Blue) {

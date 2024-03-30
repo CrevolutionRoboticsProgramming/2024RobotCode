@@ -30,8 +30,8 @@ public class SetVelocityShooterFlywheel extends Command {
         flywheel.setRightFlywheelVelocity(leftVel);
         flywheel.setLeftFlywheelVelocity(rightVel);
 
-        SmartDashboard.putBoolean("Shooter Ready (left)", Math.abs(leftVel.getRotations() - flywheel.getLeftFlywheelVelocity().getRotations()) < kAllowedError.getRotations());
-        SmartDashboard.putBoolean("Shooter Ready (right)", Math.abs(rightVel.getRotations() - flywheel.getRightFlywheelVelocity().getRotations()) < kAllowedError.getRotations());
+        SmartDashboard.putBoolean("Shooter Ready (left)", (Math.abs(leftVel.getRotations()) - (Math.abs(flywheel.getLeftFlywheelVelocity().getRotations()))) < kAllowedError.getRotations());
+        SmartDashboard.putBoolean("Shooter Ready (right)", (Math.abs(rightVel.getRotations()) - (Math.abs(flywheel.getRightFlywheelVelocity().getRotations()))) < kAllowedError.getRotations());
     }
 
     @Override

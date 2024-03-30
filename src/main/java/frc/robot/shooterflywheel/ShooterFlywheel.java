@@ -63,5 +63,7 @@ public class ShooterFlywheel extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Left Flywheel Velocity (RPM)", mFalconLeft.getVelocity().getValueAsDouble() * 60);
         SmartDashboard.putNumber("Right Flywheel Velocity (RPM)", mFalconRight.getVelocity().getValueAsDouble() * 60);
+        //mInstance.setLeftFlywheelVelocity(ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.216));
+        //mInstance.setRightFlywheelVelocity(ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.216));
     }
 }

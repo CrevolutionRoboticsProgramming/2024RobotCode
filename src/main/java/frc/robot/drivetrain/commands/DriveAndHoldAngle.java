@@ -22,9 +22,9 @@ import frc.robot.vision.Vision;
 
 public class DriveAndHoldAngle extends Command {
     private static class Settings {
-        static final double kP = 8.0;
+        static final double kP = 5.0;
         static final double kI = 0.0;
-        static final double kD = 1.0;
+        static final double kD = 1.5;
         
         static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(360.0);
         static final Rotation2d kAllowedError = Rotation2d.fromDegrees(1.0);
@@ -32,14 +32,16 @@ public class DriveAndHoldAngle extends Command {
 
     private final Drivetrain drivetrain;
     private Rotation2d deltaTheta;
+    private Supplier<Translation2d> translationSupplier;
 
     private final PIDController pidController;
 
     private Rotation2d targetAngle;
 
-    public DriveAndHoldAngle(Supplier<Rotation2d> target) {
+    public DriveAndHoldAngle(Supplier<Translation2d> translationSupplier) {
         drivetrain = Drivetrain.getInstance();
         this.deltaTheta = null;
+        this.translationSupplier = translationSupplier;
 
         pidController = new PIDController(Settings.kP, Settings.kI, Settings.kD);
 
@@ -48,10 +50,14 @@ public class DriveAndHoldAngle extends Command {
 
     @Override
     public void initialize() {
+
+    }
+
+    @Override
+    public void execute() {
         Pose2d goalPose = null;
         final var mPoseEstimator = Vision.PoseEstimator.getInstance();
         final var robotPose = mPoseEstimator.getCurrentPose();
-        final var currentAlliance = DriverStation.getAlliance();
         Optional<Alliance> ally = DriverStation.getAlliance();
         if (ally.isPresent()) {
             if (ally.get() == Alliance.Blue) {
@@ -66,17 +72,21 @@ public class DriveAndHoldAngle extends Command {
         deltaTheta = endAngle.minus(startingAngle);
 
         targetAngle = Rotation2d.fromDegrees(drivetrain.getGyroYaw().getDegrees() + deltaTheta.getDegrees());
-    }
 
-    @Override
-    public void execute() {
         final var currentAngle = drivetrain.getGyroYaw();
         final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
             pidController.calculate(currentAngle.getDegrees(), targetAngle.getDegrees()),
             -Settings.kMaxAngularVelocity.getDegrees(),
             Settings.kMaxAngularVelocity.getDegrees()
         ));
-        drivetrain.drive(new Translation2d(0, 0), requestedAngularVelocity.getRadians(), false, false);
+        drivetrain.drive(translationSupplier.get(), requestedAngularVelocity.getRadians(), false, false);
+        // DrivetrainCommands.drive(translationSupplier, 
+        //     () -> {return requestedAngularVelocity.getRadians();},
+        //     1.0,
+        //     1.0,
+        //     true,
+        //     new Translation2d(0, 0)
+        // );
 
         SmartDashboard.putNumber("[TurnAnglePID] Target Angle", targetAngle.getDegrees());
         SmartDashboard.putNumber("[TurnAnglePID] Current Angle", currentAngle.getDegrees());
@@ -84,6 +94,11 @@ public class DriveAndHoldAngle extends Command {
 
     @Override
     public boolean isFinished() {
+        // if (deltaTheta.getDegrees() <= Settings.kAllowedError.getDegrees()) {
+        //     return true;
+        // }else {
+        //     return false;
+        // }
         return false;
     }
 
