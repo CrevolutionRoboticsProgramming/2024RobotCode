@@ -111,17 +111,17 @@ public class Operator extends Gamepad {
 
         
         /*TESTING ONLY */
-        controller.L2().whileTrue(
-            IntakeRollerCommands.setOutput(() -> 
-                shooterManualCurve.calculate(controller.getLeftY()))
-        );
+        // controller.L2().whileTrue(
+        //     IntakeRollerCommands.setOutput(() -> 
+        //         shooterManualCurve.calculate(controller.getLeftY()))
+        // );
         
         //Intake Pivot Mnaual Override
-        // controller.L2().whileTrue(
-        //     IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-        //         intakePivotManualCurve.calculate(controller.getLeftX())),
-        //         false)
-        // );
+        controller.L2().whileTrue(
+            IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
+                intakePivotManualCurve.calculate(controller.getLeftX())),
+                false)
+        );
 
         //Shooter Pivot Manual Override
         controller.L2().whileTrue(

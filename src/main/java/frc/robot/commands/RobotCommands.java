@@ -230,8 +230,8 @@ public class RobotCommands {
                 DrivetrainCommands.autoLineUp(),
                 Commands.race(
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
                     ),
                     Commands.sequence(
                         ShooterPivotCommands.setSpeakerAngle(
@@ -328,7 +328,7 @@ public class RobotCommands {
             ),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff),
             new ParallelRaceGroup(
-                IndexerCommands.loadNote(),
+                IndexerCommands.grabNote(),
                 new SequentialCommandGroup(
                     new WaitCommand(0.25),
                     IntakeRollerCommands.setOutput(() -> 1)
@@ -341,7 +341,7 @@ public class RobotCommands {
     public static Command autoHandoffNote_OPTIMIZED() {
         return new SequentialCommandGroup(
             new ParallelRaceGroup(
-                IndexerCommands.loadNote(),
+                IndexerCommands.grabNote(),
                 new SequentialCommandGroup(
                     new WaitCommand(0.25),
                     IntakeRollerCommands.setOutput(() -> 1)
