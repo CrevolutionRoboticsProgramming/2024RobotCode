@@ -8,45 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-<<<<<<< Updated upstream:src/main/deploy/pathplanner/paths/F4P#2.path
-        "x": 3.940933336412128,
-        "y": 1.1774740034328552
-=======
-        "x": 4.736508640529971,
-        "y": 0.5333959094314125
->>>>>>> Stashed changes:src/main/deploy/pathplanner/paths/NewF4P#2.path
+        "x": 5.453259393828432,
+        "y": 0.43338417641302396
       },
       "isLocked": false,
       "linkedName": "LowFarShoot"
     },
     {
       "anchor": {
-<<<<<<< Updated upstream:src/main/deploy/pathplanner/paths/F4P#2.path
-        "x": 7.859791719583439,
-        "y": 2.6960075738333296
+        "x": 7.994581322495979,
+        "y": 2.312759292185251
       },
       "prevControl": {
-        "x": 7.421340660858626,
-        "y": 2.2295702773267094
+        "x": 7.787824908983151,
+        "y": 2.147354161374988
       },
       "nextControl": {
-        "x": 8.05944498532964,
-        "y": 2.9084046650485305
-=======
-        "x": 7.970221341457911,
-        "y": 2.3419414148472972
-      },
-      "prevControl": {
-        "x": 7.729799251169859,
-        "y": 2.300489330314873
-      },
-      "nextControl": {
-        "x": 8.21191636291902,
-        "y": 2.3836129702716278
->>>>>>> Stashed changes:src/main/deploy/pathplanner/paths/NewF4P#2.path
+        "x": 8.108107448165484,
+        "y": 2.403580192720855
       },
       "isLocked": false,
-      "linkedName": "New-mid-four-note"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -54,13 +36,8 @@
         "y": 3.1670382122490137
       },
       "prevControl": {
-<<<<<<< Updated upstream:src/main/deploy/pathplanner/paths/F4P#2.path
-        "x": 4.677904264894927,
-        "y": 0.25392815634549737
-=======
-        "x": 4.728174329445105,
-        "y": 0.5000586650919504
->>>>>>> Stashed changes:src/main/deploy/pathplanner/paths/NewF4P#2.path
+        "x": 5.492828718990773,
+        "y": 0.2520870375074078
       },
       "nextControl": null,
       "isLocked": false,
@@ -69,33 +46,33 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": 17.320820777096426,
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": 25.461754216432528,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 1.35,
-      "rotationDegrees": 15.677913305386873,
+      "rotationDegrees": 23.986422300278342,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.5,
+    "maxVelocity": 3.5,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -27.897271030947746,
+    "rotation": -38.832015769956975,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "NewFeedAutos",
   "previewStartingState": {
-    "rotation": -27.8972710309476,
+    "rotation": -41.423665625002656,
     "velocity": 0
   },
   "useDefaultConstraints": false
