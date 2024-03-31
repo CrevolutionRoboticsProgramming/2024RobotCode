@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.751214969096605,
+      "y": 4.5388366776733555
+    },
+    "rotation": -61.09180146713389
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NewF4P#SKIP1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NewF4P#3"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "New-Autos",
+  "choreoAuto": false
+}

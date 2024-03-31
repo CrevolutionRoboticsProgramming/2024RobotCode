@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7512149690973084,
+        "y": 6.544373888747631
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.9993226653119974,
+        "y": 6.902751672170012
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.405266277199221,
+        "y": 6.99234611802557
+      },
+      "prevControl": {
+        "x": 1.633375666751333,
+        "y": 7.013021759376852
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "New-Top-Note-Amp"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.45,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 2.0,
+    "rotation": 0.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "NewAmpAutos",
+  "previewStartingState": {
+    "rotation": 62.50086126895284,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

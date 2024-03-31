@@ -8,8 +8,13 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< Updated upstream
         "x": 1.6095319463366198,
         "y": 4.878934121504607
+=======
+        "x": 1.7778282054046872,
+        "y": 5.1172670061013665
+>>>>>>> Stashed changes
       },
       "isLocked": false,
       "linkedName": null
@@ -20,15 +25,26 @@
         "y": 6.45549218371164
       },
       "prevControl": {
+<<<<<<< Updated upstream
         "x": 1.5628882166855242,
         "y": 5.783822476735862
+=======
+        "x": 1.5528018061133098,
+        "y": 6.234064691473386
+>>>>>>> Stashed changes
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 37.664708305135946,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {

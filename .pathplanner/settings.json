@@ -3,21 +3,23 @@
   "robotLength": 0.86,
   "holonomicMode": true,
   "pathFolders": [
-    "Amp4PRUN",
+    "NewAmpAutos",
     "Center4PRun",
     "CenterPaths",
     "CenterSpeaker3PiecePath",
-    "CenterSpeaker4PiecePath",
-    "Feed4PieceAuton",
-    "LeftSpeaker6PiecePath",
     "CenterSpeaker4Piece-non3175",
+    "CenterSpeaker4PiecePath",
+    "LeftSpeaker6PiecePath",
+    "NewCenterAutos",
+    "NewFeedAutos",
     "RightSpeaker2PiecePath",
     "left-speaker"
   ],
   "autoFolders": [
     "Comp",
-    "Troy-Comp-Autons",
-    "TEST PRE-TROY"
+    "New-Autos",
+    "TEST PRE-TROY",
+    "Troy-Comp-Autons"
   ],
   "defaultMaxVel": 1.0,
   "defaultMaxAccel": 3.0,

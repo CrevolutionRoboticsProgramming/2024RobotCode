@@ -3,71 +3,76 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.355668444670926,
-        "y": 6.7028871391074665
+        "x": 2.377698755397511,
+        "y": 4.345864025061384
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.355668444670927,
-        "y": 6.7028871391074665
+        "x": 2.9196288240301236,
+        "y": 6.0840470919514615
       },
       "isLocked": false,
-      "linkedName": "Amp-Shoot-Far"
+      "linkedName": "New-bottom-note"
     },
     {
       "anchor": {
-        "x": 7.787824908978238,
-        "y": 7.371399542800471
+        "x": 7.8368723641009606,
+        "y": 4.100481053753395
       },
       "prevControl": {
-        "x": 6.847108757416616,
-        "y": 7.173354037208547
+        "x": 5.244901616707689,
+        "y": 3.7921115436133594
       },
       "nextControl": {
-        "x": 7.918770637536362,
-        "y": 7.398967064602181
+        "x": 8.201108088159128,
+        "y": 4.143814564332662
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.9880033606221077,
-        "y": 5.880697915241985
+        "x": 3.9030775320442914,
+        "y": 5.358962027568134
       },
       "prevControl": {
-        "x": 6.195013080381491,
-        "y": 6.684117490062391
+        "x": 4.878191928973592,
+        "y": 3.7254370549344316
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Center-Shoot-Far"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.75,
-      "rotationDegrees": 13.374909556183704,
+      "waypointRelativePos": 0.2,
+      "rotationDegrees": 0.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
+    "maxVelocity": 4.0,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -2.009553813021058,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp4PRUN",
+  "folder": "NewCenterAutos",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -29.280500648250257,
     "velocity": 0
   },
   "useDefaultConstraints": false

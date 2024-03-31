@@ -3,35 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7512149690973084,
-        "y": 6.544373888747631
+        "x": 2.344561359173479,
+        "y": 5.550651182520641
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.378376090086217,
-        "y": 6.7028871391074665
+        "x": 2.0630712228598735,
+        "y": 5.109570833693276
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "New-Mid-Note"
     },
     {
       "anchor": {
-        "x": 4.355668444670926,
-        "y": 6.7028871391074665
+        "x": 2.377698755397511,
+        "y": 4.345864025061384
       },
       "prevControl": {
-        "x": 3.0806705613418264,
-        "y": 7.467885869104926
+        "x": 1.833240199813733,
+        "y": 4.6008636017272035
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Amp-Shoot-Far"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.45,
-      "rotationDegrees": 0,
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -42.56328600471219,
       "rotateFast": false
     }
   ],
@@ -45,13 +45,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 13.134022306396371,
+    "rotation": -25.740708356232776,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp4PRUN",
+  "folder": "NewCenterAutos",
   "previewStartingState": {
-    "rotation": 62.50086126895284,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": false

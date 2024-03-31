@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.2543222419778175,
+        "y": 5.558834984336635
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.7435617585858478,
+        "y": 5.7669074212784865
+      },
+      "isLocked": false,
+      "linkedName": "New-mid-start"
+    },
+    {
+      "anchor": {
+        "x": 2.48,
+        "y": 6.723562780458894
+      },
+      "prevControl": {
+        "x": 2.1799648009448305,
+        "y": 6.43186189248859
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "New-Top-Note"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6,
+      "rotationDegrees": 41.49168757999295,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 43.49256424122506,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "NewCenterAutos",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

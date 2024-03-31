@@ -3,19 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.101346202692406,
-        "y": 3.2018118702904066
+        "x": 3.1779924676600615,
+        "y": 3.1670382122490137
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< Updated upstream:src/main/deploy/pathplanner/paths/F4P#2.path
         "x": 3.940933336412128,
         "y": 1.1774740034328552
+=======
+        "x": 4.736508640529971,
+        "y": 0.5333959094314125
+>>>>>>> Stashed changes:src/main/deploy/pathplanner/paths/NewF4P#2.path
       },
       "isLocked": false,
       "linkedName": "LowFarShoot"
     },
     {
       "anchor": {
+<<<<<<< Updated upstream:src/main/deploy/pathplanner/paths/F4P#2.path
         "x": 7.859791719583439,
         "y": 2.6960075738333296
       },
@@ -26,18 +32,35 @@
       "nextControl": {
         "x": 8.05944498532964,
         "y": 2.9084046650485305
+=======
+        "x": 7.970221341457911,
+        "y": 2.3419414148472972
+      },
+      "prevControl": {
+        "x": 7.729799251169859,
+        "y": 2.300489330314873
+      },
+      "nextControl": {
+        "x": 8.21191636291902,
+        "y": 2.3836129702716278
+>>>>>>> Stashed changes:src/main/deploy/pathplanner/paths/NewF4P#2.path
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "New-mid-four-note"
     },
     {
       "anchor": {
-        "x": 3.101346202692406,
-        "y": 3.2018118702904066
+        "x": 3.1779924676600615,
+        "y": 3.1670382122490137
       },
       "prevControl": {
+<<<<<<< Updated upstream:src/main/deploy/pathplanner/paths/F4P#2.path
         "x": 4.677904264894927,
         "y": 0.25392815634549737
+=======
+        "x": 4.728174329445105,
+        "y": 0.5000586650919504
+>>>>>>> Stashed changes:src/main/deploy/pathplanner/paths/NewF4P#2.path
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,12 +70,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.75,
-      "rotationDegrees": 10.0,
+      "rotationDegrees": 17.320820777096426,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 1.35,
-      "rotationDegrees": 8.453929018935758,
+      "rotationDegrees": 15.677913305386873,
       "rotateFast": false
     }
   ],
@@ -70,7 +93,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Feed4PieceAuton",
+  "folder": "NewFeedAutos",
   "previewStartingState": {
     "rotation": -27.8972710309476,
     "velocity": 0
