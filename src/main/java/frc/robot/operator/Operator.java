@@ -80,7 +80,7 @@ public class Operator extends Gamepad {
         // );
 
         controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
-        controller.L2().and(controller.R1().whileTrue(RobotCommands.shootCleanUp()));
+        controller.L2().and(controller.R1()).whileTrue(RobotCommands.shootCleanUp());
 
         controller.R3().onTrue(RobotCommands.zero());
 

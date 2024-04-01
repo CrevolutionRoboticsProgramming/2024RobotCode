@@ -82,7 +82,7 @@ public class OperatorXbox extends XboxGamepad {
         // );
 
         controller.rightBumper().whileTrue(IndexerCommands.setOutput(() -> 1.0));
-        controller.leftTrigger().and(controller.rightBumper().whileTrue(RobotCommands.shootCleanUp()));
+        controller.leftTrigger().and(controller.rightBumper()).whileTrue(RobotCommands.shootCleanUp());
 
         controller.rightStick().onTrue(RobotCommands.zero());
         controller.leftStick().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
