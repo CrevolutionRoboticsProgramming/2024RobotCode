@@ -189,14 +189,14 @@
                       "data": {
                         "pathName": "NewCS4P#4"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
                     }
                   ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoLineupShoot"
                 }
               }
             ]
