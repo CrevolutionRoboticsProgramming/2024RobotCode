@@ -12,9 +12,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "NewA4P#1"
+            "name": "autoPrimeSpeakerAndShootNear"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NewA4P#1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
           }
         },
         {
@@ -24,21 +43,136 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "NewA4P#3"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoLineupShoot"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 4.0
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "NewA4P#4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NewA4P#3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "NewA4P#5"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoLineupShoot"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 4.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NewA4P#4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoLineupShoot"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 4.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NewA4P#5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoLineupShoot"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 4.0
+                }
+              }
+            ]
           }
         }
       ]

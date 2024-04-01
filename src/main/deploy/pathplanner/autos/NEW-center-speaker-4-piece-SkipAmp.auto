@@ -26,12 +26,6 @@
                       }
                     },
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "AutoLineupShoot"
-                      }
-                    },
-                    {
                       "type": "race",
                       "data": {
                         "commands": [
@@ -96,6 +90,6 @@
       ]
     }
   },
-  "folder": "New-Autos",
+  "folder": "Deprecated-Autons",
   "choreoAuto": false
 }

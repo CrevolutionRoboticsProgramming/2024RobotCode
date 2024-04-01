@@ -12,21 +12,104 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "NewF4P#1"
+            "name": "autoPrimeSpeakerAndShootNear"
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "NewF4P#2"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NewF4P#1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "NewF4P#3.5"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoLineupShoot"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 4.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NewF4P#2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoLineupShoot"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 4.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NewF4P#3.5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "autoRunIntake"
+                }
+              }
+            ]
           }
         }
       ]
