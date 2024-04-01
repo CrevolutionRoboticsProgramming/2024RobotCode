@@ -12,9 +12,15 @@
     "data": {
       "commands": [
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PerpetualRPM"
+                }
+              },
               {
                 "type": "sequential",
                 "data": {
@@ -74,17 +80,23 @@
                       "data": {
                         "name": "AutoLineupShoot"
                       }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "NewCS4P#4"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
                     }
                   ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "NewCS4P#4"
           }
         }
       ]
