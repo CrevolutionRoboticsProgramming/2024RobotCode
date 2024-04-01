@@ -59,7 +59,7 @@ public class RobotCommands {
                     ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero),
                     ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kPass),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.80)
                     )
                 )
             ),
@@ -341,7 +341,7 @@ public class RobotCommands {
 
     public static Command autoHandOffNote() {
         return new SequentialCommandGroup(
-            new ConditionalCommand(Commands.none(), runIntake() ,IntakeRoller.getInstance()::hasNote),
+            new ConditionalCommand(pulse(), runIntake() ,IntakeRoller.getInstance()::hasNote),
             new ParallelCommandGroup(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
@@ -355,6 +355,31 @@ public class RobotCommands {
                 )
             ),
             new InstantCommand(() -> System.out.println("handoff complete"))
+        );
+    }
+
+    public static Command pulse() {
+        return new SequentialCommandGroup(
+            new ParallelRaceGroup(
+                IntakeRollerCommands.setOutput(() -> -1.0),
+                new WaitCommand(0.1)
+            ),
+            new ParallelRaceGroup(
+                IntakeRollerCommands.setOutput(() -> -1.0),
+                new WaitCommand(0.1)
+            ),
+            new ParallelRaceGroup(
+                IntakeRollerCommands.setOutput(() -> -1.0),
+                new WaitCommand(0.1)
+            ),
+            new ParallelRaceGroup(
+                IntakeRollerCommands.setOutput(() -> -1.0),
+                new WaitCommand(0.1)
+            ),
+            new ParallelRaceGroup(
+                IntakeRollerCommands.setOutput(() -> -1.0),
+                new WaitCommand(0.1)
+            )
         );
     }
 

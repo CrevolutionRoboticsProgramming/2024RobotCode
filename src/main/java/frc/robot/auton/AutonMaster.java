@@ -103,13 +103,13 @@ public class AutonMaster {
         //////////////// NEW AUTONS TO TEST ////////////////
         ///////////////////////////////////////////////////
         autonChooser.setDefaultOption("NEW-center-speaker-close-4p", AutoBuilder.buildAuto("New-center-speaker-4-piece"));
-        autonChooser.addOption("NEW-center-speaker-5-piece", AutoBuilder.buildAuto("NEW-center-speaker-5-piece"));
+        //autonChooser.addOption("NEW-center-speaker-5-piece", AutoBuilder.buildAuto("NEW-center-speaker-5-piece"));
 
         autonChooser.addOption("NEW-feed-side-speaker-4.5-piece", AutoBuilder.buildAuto("New-feed-speaker-4.5-piece"));
-        autonChooser.addOption("NEW-feed-side-speaker-4.5-piece-skip-5", AutoBuilder.buildAuto("New-feed-speaker-4-piece-Skip5"));
+        //autonChooser.addOption("NEW-feed-side-speaker-4.5-piece-skip-5", AutoBuilder.buildAuto("New-feed-speaker-4-piece-Skip5"));
 
         autonChooser.addOption("NEW-amp-side-speaker-4.5-piece", AutoBuilder.buildAuto("New-amp-speaker-4.5-piece"));
-        autonChooser.addOption("NEW-amp-side-speaker-4-piece-Skip1", AutoBuilder.buildAuto("New-amp-speaker-4-piece-Skip1"));
+        //autonChooser.addOption("NEW-amp-side-speaker-4-piece-Skip1", AutoBuilder.buildAuto("New-amp-speaker-4-piece-Skip1"));
         configurePathPlannerLogging();
     }
 
