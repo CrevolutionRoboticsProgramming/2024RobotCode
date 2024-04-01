@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.Gamepad;
 import frc.crevolib.util.XboxGamepad;
@@ -67,7 +68,7 @@ public class OperatorXbox extends XboxGamepad {
         // Shooter Commands
         controller.a().whileTrue(RobotCommands.handOffNote());
 
-        controller.x().whileTrue(RobotCommands.passNote());
+        controller.x().whileTrue(RobotCommands.pass());
         controller.b().whileTrue(RobotCommands.amp());
 
         controller.y().whileTrue(new SequentialCommandGroup(
@@ -81,8 +82,13 @@ public class OperatorXbox extends XboxGamepad {
         // );
 
         controller.rightBumper().whileTrue(IndexerCommands.setOutput(() -> 1.0));
+        controller.leftTrigger().and(controller.rightBumper().whileTrue(RobotCommands.shootCleanUp()));
 
         controller.rightStick().onTrue(RobotCommands.zero());
+        controller.leftStick().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
+            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
+            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
+        ));
 
         // ONlY For Testing
         // controller.square().whileTrue(ShooterFlywheelCommands.setAngularVelocity(

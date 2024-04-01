@@ -43,7 +43,8 @@ public class DriverXbox extends XboxGamepad {
     public void setupTeleopButtons() {
         // Drivetrain Commands
         controller.y().onTrue(new InstantCommand(() -> Drivetrain.getInstance().zeroHeading()));
-        controller.leftTrigger().whileTrue(DrivetrainCommands.driveSlowMode(this::getDriveTranslation, this::getDriveRotation));
+        //controller.leftTrigger().whileTrue(DrivetrainCommands.driveSlowMode(this::getDriveTranslation, this::getDriveRotation));
+        controller.leftTrigger().whileTrue(RobotCommands.primeCleanUp());
 
         // Intake Commands
         controller.rightTrigger().whileTrue(IntakeRollerCommands.setOutput(() -> -1));

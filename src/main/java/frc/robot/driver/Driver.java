@@ -49,7 +49,8 @@ public class Driver extends Gamepad {
     public void setupTeleopButtons() {
         // Drivetrain Commands
         controller.triangle().onTrue(new InstantCommand(() -> Drivetrain.getInstance().zeroHeading()));
-        controller.L2().whileTrue(DrivetrainCommands.driveSlowMode(this::getDriveTranslation, this::getDriveRotation));
+        controller.L2().whileTrue(RobotCommands.primeCleanUp());
+        //controller.L2().whileTrue(DrivetrainCommands.driveSlowMode(this::getDriveTranslation, this::getDriveRotation));
 
         // Intake Commands
         controller.R2().whileTrue(IntakeRollerCommands.setOutput(() -> -1));

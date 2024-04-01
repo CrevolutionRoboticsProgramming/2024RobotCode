@@ -103,6 +103,26 @@ public class RobotCommands {
         );
     }
 
+    public static Command primeCleanUp() {
+        return new ParallelCommandGroup(
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kShooterNear),
+            ShooterFlywheelCommands.setAngularVelocity(
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
+            )
+        );
+    }
+
+    public static Command shootCleanUp() {
+        return new SequentialCommandGroup(
+            IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
+            new ParallelCommandGroup(
+                IntakeRollerCommands.setOutput(() -> 1.0),
+                IndexerCommands.setOutput(() -> 1.0)
+            )
+        );
+    }
+
     // public static Command shoot() {
     //     final Rotation2d kAllowedError = Rotation2d.fromRotations(5); // 300 RPM
     //     final var leftVel = ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95);
