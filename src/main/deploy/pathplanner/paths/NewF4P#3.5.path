@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.1779924676600615,
-        "y": 3.1670382122490137
+        "x": 3.246075692151385,
+        "y": 3.0984336635339935
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.4798805381028695,
-        "y": 0.12082705316002892
+        "x": 5.547963762594193,
+        "y": 0.05222250444500873
       },
       "isLocked": false,
       "linkedName": "LowFarShoot"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 6.03728727457455,
-        "y": 4.435458470916942
+        "x": 6.31985437304208,
+        "y": 4.463025992718652
       },
       "prevControl": {
-        "x": 8.25647277961222,
-        "y": 4.587079840826347
+        "x": 8.539039878079754,
+        "y": 4.614647362628058
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.85,
-      "rotationDegrees": 40.17810437451656,
+      "rotationDegrees": 49.47914947700984,
       "rotateFast": false
     }
   ],
@@ -64,6 +64,23 @@
               "type": "named",
               "data": {
                 "name": "AutoHandOff"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "autoRunIntake"
               }
             }
           ]

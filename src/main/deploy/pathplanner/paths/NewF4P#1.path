@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.751214969096605,
-        "y": 4.5388366776733555
+        "x": 0.7374312081957497,
+        "y": 4.449242231817797
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.743645753958178,
-        "y": 3.8772161544323085
+        "x": 1.7298619930573227,
+        "y": 3.78762170857675
       },
       "isLocked": false,
       "linkedName": null
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 3.1779924676600615,
-        "y": 3.1670382122490137
+        "x": 3.246075692151385,
+        "y": 3.0984336635339935
       },
       "prevControl": {
-        "x": 4.270240833974975,
-        "y": 1.784331798351339
+        "x": 4.338324058466297,
+        "y": 1.7157272496363187
       },
       "nextControl": null,
       "isLocked": false,
@@ -69,6 +69,23 @@
               "type": "named",
               "data": {
                 "name": "AutoHandOff"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.7,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "autoRunIntake"
               }
             }
           ]

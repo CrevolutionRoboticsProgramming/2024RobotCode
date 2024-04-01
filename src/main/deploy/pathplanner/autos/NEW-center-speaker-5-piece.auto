@@ -45,26 +45,7 @@
                       }
                     },
                     {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoLineupShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 4.0
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
@@ -76,7 +57,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "autoRunIntake"
+                              "name": "AutoHandOff"
                             }
                           }
                         ]
@@ -89,20 +70,33 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoLineupShoot"
+                              "name": "autoRunIntake"
                             }
                           },
                           {
-                            "type": "wait",
+                            "type": "parallel",
                             "data": {
-                              "waitTime": 4.0
+                              "commands": [
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "AutoLineupShoot"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 3.0
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
@@ -114,7 +108,39 @@
                           {
                             "type": "named",
                             "data": {
+                              "name": "AutoHandOff"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
                               "name": "autoRunIntake"
+                            }
+                          },
+                          {
+                            "type": "race",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "AutoLineupShoot"
+                                  }
+                                },
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 3.0
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -144,40 +170,33 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "named",
                             "data": {
-                              "pathName": "NewCS4P#4"
+                              "name": "AutoHandOff"
                             }
                           },
                           {
-                            "type": "named",
+                            "type": "wait",
                             "data": {
-                              "name": "autoRunIntake"
+                              "waitTime": 1.0
                             }
                           }
                         ]
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoLineupShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 4.0
-                            }
-                          }
-                        ]
+                        "pathName": "NewCS4P#4"
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoLineupShoot"
                 }
               }
             ]

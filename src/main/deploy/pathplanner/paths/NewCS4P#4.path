@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 7.8368723641009606,
-        "y": 4.100481053753395
+        "x": 7.732689865379731,
+        "y": 4.0839725679451355
       },
       "prevControl": {
-        "x": 5.244901616707689,
-        "y": 3.7921115436133594
+        "x": 5.1407191179864595,
+        "y": 3.7756030578051
       },
       "nextControl": {
-        "x": 8.201108088159128,
-        "y": 4.143814564332662
+        "x": 8.096925589437898,
+        "y": 4.127306078524403
       },
       "isLocked": false,
       "linkedName": null
@@ -74,6 +74,23 @@
           ]
         }
       }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.7,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "autoRunIntake"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -84,7 +101,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -2.009553813021058,
+    "rotation": 0.0010998973139390614,
     "rotateFast": false
   },
   "reversed": false,

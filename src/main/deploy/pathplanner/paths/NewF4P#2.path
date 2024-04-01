@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.1779924676600615,
-        "y": 3.1670382122490137
+        "x": 3.246075692151385,
+        "y": 3.0984336635339935
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.453259393828432,
-        "y": 0.43338417641302396
+        "x": 5.521342618319755,
+        "y": 0.36477962769800376
       },
       "isLocked": false,
       "linkedName": "LowFarShoot"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 3.1779924676600615,
-        "y": 3.1670382122490137
+        "x": 3.246075692151385,
+        "y": 3.0984336635339935
       },
       "prevControl": {
-        "x": 5.492828718990773,
-        "y": 0.2520870375074078
+        "x": 5.560911943482097,
+        "y": 0.1834824887923876
       },
       "nextControl": null,
       "isLocked": false,
@@ -69,6 +69,23 @@
               "type": "named",
               "data": {
                 "name": "AutoHandOff"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.35,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "autoRunIntake"
               }
             }
           ]

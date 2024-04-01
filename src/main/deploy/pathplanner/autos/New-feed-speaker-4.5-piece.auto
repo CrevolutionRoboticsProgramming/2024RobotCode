@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.751214969096605,
-      "y": 4.5388366776733555
+      "x": 0.7374312081957497,
+      "y": 4.449242231817797
     },
     "rotation": -61.09180146713389
   },
@@ -18,22 +18,9 @@
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "NewF4P#1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoRunIntake"
-                }
-              }
-            ]
+            "pathName": "NewF4P#1"
           }
         },
         {
@@ -49,29 +36,16 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 4.0
+                  "waitTime": 3.0
                 }
               }
             ]
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "NewF4P#2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoRunIntake"
-                }
-              }
-            ]
+            "pathName": "NewF4P#2"
           }
         },
         {
@@ -87,29 +61,22 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 4.0
+                  "waitTime": 3.0
                 }
               }
             ]
           }
         },
         {
-          "type": "race",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "NewF4P#3.5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "autoRunIntake"
-                }
-              }
-            ]
+            "pathName": "NewF4P#3.5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoHandOff"
           }
         }
       ]
