@@ -343,7 +343,7 @@ public class RobotCommands {
         return new SequentialCommandGroup(
             //new ConditionalCommand(pulse(), runIntake() ,IntakeRoller.getInstance()::hasNote), 
             new ParallelCommandGroup(
-                IntakeRollerCommands.setOutput(() -> -0.8), //Should pull note in more during handoff
+                IntakeRollerCommands.setOutput(() -> -1.0), //Should pull note in more during handoff
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
             ),
