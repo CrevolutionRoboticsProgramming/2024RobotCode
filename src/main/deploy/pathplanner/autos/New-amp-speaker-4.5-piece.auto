@@ -40,31 +40,6 @@
                             "data": {
                               "pathName": "NewA4P#1"
                             }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "autoRunIntake"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "NewA4P#2"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoHandOff"
-                            }
                           }
                         ]
                       }

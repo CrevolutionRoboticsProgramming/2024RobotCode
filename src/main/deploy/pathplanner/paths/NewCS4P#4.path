@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.377698755397511,
-        "y": 4.345864025061384
+        "x": 2.329455592244518,
+        "y": 4.407890949115232
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9196288240301236,
-        "y": 6.0840470919514615
+        "x": 2.8808060282787236,
+        "y": 6.399644399288799
       },
       "isLocked": false,
       "linkedName": "New-bottom-note"
@@ -20,12 +20,12 @@
         "y": 4.0839725679451355
       },
       "prevControl": {
-        "x": 5.1407191179864595,
-        "y": 3.7756030578051
+        "x": 5.12066717466596,
+        "y": 3.6497840995716437
       },
       "nextControl": {
-        "x": 8.096925589437898,
-        "y": 4.127306078524403
+        "x": 8.094529250741605,
+        "y": 4.144120011949362
       },
       "isLocked": false,
       "linkedName": null
@@ -52,7 +52,7 @@
     },
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 0,
+      "rotationDegrees": 2.2906100430275678,
       "rotateFast": false
     }
   ],
@@ -60,7 +60,7 @@
   "eventMarkers": [
     {
       "name": "Handoff-on-the-move",
-      "waypointRelativePos": 1.3,
+      "waypointRelativePos": 1.15,
       "command": {
         "type": "parallel",
         "data": {

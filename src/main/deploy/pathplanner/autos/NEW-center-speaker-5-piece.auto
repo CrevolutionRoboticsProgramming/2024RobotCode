@@ -45,7 +45,13 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
+                      }
+                    },
+                    {
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
@@ -57,46 +63,20 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoHandOff"
+                              "name": "autoRunIntake"
                             }
                           }
                         ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoLineupShoot"
                       }
                     },
                     {
                       "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "autoRunIntake"
-                            }
-                          },
-                          {
-                            "type": "parallel",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "AutoLineupShoot"
-                                  }
-                                },
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 3.0
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
@@ -108,92 +88,22 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoHandOff"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
                               "name": "autoRunIntake"
                             }
-                          },
-                          {
-                            "type": "race",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "AutoLineupShoot"
-                                  }
-                                },
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 3.0
-                                  }
-                                }
-                              ]
-                            }
                           }
                         ]
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoLineupShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 4.0
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoHandOff"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "NewCS4P#4"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
                         "name": "AutoLineupShoot"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "NewCS4P#4"
                       }
                     }
                   ]

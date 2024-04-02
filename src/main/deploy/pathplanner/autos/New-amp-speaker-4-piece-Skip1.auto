@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7512149690973084,
-      "y": 6.544373888747631
+      "x": 0.7374312081957497,
+      "y": 6.6546439759546185
     },
     "rotation": 62.91644913568966
   },
@@ -40,20 +40,8 @@
                             "data": {
                               "pathName": "NewA4P#1"
                             }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "autoRunIntake"
-                            }
                           }
                         ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "NewA4P#2"
                       }
                     },
                     {
