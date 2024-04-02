@@ -59,7 +59,7 @@ public class RobotCommands {
                     ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero),
                     ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kPass),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.80)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
                     )
                 )
             ),
