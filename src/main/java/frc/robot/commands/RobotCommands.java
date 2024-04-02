@@ -246,7 +246,7 @@ public class RobotCommands {
         return Commands.sequence(
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
-                IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
+               // IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed), Do this in path planner
                 DrivetrainCommands.autoLineUp(),
                 Commands.race(
                     ShooterFlywheelCommands.setAngularVelocity(
@@ -341,8 +341,9 @@ public class RobotCommands {
 
     public static Command autoHandOffNote() {
         return new SequentialCommandGroup(
-            //new ConditionalCommand(pulse(), runIntake() ,IntakeRoller.getInstance()::hasNote),
+            //new ConditionalCommand(pulse(), runIntake() ,IntakeRoller.getInstance()::hasNote), 
             new ParallelCommandGroup(
+                IntakeRollerCommands.setOutput(() -> -0.8), //Should pull note in more during handoff
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
             ),
@@ -350,7 +351,7 @@ public class RobotCommands {
             new ParallelRaceGroup(
                 IndexerCommands.grabNote(),
                 new SequentialCommandGroup(
-                    new WaitCommand(0.25),
+                    new WaitCommand(0.25), //This can be lower after my fix, maybe .2 ish  
                     IntakeRollerCommands.setOutput(() -> 1)
                 )
             ),
