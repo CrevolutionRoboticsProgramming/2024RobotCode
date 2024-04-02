@@ -341,7 +341,7 @@ public class RobotCommands {
 
     public static Command autoHandOffNote() {
         return new SequentialCommandGroup(
-            new ConditionalCommand(pulse(), runIntake() ,IntakeRoller.getInstance()::hasNote),
+            //new ConditionalCommand(pulse(), runIntake() ,IntakeRoller.getInstance()::hasNote),
             new ParallelCommandGroup(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
