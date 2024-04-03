@@ -86,8 +86,8 @@ public class Operator extends Gamepad {
 
         // ONlY For Testing
         controller.L3().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
-            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75),
-            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
+            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.65),
+            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.65)
         ));
 
         // Trap Command

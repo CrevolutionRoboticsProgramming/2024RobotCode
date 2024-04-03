@@ -59,7 +59,7 @@ public class RobotCommands {
                     ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero),
                     ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kPass),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.65)
                     )
                 )
             ),
@@ -341,9 +341,9 @@ public class RobotCommands {
 
     public static Command autoHandOffNote() {
         return new SequentialCommandGroup(
-            //new ConditionalCommand(pulse(), runIntake() ,IntakeRoller.getInstance()::hasNote), 
+            new ConditionalCommand(pulse(), runIntake() ,IntakeRoller.getInstance()::hasNote), 
             new ParallelCommandGroup(
-                IntakeRollerCommands.setOutput(() -> -1.0), //Should pull note in more during handoff
+                //IntakeRollerCommands.setOutput(() -> -1.0), //Should pull note in more during handoff
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
             ),

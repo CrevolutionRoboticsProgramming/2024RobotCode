@@ -50,10 +50,10 @@ public class TurnPassPID extends Command{
         Optional<Alliance> ally = DriverStation.getAlliance();
         if (ally.isPresent()) {
             if (ally.get() == Alliance.Blue) {
-                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(209.48), Units.inchesToMeters(161.62)), new Rotation2d(0));
+                goalPose = new Pose2d(new Translation2d(1.66, 7.02), new Rotation2d(0));
             }
             if (ally.get() == Alliance.Red) {
-                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(441.74), Units.inchesToMeters(161.62)), new Rotation2d(Units.degreesToRadians(180)));
+                goalPose = new Pose2d(new Translation2d(14.65, 7.02), new Rotation2d(Units.degreesToRadians(180)));
             }
         }
         final var startingAngle = robotPose.getRotation();
