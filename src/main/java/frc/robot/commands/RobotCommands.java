@@ -344,15 +344,16 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), runIntake() ,IntakeRoller.getInstance()::hasNote), 
             new ParallelCommandGroup(
                 //IntakeRollerCommands.setOutput(() -> -1.0), //Should pull note in more during handoff
-                ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
-                ),
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
+                pulse(),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
             ),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff),
             new ParallelRaceGroup(
+                ShooterFlywheelCommands.setAngularVelocity(
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
+                ),
                 IndexerCommands.grabNote(),
                 new SequentialCommandGroup(
                     new WaitCommand(0.25), //This can be lower after my fix, maybe .2 ish  
