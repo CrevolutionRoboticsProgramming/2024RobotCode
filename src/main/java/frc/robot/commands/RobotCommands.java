@@ -341,9 +341,13 @@ public class RobotCommands {
 
     public static Command autoHandOffNote() {
         return new SequentialCommandGroup(
-            new ConditionalCommand(pulse(), runIntake() ,IntakeRoller.getInstance()::hasNote), 
+            new ConditionalCommand(Commands.none(), runIntake() ,IntakeRoller.getInstance()::hasNote), 
             new ParallelCommandGroup(
                 //IntakeRollerCommands.setOutput(() -> -1.0), //Should pull note in more during handoff
+                ShooterFlywheelCommands.setAngularVelocity(
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
+                ),
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
             ),
@@ -361,14 +365,6 @@ public class RobotCommands {
 
     public static Command pulse() {
         return new SequentialCommandGroup(
-            new ParallelRaceGroup(
-                IntakeRollerCommands.setOutput(() -> -1.0),
-                new WaitCommand(0.1)
-            ),
-            new ParallelRaceGroup(
-                IntakeRollerCommands.setOutput(() -> -1.0),
-                new WaitCommand(0.1)
-            ),
             new ParallelRaceGroup(
                 IntakeRollerCommands.setOutput(() -> -1.0),
                 new WaitCommand(0.1)
