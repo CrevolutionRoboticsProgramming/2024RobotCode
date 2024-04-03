@@ -1,8 +1,10 @@
 package frc.robot.shooterflywheel.commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.operator.OperatorXbox;
 import frc.robot.shooterflywheel.ShooterFlywheel;
 
 import java.util.function.Supplier;
@@ -32,6 +34,12 @@ public class SetVelocityShooterFlywheel extends Command {
 
         SmartDashboard.putBoolean("Shooter Ready (left)", (Math.abs(leftVel.getRotations()) - (Math.abs(flywheel.getLeftFlywheelVelocity().getRotations()))) < kAllowedError.getRotations());
         SmartDashboard.putBoolean("Shooter Ready (right)", (Math.abs(rightVel.getRotations()) - (Math.abs(flywheel.getRightFlywheelVelocity().getRotations()))) < kAllowedError.getRotations());
+    
+        var leftAtVel = (Math.abs(leftVel.getRotations()) - (Math.abs(flywheel.getLeftFlywheelVelocity().getRotations()))) < kAllowedError.getRotations();
+        var rightAtVel = (Math.abs(rightVel.getRotations()) - (Math.abs(flywheel.getRightFlywheelVelocity().getRotations()))) < kAllowedError.getRotations();
+        if (leftAtVel || rightAtVel) {
+            OperatorXbox.getInstance().controller.getHID().setRumble(RumbleType.kBothRumble, 1);
+        }
     }
 
     @Override

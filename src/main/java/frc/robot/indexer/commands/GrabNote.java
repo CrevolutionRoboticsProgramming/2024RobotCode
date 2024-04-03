@@ -1,7 +1,9 @@
 package frc.robot.indexer.commands;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.indexer.Indexer;
+import frc.robot.operator.OperatorXbox;
 
 public class GrabNote extends Command{
     private final Indexer indexer;
