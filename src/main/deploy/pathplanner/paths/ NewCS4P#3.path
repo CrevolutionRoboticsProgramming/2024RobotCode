@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.2260773854881046,
-        "y": 5.51748370163407
+        "x": 2.3,
+        "y": 5.531267462534925
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.944587249174499,
-        "y": 5.076403352806706
+        "x": 2.0185098636863943,
+        "y": 5.09018711370756
       },
       "isLocked": false,
       "linkedName": "New-Mid-Note"
@@ -41,7 +41,7 @@
     "maxVelocity": 4.0,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAngularAcceleration": 550.0
   },
   "goalEndState": {
     "velocity": 0,
