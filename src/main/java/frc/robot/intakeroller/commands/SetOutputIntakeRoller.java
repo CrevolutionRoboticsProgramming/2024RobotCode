@@ -36,6 +36,8 @@ class SetOutputIntakeRoller extends Command{
 
         if(roller.hasNote()) {
             DriverXbox.getInstance().controller.getHID().setRumble(RumbleType.kBothRumble, 1);
+        } else {
+            DriverXbox.getInstance().controller.getHID().setRumble(RumbleType.kBothRumble, 0);
         }
     }
 

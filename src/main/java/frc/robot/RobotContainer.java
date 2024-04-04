@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.auton.AutonMaster;
 import frc.robot.auton.commands.TurnInPlaceCommand;
 import frc.robot.driver.Driver;
+import frc.robot.driver.DriverXbox;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
 import frc.robot.elevator.Elevator;
@@ -73,7 +74,8 @@ public class RobotContainer {
     }
 
     public void setDefaultCommands() {
-        final var driver = Driver.getInstance();
+        // final var driver = Driver.getInstance();
+        final var driver = DriverXbox.getInstance();
         Drivetrain.getInstance().setDefaultCommand(DrivetrainCommands.drive(
             driver::getDriveTranslation,
             driver::getDriveRotation

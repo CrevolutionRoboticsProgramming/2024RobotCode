@@ -39,6 +39,8 @@ public class SetVelocityShooterFlywheel extends Command {
         var rightAtVel = (Math.abs(rightVel.getRotations()) - (Math.abs(flywheel.getRightFlywheelVelocity().getRotations()))) < kAllowedError.getRotations();
         if (leftAtVel || rightAtVel) {
             OperatorXbox.getInstance().controller.getHID().setRumble(RumbleType.kBothRumble, 1);
+        } else {
+            OperatorXbox.getInstance().controller.getHID().setRumble(RumbleType.kBothRumble, 0);
         }
     }
 
