@@ -5,7 +5,7 @@
       "x": 0.7374312081957497,
       "y": 6.6546439759546185
     },
-    "rotation": 62.91644913568966
+    "rotation": 59.452428251092975
   },
   "command": {
     "type": "sequential",
@@ -64,22 +64,9 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "NewA4P#4"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "autoRunIntake"
-                            }
-                          }
-                        ]
+                        "pathName": "NewA4P#4"
                       }
                     },
                     {
@@ -102,41 +89,15 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "NewA4P#5"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "autoRunIntake"
-                            }
-                          }
-                        ]
+                        "pathName": "NewA4P#5"
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoLineupShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 4.0
-                            }
-                          }
-                        ]
+                        "name": "AutoLineupShoot"
                       }
                     }
                   ]

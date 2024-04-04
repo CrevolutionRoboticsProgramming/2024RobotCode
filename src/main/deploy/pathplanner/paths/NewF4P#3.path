@@ -20,12 +20,12 @@
         "y": 3.9874862416391497
       },
       "prevControl": {
-        "x": 7.269842139223905,
-        "y": 2.431408438198691
+        "x": 7.187407532203755,
+        "y": 2.4680354877965978
       },
       "nextControl": {
-        "x": 8.178579118579556,
-        "y": 4.633876963185398
+        "x": 8.045230141221705,
+        "y": 4.267167275451302
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 5.909026559169869
       },
       "prevControl": {
-        "x": 6.186678769296624,
-        "y": 7.367530999021389
+        "x": 6.170010147126892,
+        "y": 7.717572064585753
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,12 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.85,
-      "rotationDegrees": 40.17810437451656,
+      "rotationDegrees": 40.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.1,
+      "rotationDegrees": 40.0,
       "rotateFast": false
     }
   ],
@@ -55,7 +60,7 @@
   "eventMarkers": [
     {
       "name": "Handoff-on-the-move",
-      "waypointRelativePos": 1.25,
+      "waypointRelativePos": 1.15,
       "command": {
         "type": "parallel",
         "data": {
@@ -64,6 +69,23 @@
               "type": "named",
               "data": {
                 "name": "AutoHandOff"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.4,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "autoRunIntake"
               }
             }
           ]
