@@ -104,6 +104,7 @@ public class AutonMaster {
         ///////////////////////////////////////////////////
         autonChooser.setDefaultOption("NEW-center-speaker-close-4p", AutoBuilder.buildAuto("New-center-speaker-4-piece"));
         autonChooser.addOption("NEW-center-speaker-5-piece", AutoBuilder.buildAuto("NEW-center-speaker-5-piece"));
+        autonChooser.addOption("NEW-center-speaker-close-4p-skip-AMP", AutoBuilder.buildAuto("NEW-center-speaker-4-piece-SkipAmp"));
 
         autonChooser.addOption("NEW-feed-side-speaker-4.5-piece", AutoBuilder.buildAuto("New-feed-speaker-4.5-piece"));
         //autonChooser.addOption("NEW-feed-side-speaker-4.5-piece-skip-5", AutoBuilder.buildAuto("New-feed-speaker-4-piece-Skip5"));
