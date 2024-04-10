@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.XboxGamepad;
+import frc.robot.Robot;
 import frc.robot.commands.RobotCommands;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
@@ -58,6 +59,8 @@ public class DriverXbox extends XboxGamepad {
         controller.a().whileTrue(RobotCommands.prime());
         //controller.circle().whileTrue(DrivetrainCommands.driveAndLockTarget(this::getDriveTranslation));
         //controller.povDown().whileTrue(ShooterPivotCommands.tuneLockSpeaker(() -> Rotation2d.fromDegrees(45)));
+
+        controller.povDown().whileTrue(RobotCommands.harmonize());
 
         controller.rightBumper().onTrue(RobotCommands.spitNote());
 

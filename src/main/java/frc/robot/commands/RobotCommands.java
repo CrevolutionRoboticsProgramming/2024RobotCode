@@ -36,7 +36,7 @@ import com.revrobotics.CANSparkBase;
 
 public class RobotCommands {
     public static Command handOffNote() {
-        Elevator.getInstance().setElevatorIdleMode(CANSparkBase.IdleMode.kCoast);
+        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
             new ParallelCommandGroup(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
@@ -56,14 +56,14 @@ public class RobotCommands {
     }
 
     public static Command harmonize() {
-        Elevator.getInstance().setElevatorIdleMode(CANSparkBase.IdleMode.kCoast);
+        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kCoast);
         return new SequentialCommandGroup(
             ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
         );
     }
 
     public static Command passNote() {
-        Elevator.getInstance().setElevatorIdleMode(CANSparkBase.IdleMode.kBrake);
+        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
             new ParallelRaceGroup(
@@ -88,7 +88,7 @@ public class RobotCommands {
     }
 
     public static Command primeShoot() {
-        Elevator.getInstance().setElevatorIdleMode(CANSparkBase.IdleMode.kCoast);
+        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
             new ParallelRaceGroup(
@@ -186,7 +186,7 @@ public class RobotCommands {
     }
 
     public static Command primeAmp() {
-        Elevator.getInstance().setElevatorIdleMode(CANSparkBase.IdleMode.kCoast);
+        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.revrobotics.*;
 import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.elevator.ElevatorConfig;
 import frc.robot.vision.Vision;
 
 public class ShooterPivot extends SubsystemBase {
@@ -47,7 +49,7 @@ public class ShooterPivot extends SubsystemBase {
 
     private static ShooterPivot mInstance;
 
-    private final CANSparkMax mSpark;
+    private CANSparkMax mSpark;
     private final SparkAbsoluteEncoder mPosEncoder;
     private final RelativeEncoder mVelEncoder;
     private final PIDController mPositionPIDController, mVelocityPIDController;
@@ -77,6 +79,14 @@ public class ShooterPivot extends SubsystemBase {
             mInstance = new ShooterPivot();
         }
         return mInstance;
+    }
+
+    public void setShooterPivotIdleMode(CANSparkBase.IdleMode kIdleMode) {
+        mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushless) {{
+            setIdleMode(kIdleMode);
+            setInverted(true);
+            setSmartCurrentLimit(Settings.KMaxVoltage);
+        }};
     }
 
     public void setAngularVelocity(Rotation2d velocity, boolean openLoop) {
