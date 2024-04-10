@@ -44,7 +44,9 @@ public class Elevator extends SubsystemBase {
 
     private static Elevator mInstance;
 
-    private final CANSparkMax mSparkLeader, mSparkFollower;
+    private CANSparkMax mSparkLeader;
+
+    private CANSparkMax mSparkFollower;
     private final RelativeEncoder mEncoder;
     private final DigitalInput mLowerLimitSwitch, mUpperLimitSwitch;
 
@@ -81,6 +83,16 @@ public class Elevator extends SubsystemBase {
         final var ffComponent = mFFController.calculate(velocity);
         final var pidComponent = (openLoop) ? 0 : mPIDController.calculate(getVelocity(), velocity);
         mSparkLeader.setVoltage(ffComponent + pidComponent);
+    }
+    public void setElevatorIdleMode(CANSparkBase.IdleMode kIdleMode) {
+        mSparkLeader = new CANSparkMax(Settings.kSparkLeaderID, MotorType.kBrushless) {{
+            setIdleMode(kIdleMode);
+            setInverted(true);
+        }};
+        mSparkFollower = new CANSparkMax(ElevatorConfig.kElevatorSparkID2, MotorType.kBrushless) {{
+            setIdleMode(kIdleMode);
+            follow(mSparkLeader, true);
+        }};
     }
 
     public boolean getLowerLimitState() {

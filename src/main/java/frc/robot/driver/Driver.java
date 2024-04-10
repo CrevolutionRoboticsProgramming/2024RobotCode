@@ -64,6 +64,7 @@ public class Driver extends Gamepad {
         controller.cross().whileTrue(RobotCommands.prime());
         //controller.povDown().whileTrue(DrivetrainCommands.driveAndLockTarget(this::getDriveTranslation));
         //controller.povDown().whileTrue(ShooterPivotCommands.tuneLockSpeaker(() -> Rotation2d.fromDegrees(45)));
+        controller.povDown().whileTrue(RobotCommands.harmonize());
 
         controller.R1().onTrue(RobotCommands.spitNote());
 
