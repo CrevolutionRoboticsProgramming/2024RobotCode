@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import frc.robot.driver.Driver;
@@ -13,9 +14,19 @@ import frc.robot.drivetrain.Drivetrain;
 import frc.robot.operator.Operator;
 
 import frc.robot.operator.OperatorXbox;
+import frc.robot.shooterflywheel.ShooterFlywheel;
+import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
+import frc.robot.vision.Vision;
+
 import org.littletonrobotics.junction.LoggedRobot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.crevolib.configs.CTREConfigs;
@@ -31,6 +42,7 @@ public class Robot extends LoggedRobot {
 
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
+    // private boolean constantRPM;
 
     /**
      * This method cancels all commands and returns subsystems to their default commands and the
@@ -75,8 +87,36 @@ public class Robot extends LoggedRobot {
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
+        
+        // constantRPM = getIsConstantRPM();
+        // if (constantRPM = true) {
+        //     ShooterFlywheelCommands.setAngularVelocity(
+        //         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
+        //         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
+        //     );
+        // }
+
         CommandScheduler.getInstance().run();
     }
+
+    // public boolean getIsConstantRPM() {
+    //     double goalPose = (Double) null;
+    //     boolean inZone = false;
+    //     final var mPoseEstimator = Vision.PoseEstimator.getInstance();
+    //     final var robotPose = mPoseEstimator.getCurrentPose();
+    //     Optional<Alliance> ally = DriverStation.getAlliance();
+    //     if (ally.isPresent()) {
+    //         if (ally.get() == Alliance.Blue) {
+    //             goalPose = 6.35;
+    //             inZone = robotPose.getX() < goalPose;
+    //         }
+    //         if (ally.get() == Alliance.Red) {
+    //             goalPose = 9.73;
+    //             inZone = robotPose.getX() > goalPose;
+    //         }
+    //     }
+    //     return inZone;
+    // }
 
     /**
      * This function is called once each time the robot enters Disabled mode.
