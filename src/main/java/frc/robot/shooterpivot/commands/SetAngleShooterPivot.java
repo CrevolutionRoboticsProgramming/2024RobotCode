@@ -164,7 +164,8 @@ public class SetAngleShooterPivot extends Command {
 
     @Override
     public boolean isFinished() {
-        return state == State.kDone;
+        // return state == State.kDone;
+        return false;
     }
 
     @Override

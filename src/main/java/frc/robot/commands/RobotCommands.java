@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.driver.Driver;
+import frc.robot.driver.DriverXbox;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
 import frc.robot.drivetrain.commands.TurnAngleProfile;
@@ -110,10 +111,16 @@ public class RobotCommands {
     }
 
     public static Command prime() {
+        DriverXbox.autoAim = true;
         return new ParallelCommandGroup(
-            primeShoot(),
-            DrivetrainCommands.autoLineUp()
+            primeShoot()
+            //DrivetrainCommands.autoLineUp()
         );
+    }
+
+    public static Command stopPrime() {
+        DriverXbox.autoAim = false;
+        return null;
     }
 
     public static Command primeCleanUp() {
@@ -263,10 +270,10 @@ public class RobotCommands {
                // IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed), Do this in path planner
                 DrivetrainCommands.autoLineUp(),
                 Commands.race(
-                    // ShooterFlywheelCommands.setAngularVelocity(
-                    //     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
-                    //     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
-                    // ),
+                    ShooterFlywheelCommands.setAngularVelocity(
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
+                    ),
                     Commands.sequence(
                         ShooterPivotCommands.setSpeakerAngle(
                             () -> Rotation2d.fromDegrees(
@@ -277,7 +284,7 @@ public class RobotCommands {
                         ),
                         new WaitUntilCommand(() -> {
                             final var currentRPS = ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations();
-                            final var error = Math.abs(currentRPS - (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.8));
+                            final var error = Math.abs(currentRPS - (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.9));
                             // System.out.printf("current: %d, setpoint: %d, err: %d%n", currentRPS, targetRPS, error);
                             return error < 6;
                         }),
@@ -305,7 +312,7 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
                 Commands.race(
-                    // ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPS)),
+                    ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPS)),
                     Commands.sequence(
                         ShooterPivotCommands.setState(state),
                         // new WaitCommand(1),
@@ -317,7 +324,7 @@ public class RobotCommands {
                         }),
                         Commands.race(
                             IndexerCommands.setOutput(() -> 1.0),
-                            Commands.waitSeconds(0.2)
+                            Commands.waitSeconds(0.135)
                         )
                     )
                 )
@@ -370,7 +377,7 @@ public class RobotCommands {
                 ),
                 IndexerCommands.grabNote(),
                 new SequentialCommandGroup(
-                    new WaitCommand(0.25), //This can be lower after my fix, maybe .2 ish  
+                    new WaitCommand(0.2), //This can be lower after my fix, maybe .2 ish  
                     IntakeRollerCommands.setOutput(() -> 1)
                 )
             ),
@@ -380,10 +387,6 @@ public class RobotCommands {
 
     public static Command pulse() {
         return new SequentialCommandGroup(
-            new ParallelRaceGroup(
-                IntakeRollerCommands.setOutput(() -> -1.0),
-                new WaitCommand(0.1)
-            ),
             new ParallelRaceGroup(
                 IntakeRollerCommands.setOutput(() -> -1.0),
                 new WaitCommand(0.1)

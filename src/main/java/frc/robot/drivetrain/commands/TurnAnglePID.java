@@ -1,6 +1,9 @@
 package frc.robot.drivetrain.commands;
 
 import java.util.Optional;
+import java.util.function.Supplier;
+
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.math.MathUtil;
@@ -16,6 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.driver.DriverXbox;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.vision.Vision;
@@ -77,6 +81,11 @@ public class TurnAnglePID extends Command {
             Settings.kMaxAngularVelocity.getDegrees()
         ));
         drivetrain.drive(new Translation2d(0, 0), requestedAngularVelocity.getRadians(), false, false);
+
+        // Supplier<SwerveRequest> regRequestSupplier =  () -> drivetrain.withVelocityX(
+        //     DriverXbox.translationStickCurve.calculate(-DriverXbox.getInstance().controller.getLeftX()) * MaxSpeed).withVelocityY(
+        //     -m_joystick.getLeftX() * MaxSpeed).withRotationalRate(-requestedAngularVelocity*MaxAngularRate);
+        // m_swerve.setControl(regRequestSupplier.get());
 
         SmartDashboard.putNumber("[TurnAnglePID] Target Angle", targetAngle.getDegrees());
         SmartDashboard.putNumber("[TurnAnglePID] Current Angle", currentAngle.getDegrees());
