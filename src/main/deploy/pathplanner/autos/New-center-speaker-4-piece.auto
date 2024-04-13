@@ -16,6 +16,12 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "PerpetualRPM"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [

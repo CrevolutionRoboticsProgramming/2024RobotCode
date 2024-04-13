@@ -263,10 +263,10 @@ public class RobotCommands {
                // IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed), Do this in path planner
                 DrivetrainCommands.autoLineUp(),
                 Commands.race(
-                    ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
-                    ),
+                    // ShooterFlywheelCommands.setAngularVelocity(
+                    //     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
+                    //     () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
+                    // ),
                     Commands.sequence(
                         ShooterPivotCommands.setSpeakerAngle(
                             () -> Rotation2d.fromDegrees(
@@ -294,8 +294,8 @@ public class RobotCommands {
     public static Command autoConstantlyRPM() {
         return new RepeatCommand(
             ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.6),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.5)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
             )
         );
     }
@@ -305,7 +305,7 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
                 Commands.race(
-                    ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPS)),
+                    // ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPS)),
                     Commands.sequence(
                         ShooterPivotCommands.setState(state),
                         // new WaitCommand(1),
