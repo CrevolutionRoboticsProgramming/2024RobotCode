@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.shooterpivot.ShooterPivot;
 
-public class SetAngleShooterPivot extends Command {
+public class SetAngleConstantPivot extends Command{
     private final static boolean loggingEnabled = true;
 
     private static class Settings {
@@ -67,7 +67,7 @@ public class SetAngleShooterPivot extends Command {
 
     private final String kPivotAtAngleKey = "[ShooterPivot] AtAngle";
 
-    SetAngleShooterPivot(Preset target, boolean indefinite) {
+    SetAngleConstantPivot(Preset target, boolean indefinite) {
         // pivot = ShooterPivot.getInstance();
         // targetState = target.target;
         // profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
@@ -81,7 +81,7 @@ public class SetAngleShooterPivot extends Command {
         this(() -> target.target, indefinite);
     }
 
-    SetAngleShooterPivot(Rotation2d target, boolean indefinite) {
+    SetAngleConstantPivot(Rotation2d target, boolean indefinite) {
         // pivot = ShooterPivot.getInstance();
         // targetState = target;
         // profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(
@@ -95,7 +95,7 @@ public class SetAngleShooterPivot extends Command {
         this(() -> target, indefinite);
     }
 
-    SetAngleShooterPivot(Supplier<Rotation2d> targetSupplier, boolean indefinite) {
+    SetAngleConstantPivot(Supplier<Rotation2d> targetSupplier, boolean indefinite) {
         this.pivot = ShooterPivot.getInstance();
         this.targetSupplier = targetSupplier;
         this.indefinite = indefinite;
@@ -165,6 +165,7 @@ public class SetAngleShooterPivot extends Command {
     @Override
     public boolean isFinished() {
         return state == State.kDone;
+        //return false;
     }
 
     @Override

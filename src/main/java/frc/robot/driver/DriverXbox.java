@@ -36,7 +36,8 @@ public class DriverXbox extends XboxGamepad {
     private static DriverXbox mInstance;
     public static ExpCurve translationStickCurve;
     private static ExpCurve rotationStickCurve;
-    public static boolean autoAim = false;
+    public boolean autoAim;
+    private double reqAngularVel;
 
     private DriverXbox() {
         super(DriverXbox.Settings.name, DriverXbox.Settings.port);
@@ -69,7 +70,7 @@ public class DriverXbox extends XboxGamepad {
 
         controller.x().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
         controller.a().whileTrue(RobotCommands.prime());
-        controller.a().whileFalse(RobotCommands.stopPrime());
+        //controller.a().whileFalse(RobotCommands.stopPrime());
         //controller.circle().whileTrue(DrivetrainCommands.driveAndLockTarget(this::getDriveTranslation));
         //controller.povDown().whileTrue(ShooterPivotCommands.tuneLockSpeaker(() -> Rotation2d.fromDegrees(45)));
 
@@ -108,49 +109,55 @@ public class DriverXbox extends XboxGamepad {
         return new Translation2d(yComponent, xComponent);
     }
 
+    public void setDriveRotation(double requestedAngularVel) {
+        reqAngularVel = requestedAngularVel;
+    }
+
     public double getDriveRotation() {
-        if (autoAim) {
-            final Drivetrain drivetrain = Drivetrain.getInstance();
+        return rotationStickCurve.calculate(-controller.getRightX());
+        // return reqAngularVel;
+        // System.out.println("Is it true??? " + autoAim);
+        // if (true) {
+        //     final Drivetrain drivetrain = Drivetrain.getInstance();
 
-            PIDController pidController = new PIDController(8.0, 0.0, 1.0);
+        //     PIDController pidController = new PIDController(1.0, 0.0, 0.1);
             
-            Rotation2d deltaTheta;
-            Rotation2d targetAngle;
-            Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(1.0);
+        //     Rotation2d deltaTheta;
+        //     Rotation2d targetAngle;
+        //     Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(1.0);
 
-            Pose2d goalPose = null;
+        //     Pose2d goalPose = null;
             
 
-            final var mPoseEstimator = Vision.PoseEstimator.getInstance();
-            final var robotPose = mPoseEstimator.getCurrentPose();
+        //     final var mPoseEstimator = Vision.PoseEstimator.getInstance();
+        //     final var robotPose = mPoseEstimator.getCurrentPose();
 
-            Optional<Alliance> ally = DriverStation.getAlliance();
-            if (ally.isPresent()) {
-                if (ally.get() == Alliance.Blue) {
-                    goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
-                }
-                if (ally.get() == Alliance.Red) {
-                    goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
-                }
-            }
-            final var startingAngle = robotPose.getRotation();
-            final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle().plus(Rotation2d.fromDegrees(180.0));
-            deltaTheta = endAngle.minus(startingAngle);
+        //     Optional<Alliance> ally = DriverStation.getAlliance();
+        //     if (ally.isPresent()) {
+        //         if (ally.get() == Alliance.Blue) {
+        //             goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+        //         }
+        //         if (ally.get() == Alliance.Red) {
+        //             goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+        //         }
+        //     }
+        //     final var startingAngle = robotPose.getRotation();
+        //     final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle().plus(Rotation2d.fromDegrees(180.0));
+        //     deltaTheta = endAngle.minus(startingAngle);
 
-            targetAngle = Rotation2d.fromDegrees(drivetrain.getGyroYaw().getDegrees() + deltaTheta.getDegrees());
+        //     targetAngle = Rotation2d.fromDegrees(drivetrain.getGyroYaw().getDegrees() + deltaTheta.getDegrees());
 
-            final var currentAngle = drivetrain.getGyroYaw();
-            final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
-                pidController.calculate(currentAngle.getDegrees(), targetAngle.getDegrees()),
-                -kMaxAngularVelocity.getDegrees(),
-                kMaxAngularVelocity.getDegrees()
-            ));
+        //     final var currentAngle = drivetrain.getGyroYaw();
+        //     final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
+        //         pidController.calculate(currentAngle.getDegrees(), targetAngle.getDegrees()),
+        //         -kMaxAngularVelocity.getDegrees(),
+        //         kMaxAngularVelocity.getDegrees()
+        //     ));
 
-            System.out.println("requested Angular Vel: " + requestedAngularVelocity.getDegrees());
-            return requestedAngularVelocity.getDegrees();
-        } else {
-            return rotationStickCurve.calculate(-controller.getRightX());
-        }
-        // return rotationStickCurve.calculate(-controller.getRightX());
+        //     System.out.println("requested Angular Vel: " + requestedAngularVelocity.getDegrees());
+        //     return requestedAngularVelocity.getDegrees();
+        // } else {
+        //     return rotationStickCurve.calculate(-controller.getRightX());
+        // }
     }
 }

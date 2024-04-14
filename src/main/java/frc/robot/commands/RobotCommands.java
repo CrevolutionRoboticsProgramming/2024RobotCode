@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.driver.Driver;
 import frc.robot.driver.DriverXbox;
 import frc.robot.drivetrain.Drivetrain;
+import frc.robot.drivetrain.commands.DriveAndAim;
+import frc.robot.drivetrain.commands.DriveAndStopAim;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
 import frc.robot.drivetrain.commands.TurnAngleProfile;
 import frc.robot.elevator.Elevator;
@@ -37,7 +39,7 @@ import com.revrobotics.CANSparkBase;
 
 public class RobotCommands {
     public static Command handOffNote() {
-        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
+        //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
             new ParallelCommandGroup(
                 IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
@@ -57,14 +59,14 @@ public class RobotCommands {
     }
 
     public static Command harmonize() {
-        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kCoast);
+        //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kCoast);
         return new SequentialCommandGroup(
             ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
         );
     }
 
     public static Command passNote() {
-        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
+        //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
             new ParallelRaceGroup(
@@ -89,7 +91,7 @@ public class RobotCommands {
     }
 
     public static Command primeShoot() {
-        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
+        //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
             new ParallelRaceGroup(
@@ -111,17 +113,18 @@ public class RobotCommands {
     }
 
     public static Command prime() {
-        DriverXbox.autoAim = true;
+        //DriverXbox.getInstance().autoAim = true;
         return new ParallelCommandGroup(
-            primeShoot()
-            //DrivetrainCommands.autoLineUp()
+            primeShoot(),
+            //new DriveAndAim()
+            DrivetrainCommands.autoLineUp()
         );
     }
 
-    public static Command stopPrime() {
-        DriverXbox.autoAim = false;
-        return null;
-    }
+    // public static Command stopPrime() {
+    //     //DriverXbox.getInstance().autoAim = false;
+    //     return new DriveAndStopAim();
+    // }
 
     public static Command primeCleanUp() {
         return new ParallelCommandGroup(
@@ -193,7 +196,7 @@ public class RobotCommands {
     }
 
     public static Command primeAmp() {
-        ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
+        //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
             Commands.parallel(
@@ -250,7 +253,8 @@ public class RobotCommands {
     public static Command zero() {
         return Commands.parallel(
             ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero),
-            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero)
+            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
+            new WaitCommand(3)
         );
     }
 

@@ -12,18 +12,19 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.driver.DriverXbox;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.vision.Vision;
 
-public class TurnPassPID extends Command{
+public class DriveAndAim extends Command{
     private static class Settings {
         static final double kP = 8.0;
         static final double kI = 0.0;
         static final double kD = 1.0;
         
-        static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(360.0);
+        static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(1.0);
 
-        static final Rotation2d kAllowedError = Rotation2d.fromDegrees(0.5);
+        static final Rotation2d kAllowedError = Rotation2d.fromDegrees(1.0);
     }
 
     private final Drivetrain drivetrain;
@@ -33,7 +34,7 @@ public class TurnPassPID extends Command{
 
     private Rotation2d targetAngle;
 
-    public TurnPassPID() {
+    public DriveAndAim() {
         drivetrain = Drivetrain.getInstance();
         this.deltaTheta = null;
 
@@ -44,16 +45,21 @@ public class TurnPassPID extends Command{
 
     @Override
     public void initialize() {
+        
+    }
+
+    @Override
+    public void execute() {
         Pose2d goalPose = null;
         final var mPoseEstimator = Vision.PoseEstimator.getInstance();
         final var robotPose = mPoseEstimator.getCurrentPose();
         Optional<Alliance> ally = DriverStation.getAlliance();
         if (ally.isPresent()) {
             if (ally.get() == Alliance.Blue) {
-                goalPose = new Pose2d(new Translation2d(1.66, 7.02), new Rotation2d(0));
+                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
             }
             if (ally.get() == Alliance.Red) {
-                goalPose = new Pose2d(new Translation2d(14.65, 7.02), new Rotation2d(Units.degreesToRadians(180)));
+                goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
             }
         }
         final var startingAngle = robotPose.getRotation();
@@ -61,26 +67,26 @@ public class TurnPassPID extends Command{
         deltaTheta = endAngle.minus(startingAngle);
 
         targetAngle = Rotation2d.fromDegrees(drivetrain.getGyroYaw().getDegrees() + deltaTheta.getDegrees());
-    }
 
-    @Override
-    public void execute() {
         final var currentAngle = drivetrain.getGyroYaw();
         final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
             pidController.calculate(currentAngle.getDegrees(), targetAngle.getDegrees()),
             -Settings.kMaxAngularVelocity.getDegrees(),
             Settings.kMaxAngularVelocity.getDegrees()
         ));
-        drivetrain.drive(new Translation2d(0, 0), requestedAngularVelocity.getRadians(), false, false);
 
-        SmartDashboard.putNumber("[TurnAnglePID] Target Angle", targetAngle.getDegrees());
-        SmartDashboard.putNumber("[TurnAnglePID] Current Angle", currentAngle.getDegrees());
+        DriverXbox.getInstance().setDriveRotation(requestedAngularVelocity.getDegrees());
+
+        DriverXbox.getInstance().autoAim = true;
+        
+        System.out.println("Req Angle Shit: " + requestedAngularVelocity.getDegrees());
     }
 
     @Override
     public boolean isFinished() {
-        final var error = Math.abs(drivetrain.getGyroYaw().getDegrees() - targetAngle.getDegrees());
-        return error < Settings.kAllowedError.getDegrees();
+        // final var error = Math.abs(drivetrain.getGyroYaw().getDegrees() - targetAngle.getDegrees());
+        // return error < Settings.kAllowedError.getDegrees();
+        return false;
     }
 
     @Override

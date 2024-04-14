@@ -15,7 +15,7 @@ public class ShooterPivotCommands {
     }
 
     public static Command setSpeakerAngle(Supplier<Rotation2d> targetSupplier) {
-        return new SetAngleShooterPivot(targetSupplier, false);
+        return new SetAngleConstantPivot(targetSupplier, false);
     }
 
     public static Command tuneLockSpeaker(Supplier<Rotation2d> targetSupplier) {

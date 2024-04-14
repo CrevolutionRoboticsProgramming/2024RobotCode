@@ -81,13 +81,13 @@ public class ShooterPivot extends SubsystemBase {
         return mInstance;
     }
 
-    public void setShooterPivotIdleMode(CANSparkBase.IdleMode kIdleMode) {
-        mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushless) {{
-            setIdleMode(kIdleMode);
-            setInverted(true);
-            setSmartCurrentLimit(Settings.KMaxVoltage);
-        }};
-    }
+    // public void setShooterPivotIdleMode(CANSparkBase.IdleMode kIdleMode) {
+    //     mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushless) {{
+    //         setIdleMode(kIdleMode);
+    //         setInverted(true);
+    //         setSmartCurrentLimit(Settings.KMaxVoltage);
+    //     }};
+    // }
 
     public void setAngularVelocity(Rotation2d velocity, boolean openLoop) {
         lastRequestedVelocity = velocity;

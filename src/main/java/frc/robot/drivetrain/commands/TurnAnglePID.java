@@ -32,7 +32,7 @@ public class TurnAnglePID extends Command {
         
         static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(360.0);
 
-        static final Rotation2d kAllowedError = Rotation2d.fromDegrees(1.0);
+        static final Rotation2d kAllowedError = Rotation2d.fromDegrees(0.5);
     }
 
     private final Drivetrain drivetrain;
