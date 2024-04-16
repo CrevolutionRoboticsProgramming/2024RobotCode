@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "Handoff",
-      "waypointRelativePos": 1.1,
+      "waypointRelativePos": 1.15,
       "command": {
         "type": "parallel",
         "data": {

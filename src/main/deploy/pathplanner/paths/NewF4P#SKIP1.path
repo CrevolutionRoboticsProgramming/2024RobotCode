@@ -60,7 +60,7 @@
   "eventMarkers": [
     {
       "name": "Handoff-on-the-move",
-      "waypointRelativePos": 1.3,
+      "waypointRelativePos": 1.1,
       "command": {
         "type": "parallel",
         "data": {
@@ -69,6 +69,23 @@
               "type": "named",
               "data": {
                 "name": "AutoHandOff"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.75,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "autoRunIntake"
               }
             }
           ]

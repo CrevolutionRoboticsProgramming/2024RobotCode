@@ -60,7 +60,7 @@
   "eventMarkers": [
     {
       "name": "Handoff-on-the-move",
-      "waypointRelativePos": 1.25,
+      "waypointRelativePos": 1.1,
       "command": {
         "type": "parallel",
         "data": {

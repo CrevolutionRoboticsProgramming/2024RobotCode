@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9258395486487943,
-        "y": 6.413579021097436
+        "x": 2.6695994914832464,
+        "y": 6.6174430013834655
       },
       "isLocked": false,
       "linkedName": "New-bottom-note"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 3.9030775320442914,
-        "y": 5.358962027568134
+        "x": 3.8197344211988975,
+        "y": 5.525648249263958
       },
       "prevControl": {
-        "x": 4.878191928973592,
-        "y": 3.7254370549344316
+        "x": 4.819851751382797,
+        "y": 3.708768432763208
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,6 +53,26 @@
     {
       "waypointRelativePos": 1,
       "rotationDegrees": 2.2906100430275678,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -35.89351449575907,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.9,
+      "rotationDegrees": -0.39705172367387964,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.65,
+      "rotationDegrees": -22.02902687271586,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.85,
+      "rotationDegrees": -22.41836928375464,
       "rotateFast": false
     }
   ],
@@ -77,7 +97,7 @@
     },
     {
       "name": "intake",
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "parallel",
         "data": {
