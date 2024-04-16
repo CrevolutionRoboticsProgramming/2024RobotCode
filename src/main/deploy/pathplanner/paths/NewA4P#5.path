@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.639550188191285,
-        "y": 7.155148128478076
+        "x": 5.8616406369868574,
+        "y": 7.375865310106255
       },
       "isLocked": false,
       "linkedName": "Amp-Shoot-Far"
@@ -36,8 +36,8 @@
         "y": 6.408848454060545
       },
       "prevControl": {
-        "x": 6.050015009120926,
-        "y": 7.183134366268733
+        "x": 6.1616758360420265,
+        "y": 7.375865310106255
       },
       "nextControl": null,
       "isLocked": false,
@@ -77,7 +77,7 @@
     },
     {
       "name": "intake",
-      "waypointRelativePos": 0.3,
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "parallel",
         "data": {
