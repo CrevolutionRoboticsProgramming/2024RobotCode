@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.8261251067956685,
-        "y": 6.955996336235097
+        "x": 5.899449665565998,
+        "y": 6.957886715773432
       },
       "isLocked": false,
       "linkedName": "Amp-Shoot-Far"
@@ -20,12 +20,12 @@
         "y": 7.351051793012677
       },
       "prevControl": {
-        "x": 7.617244325397741,
-        "y": 7.295079317431362
+        "x": 7.601744136821609,
+        "y": 7.2542375751418176
       },
       "nextControl": {
-        "x": 8.225909921286522,
-        "y": 7.366687034594748
+        "x": 8.22430129900969,
+        "y": 7.376925398834338
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 6.408848454060545
       },
       "prevControl": {
-        "x": 5.59290645854019,
-        "y": 6.959244463943475
+        "x": 5.637558208449752,
+        "y": 6.930319193971721
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.75,
+      "waypointRelativePos": 0.6,
       "rotationDegrees": 13.374909556183704,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.5,
+      "rotationDegrees": 11.724530431258147,
       "rotateFast": false
     }
   ],
