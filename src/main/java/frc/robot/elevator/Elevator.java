@@ -33,8 +33,8 @@ public class Elevator extends SubsystemBase {
         public static final double kI = 0.0;
         public static final double kD = 0.0;
 
-        public static final double kMaxVelocity = 0.2; //0.15
-        public static final double kMaxAcceleration = 0.5;
+        public static final double kMaxVelocity = 0.25; //0.15
+        public static final double kMaxAcceleration = 0.6;
 
         public static final double kMaxVoltage = 10.0;
         static final double kSprocketDiameter = Units.inchesToMeters(1.432);
