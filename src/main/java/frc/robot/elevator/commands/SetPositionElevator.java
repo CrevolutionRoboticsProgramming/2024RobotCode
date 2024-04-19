@@ -12,7 +12,7 @@ import frc.robot.elevator.ElevatorConfig.ElevatorState;
 
 public class SetPositionElevator extends Command {
     public enum Preset {
-        kZero(0.0), kAmp(0.10), kClimb(0.3127), kTrap(0.1802), kPostTrap(0.14);
+        kZero(0.0), kAmp(0.10), kClimb(0.3127), kTrap(0.1867), kPostTrap(0.14);
 
         double pos;
 

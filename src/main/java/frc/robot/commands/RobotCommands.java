@@ -131,7 +131,7 @@ public class RobotCommands {
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kShooterNear),
             ShooterFlywheelCommands.setAngularVelocity(
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95)
             )
         );
     }

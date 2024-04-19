@@ -16,10 +16,11 @@ public class VisionConfig{
     public class ShooterCamsConfig {
         //TODO: uncomment Pose-Cam related code when 2nd cam installed 
         public static final String shooterCamName = "Shooting-Cam";
-        // public static final String poseCamName = "Pose-Cam";
+        public static final String driveCamName = "Drive-Cam";
 
         public static PhotonCamera shooterCam = new PhotonCamera(shooterCamName);
-        // public static PhotonCamera poseCam = new PhotonCamera(poseCamName);
+        
+        public static PhotonCamera poseCam = new PhotonCamera(driveCamName);
 
         //Robot to Shooting-Cam constants
         public static final Transform3d shootingCamToRobot = new Transform3d(
