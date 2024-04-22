@@ -119,7 +119,7 @@ public class AutonMaster {
         NamedCommands.registerCommand("ZeroHeading", new InstantCommand(drivetrain::zeroHeading));
         NamedCommands.registerCommand("autoPrimeSpeakerAndShootNear", RobotCommands.autoPrimeSpeakerAndShoot(
             SetAngleShooterPivot.Preset.kShooterNear,
-            ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.7
+            ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.8
         ));
         NamedCommands.registerCommand("autoPrimeSpeakerAndShootMid", RobotCommands.autoPrimeSpeakerAndShoot(
             SetAngleShooterPivot.Preset.kShooterMid,
@@ -138,8 +138,7 @@ public class AutonMaster {
             IntakeRollerCommands.setOutput(() -> -1.0),
             ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff)
         ));
-
-        //TESTING (post-vision) Auton - Satchit
+        
         NamedCommands.registerCommand("PerpetualRPM", RobotCommands.autoConstantlyRPM());
         NamedCommands.registerCommand("AutoLineupShoot", RobotCommands.autoLineupAndShoot());   
         NamedCommands.registerCommand("AutoHandOff", RobotCommands.autoHandOffNote());

@@ -25,7 +25,7 @@ public class VisionConfig{
         //Robot to Shooting-Cam constants
         public static final Transform3d shootingCamToRobot = new Transform3d(
             new Translation3d(Units.inchesToMeters(13), Units.inchesToMeters(0), Units.inchesToMeters(19)), 
-            new Rotation3d(0, Units.degreesToRadians(15), Units.degreesToRadians(180))
+            new Rotation3d(0, Units.degreesToRadians(16.5), Units.degreesToRadians(180))
         );
         public static final Transform3d robotToShootingCam = shootingCamToRobot.inverse();
 

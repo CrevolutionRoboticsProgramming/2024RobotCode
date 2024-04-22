@@ -104,8 +104,8 @@ public class RobotCommands {
                         )
                     ),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0)
                     )
                 )
             )
@@ -275,8 +275,8 @@ public class RobotCommands {
                 DrivetrainCommands.autoLineUp(),
                 Commands.race(
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0)
                     ),
                     Commands.sequence(
                         ShooterPivotCommands.setSpeakerAngle(
@@ -288,13 +288,14 @@ public class RobotCommands {
                         ),
                         new WaitUntilCommand(() -> {
                             final var currentRPS = ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations();
-                            final var error = Math.abs(currentRPS - (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.9));
+                            final var error = Math.abs(currentRPS - (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.95));
                             // System.out.printf("current: %d, setpoint: %d, err: %d%n", currentRPS, targetRPS, error);
-                            return error < 6;
+                            return error < 5;
                         }),
+                        new WaitCommand(0.2),
                         Commands.race(
                             IndexerCommands.setOutput(() -> 1.0),
-                            Commands.waitSeconds(0.135)
+                            Commands.waitSeconds(0.15)
                         )
                     )
                 )
@@ -324,11 +325,12 @@ public class RobotCommands {
                             final var currentRPS = ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations();
                             final var error = Math.abs(currentRPS - targetRPS);
                             // System.out.printf("current: %d, setpoint: %d, err: %d%n", currentRPS, targetRPS, error);
-                            return error < 6;
+                            return error < 5;
                         }),
+                        new WaitCommand(0.2),
                         Commands.race(
                             IndexerCommands.setOutput(() -> 1.0),
-                            Commands.waitSeconds(0.135)
+                            Commands.waitSeconds(0.15)
                         )
                     )
                 )
