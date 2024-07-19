@@ -28,7 +28,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
-import frc.robot.vision.VisionConfig.ShooterCamsConfig;
 
 public class Vision extends SubsystemBase {
 
@@ -71,8 +70,8 @@ public class Vision extends SubsystemBase {
                 if (photonResults.hasTargets()) {
                     photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
                         var estimatedPose = estimatedRobotPose.estimatedPose;
-                        if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= ShooterCamsConfig.fieldLength_m
-                            && estimatedPose.getY() > 0.0 && estimatedPose.getY() <= ShooterCamsConfig.fieldWidth_m) {
+                        if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= VisionConfig.fieldLength_m
+                            && estimatedPose.getY() > 0.0 && estimatedPose.getY() <= VisionConfig.fieldWidth_m) {
                             atomicEstimatedRobotPose.set(estimatedRobotPose);
                         }
                     });
@@ -88,20 +87,20 @@ public class Vision extends SubsystemBase {
     public static class PoseEstimator extends SubsystemBase {
         private static PoseEstimator mInstance;
 
-        private PhotonCamera shootingCam = ShooterCamsConfig.shooterCam;
-        // private PhotonCamera poseCam = ShooterCamsConfig.poseCam;
+        private PhotonCamera leftCam = VisionConfig.leftCam;
+        private PhotonCamera rightCam = VisionConfig.rightCam;
         private final Supplier<Rotation2d> rotationSupplier;
         private final Supplier<SwerveModulePosition[]> modSupplier;
         private final SwerveDrivePoseEstimator poseEstimator;
         private final Field2d field2d = new Field2d();
-        private final PhotonRunnable photonEstimatorShoot = new PhotonRunnable(shootingCam, ShooterCamsConfig.robotToShootingCam);
-        // private final PhotonRunnable photonEstimatorPose = new PhotonRunnable(poseCam, ShooterCamsConfig.robotToPoseCam);
+        private final PhotonRunnable leftPhotonEstimator = new PhotonRunnable(leftCam, VisionConfig.robotToLeftCam);
+        private final PhotonRunnable rightPhotonEstimator = new PhotonRunnable(rightCam, VisionConfig.robotToRightCam);
         private final Notifier allPhotonNotifier = new Notifier(
             () -> {
-                photonEstimatorShoot.run();
-            // photonEstimatorPose.run();
+                leftPhotonEstimator.run();
+                rightPhotonEstimator.run();
         });
-        private final ShuffleboardTab visionTab = Shuffleboard.getTab(ShooterCamsConfig.shuffleboardTabName);
+        private final ShuffleboardTab visionTab = Shuffleboard.getTab(VisionConfig.shuffleboardTabName);
 
         private OriginPosition originPosition;
         private boolean allianceChanged;
@@ -208,7 +207,7 @@ public class Vision extends SubsystemBase {
         }
 
         private Pose2d flipAlliance(Pose2d poseToFlip) {
-            return poseToFlip.relativeTo(ShooterCamsConfig.flippingPose);
+            return poseToFlip.relativeTo(VisionConfig.flippingPose);
         }
 
         private void estimatorUpdate(PhotonRunnable estimator) {
@@ -230,8 +229,8 @@ public class Vision extends SubsystemBase {
             poseEstimator.update(rotationSupplier.get(), modSupplier.get());
 
             //add vision measurements
-            estimatorUpdate(photonEstimatorShoot);
-            // estimatorUpdate(photonEstimatorPose);
+            estimatorUpdate(leftPhotonEstimator);
+            estimatorUpdate(rightPhotonEstimator);
 
             //log to dashboard
             var dashboardPose = poseEstimator.getEstimatedPosition();
@@ -243,8 +242,5 @@ public class Vision extends SubsystemBase {
             SmartDashboard.putData(field2d);
             field2d.setRobotPose(getCurrentPose());
         }
-
-        //methods needed for this class
-
     }
 }
