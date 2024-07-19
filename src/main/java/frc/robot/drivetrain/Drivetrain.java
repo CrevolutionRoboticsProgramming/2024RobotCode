@@ -1,8 +1,12 @@
 package frc.robot.drivetrain;
 
+import java.util.Optional;
+
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -11,10 +15,14 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.drivetrain.swerve.SwerveModule;
+import frc.robot.vision.Vision;
 
 public class Drivetrain extends SubsystemBase {
     private static Drivetrain mInstance;
@@ -25,6 +33,8 @@ public class Drivetrain extends SubsystemBase {
     private SwerveModuleState[] lastTargetStates;
     private Translation2d lastTranslation;
     private double lastRotation;
+
+    public static boolean ampMode, speakerMode;
 
     private Drivetrain() {
         gyro = new Pigeon2(DriveConstants.pigeonID, "Canivore");
@@ -51,15 +61,90 @@ public class Drivetrain extends SubsystemBase {
     //MASTER DRIVE METHOD
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
 
-        
+        if (speakerMode) {
+            final Drivetrain drivetrain = Drivetrain.getInstance();
+
+            PIDController pidController = new PIDController(8.0, 0.0, 1.0);
+            
+            Rotation2d deltaTheta;
+            Rotation2d targetAngle;
+            Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(1.0);
+
+            Pose2d goalPose = null;
+            
+
+            final var mPoseEstimator = Vision.PoseEstimator.getInstance();
+            final var robotPose = mPoseEstimator.getCurrentPose();
+
+            Optional<Alliance> ally = DriverStation.getAlliance();
+            if (ally.isPresent()) {
+                if (ally.get() == Alliance.Blue) {
+                    goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(-1.5), Units.inchesToMeters(218.42)), new Rotation2d(0));
+                }
+                if (ally.get() == Alliance.Red) {
+                    goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
+                }
+            }
+            final var startingAngle = robotPose.getRotation();
+            final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle().plus(Rotation2d.fromDegrees(180.0));
+            deltaTheta = endAngle.minus(startingAngle);
+
+            targetAngle = Rotation2d.fromDegrees(drivetrain.getGyroYaw().getDegrees() + deltaTheta.getDegrees());
+
+            final var currentAngle = drivetrain.getGyroYaw();
+            final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
+                pidController.calculate(currentAngle.getDegrees(), targetAngle.getDegrees()),
+                -kMaxAngularVelocity.getDegrees(),
+                kMaxAngularVelocity.getDegrees()
+            ));
+            lastRotation = requestedAngularVelocity.getDegrees();
+        } else if (ampMode) {
+            final Drivetrain drivetrain = Drivetrain.getInstance();
+
+            PIDController pidController = new PIDController(8.0, 0.0, 1.0);
+            
+            Rotation2d deltaTheta;
+            Rotation2d targetAngle;
+            Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(1.0);
+
+            Pose2d goalPose = null;
+            
+
+            final var mPoseEstimator = Vision.PoseEstimator.getInstance();
+            final var robotPose = mPoseEstimator.getCurrentPose();
+
+            Optional<Alliance> ally = DriverStation.getAlliance();
+            if (ally.isPresent()) {
+                if (ally.get() == Alliance.Blue) {
+                    goalPose = new Pose2d(new Translation2d(1.66, 7.02), new Rotation2d(0));
+                }
+                if (ally.get() == Alliance.Red) {
+                    goalPose = new Pose2d(new Translation2d(14.65, 7.02), new Rotation2d(Units.degreesToRadians(180)));
+                }
+            }
+            final var startingAngle = robotPose.getRotation();
+            final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle().plus(Rotation2d.fromDegrees(180.0));
+            deltaTheta = endAngle.minus(startingAngle);
+
+            targetAngle = Rotation2d.fromDegrees(drivetrain.getGyroYaw().getDegrees() + deltaTheta.getDegrees());
+
+            final var currentAngle = drivetrain.getGyroYaw();
+            final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
+                pidController.calculate(currentAngle.getDegrees(), targetAngle.getDegrees()),
+                -kMaxAngularVelocity.getDegrees(),
+                kMaxAngularVelocity.getDegrees()
+            ));
+            lastRotation = requestedAngularVelocity.getDegrees();
+        } else {
+            lastRotation = rotation;
+        }
         lastTranslation = translation;
-        lastRotation = rotation;
         SwerveModuleState[] swerveModuleStates =
             DriveConstants.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                     translation.getX(),
                     translation.getY(),
-                    rotation,
+                    lastRotation,
                     getHeading()
                 )
                     : new ChassisSpeeds(

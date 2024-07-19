@@ -69,8 +69,15 @@ public class DriverXbox extends XboxGamepad {
 
 
         // Future notice: A = speaker and x = amp wil be amp and speaker shoot on move
-        controller.x().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
-        controller.a().whileTrue(RobotCommands.prime());
+        controller.a().whileTrue(RobotCommands.switchModeSpeaker(true));
+        controller.a().whileFalse(RobotCommands.switchModeSpeaker(false));
+
+        controller.x().whileTrue(RobotCommands.switchModeAmp(true));
+        controller.x().whileFalse(RobotCommands.switchModeAmp(false));
+
+
+        // controller.x().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
+        // controller.a().whileTrue(RobotCommands.prime());
 
         //controller.a().whileFalse(RobotCommands.stopPrime());
         //controller.circle().whileTrue(DrivetrainCommands.driveAndLockTarget(this::getDriveTranslation));

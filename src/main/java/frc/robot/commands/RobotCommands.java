@@ -38,6 +38,16 @@ import java.util.concurrent.ConcurrentMap;
 import com.revrobotics.CANSparkBase;
 
 public class RobotCommands {
+    public static Command switchModeAmp(boolean currentMode) {
+        Drivetrain.ampMode = currentMode;
+        return null;
+    }
+
+    public static Command switchModeSpeaker(boolean currentMode) {
+        Drivetrain.speakerMode = currentMode;
+        return null;
+    }
+
     public static Command handOffNote() {
         //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
@@ -68,7 +78,7 @@ public class RobotCommands {
     public static Command passNote() {
         //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
-            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
+            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasFinalNote),
             new ParallelRaceGroup(
                 Commands.parallel(
                     ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero),
@@ -93,7 +103,7 @@ public class RobotCommands {
     public static Command primeShoot() {
         //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
-            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
+            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasFinalNote),
             new ParallelRaceGroup(
                 Commands.parallel(
                     ShooterPivotCommands.setSpeakerAngle(
@@ -180,7 +190,7 @@ public class RobotCommands {
 
     public static Command primeSpeaker(SetAngleShooterPivot.Preset state) {
         return new SequentialCommandGroup(
-            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
+            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasFinalNote),
             new ParallelRaceGroup(
                 Commands.parallel(
                     ShooterPivotCommands.setState(state),
@@ -198,14 +208,14 @@ public class RobotCommands {
     public static Command primeAmp() {
         //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);
         return new SequentialCommandGroup(
-            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasNote),
+            new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasFinalNote),
             Commands.parallel(
                 ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kAmp),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kAmp),
                 new ParallelRaceGroup(
                     ShooterFlywheelCommands.setAngularVelocity(
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)),
-                    new WaitUntilCommand(() -> !Indexer.getInstance().hasNote())
+                    new WaitUntilCommand(() -> !Indexer.getInstance().hasFinalNote())
                 )
             )
         );
@@ -214,7 +224,7 @@ public class RobotCommands {
     public static Command amp() {
         return new SequentialCommandGroup(
             primeAmp(),
-            new ConditionalCommand(Commands.none(), primeAmp(), () -> !Indexer.getInstance().hasNote()),
+            new ConditionalCommand(Commands.none(), primeAmp(), () -> !Indexer.getInstance().hasFinalNote()),
             Commands.parallel(
                 ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kZero),
                 ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
@@ -269,7 +279,7 @@ public class RobotCommands {
     // AUTON COMMANDS
     public static Command autoLineupAndShoot() {
         return Commands.sequence(
-            new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
+            new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasFinalNote),
             Commands.parallel(
                // IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed), Do this in path planner
                 DrivetrainCommands.autoLineUp(),
@@ -314,7 +324,7 @@ public class RobotCommands {
 
     public static Command autoPrimeSpeakerAndShoot(SetAngleShooterPivot.Preset state, double targetRPS) {
         return Commands.sequence(
-            new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasNote),
+            new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasFinalNote),
             Commands.parallel(
                 Commands.race(
                     ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(targetRPS)),

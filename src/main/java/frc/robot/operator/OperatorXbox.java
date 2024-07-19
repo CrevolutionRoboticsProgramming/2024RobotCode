@@ -73,7 +73,7 @@ public class OperatorXbox extends XboxGamepad {
 
         controller.y().whileTrue(new SequentialCommandGroup(
             IndexerCommands.unJamNote(),
-            IndexerCommands.loadNote())
+            IndexerCommands.grabNote())
         );
 
         // controller.triangle().whileTrue(new SequentialCommandGroup(

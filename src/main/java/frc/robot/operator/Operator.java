@@ -71,7 +71,7 @@ public class Operator extends Gamepad {
 
         controller.triangle().whileTrue(new SequentialCommandGroup(
             IndexerCommands.unJamNote(),
-            IndexerCommands.loadNote())
+            IndexerCommands.grabNote())
         );
 
         // controller.triangle().whileTrue(new SequentialCommandGroup(

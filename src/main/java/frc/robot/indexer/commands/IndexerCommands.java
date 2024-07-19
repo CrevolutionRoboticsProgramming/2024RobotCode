@@ -10,7 +10,7 @@ public class IndexerCommands {
         return new SetOutputIndexer(outputSupplier);
     }
 
-    public static Command loadNote() {
+    public static Command grabNote() {
         return new LoadNote(LoadNote.Profile.kLowLoad);
     }
 
