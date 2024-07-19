@@ -68,8 +68,10 @@ public class DriverXbox extends XboxGamepad {
         controller.b().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
 
 
+        // Future notice: A = speaker and x = amp wil be amp and speaker shoot on move
         controller.x().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
         controller.a().whileTrue(RobotCommands.prime());
+
         //controller.a().whileFalse(RobotCommands.stopPrime());
         //controller.circle().whileTrue(DrivetrainCommands.driveAndLockTarget(this::getDriveTranslation));
         //controller.povDown().whileTrue(ShooterPivotCommands.tuneLockSpeaker(() -> Rotation2d.fromDegrees(45)));

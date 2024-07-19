@@ -60,7 +60,7 @@ public class ShooterPivot extends SubsystemBase {
     private ShooterPivot() {
         mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushless) {{
             setIdleMode(IdleMode.kBrake);
-            setInverted(true);
+            setInverted(false);
             setSmartCurrentLimit(Settings.KMaxVoltage);
         }};
 

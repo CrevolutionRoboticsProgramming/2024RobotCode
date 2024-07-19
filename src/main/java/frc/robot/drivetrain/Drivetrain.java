@@ -50,6 +50,8 @@ public class Drivetrain extends SubsystemBase {
 
     //MASTER DRIVE METHOD
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+
+        
         lastTranslation = translation;
         lastRotation = rotation;
         SwerveModuleState[] swerveModuleStates =

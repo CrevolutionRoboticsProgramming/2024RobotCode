@@ -18,7 +18,7 @@ public class IndexerCommands {
         return new LoadNote(LoadNote.Profile.kHighLoad);
     }
 
-    public static Command grabNote() {
-        return new GrabNote(GrabNote.Profile.kLowLoad);
-    }
+    // public static Command grabNote() {
+    //     return new GrabNote(GrabNote.Profile.kLowLoad);
+    // }
 }

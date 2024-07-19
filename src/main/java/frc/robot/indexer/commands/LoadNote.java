@@ -8,7 +8,7 @@ public class LoadNote extends Command {
     private final Indexer indexer;
 
     private enum State {
-        kLoading, kBackoff, kReverseBackoff, kDone
+        kLoading, kSlowDown, kStop, kDone
     }
 
     public enum Profile{
@@ -40,9 +40,9 @@ public class LoadNote extends Command {
     @Override
     public void execute() {
         indexer.setOutput(switch (state) {
-            case kLoading -> 0.60;
-            case kBackoff -> -profile.percent;
-            case kReverseBackoff -> 0.15;
+            case kLoading -> 1.00;
+            case kSlowDown -> 0.50;
+            case kStop -> 0.00;
             default -> 0.0;
         });
         transitionState();
@@ -61,26 +61,13 @@ public class LoadNote extends Command {
     private void transitionState() {
         switch (state) {
             case kLoading:
-                if (indexer.hasNote()) {
-                    changeState(State.kBackoff, "detected note");
+                if (indexer.hasInitialNote()) {
+                    changeState(State.kSlowDown, "detected note");
                 }
                 break;
-            case kBackoff:
-                if (!indexer.hasNote()) {
-                    changeState(State.kReverseBackoff, "no longer detected note");
-                }
-                break;
-            case kReverseBackoff:
-                if (indexer.hasNote()) {
-                    changeState(State.kDone, "detected note");
-                }
-                break;
-        }
-
-        switch (state) {
-            case kLoading:
-                if (indexer.hasNote()) {
-                    changeState(State.kDone, "detected note");
+            case kSlowDown:
+                if (indexer.hasFinalNote()) {
+                    changeState(State.kStop, "Detected note again");
                 }
                 break;
         }
