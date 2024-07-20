@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
 import frc.robot.drivetrain.swerve.SwerveModule;
 import frc.robot.vision.Vision;
@@ -35,6 +36,7 @@ public class Drivetrain extends SubsystemBase {
     private double lastRotation;
 
     public static boolean ampMode, speakerMode;
+    private double noteSpeed, avgVelocity;
 
     private Drivetrain() {
         gyro = new Pigeon2(DriveConstants.pigeonID, "Canivore");
@@ -60,8 +62,19 @@ public class Drivetrain extends SubsystemBase {
 
     //MASTER DRIVE METHOD
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop, boolean modeS, boolean modeA) {
+        avgVelocity = 0;
         ampMode = modeA;
         speakerMode = modeS;
+
+        // Note Speed is in m/s
+        noteSpeed = 16.0;
+
+        // Used to find avg Velocity of all 4 Mods
+        for (SwerveModule mod : mSwerveMods) {
+            avgVelocity += Math.abs(mod.getState().speedMetersPerSecond);
+        }
+        avgVelocity /= 4;
+
         if (speakerMode) {
             final Drivetrain drivetrain = Drivetrain.getInstance();
 
@@ -86,6 +99,14 @@ public class Drivetrain extends SubsystemBase {
                     goalPose = new Pose2d(new Translation2d(Units.inchesToMeters(652.73), Units.inchesToMeters(218.42)), new Rotation2d(Units.degreesToRadians(180)));
                 }
             }
+
+            // Math for goal offset
+            double distanceToTarget = drivetrain.getPose().getTranslation().getDistance(goalPose.getTranslation());
+            double timeToTarget = noteSpeed / distanceToTarget;
+            Translation2d offSetTarget = new Translation2d(goalPose.getX() - (timeToTarget * avgVelocity), 
+                goalPose.getY() - (timeToTarget * avgVelocity));
+            goalPose.getTranslation().minus(offSetTarget).getAngle().getDegrees();
+
             final var startingAngle = robotPose.getRotation();
             final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle().plus(Rotation2d.fromDegrees(180.0));
             deltaTheta = endAngle.minus(startingAngle);
@@ -110,7 +131,6 @@ public class Drivetrain extends SubsystemBase {
 
             Pose2d goalPose = null;
             
-
             final var mPoseEstimator = Vision.PoseEstimator.getInstance();
             final var robotPose = mPoseEstimator.getCurrentPose();
 
@@ -123,6 +143,14 @@ public class Drivetrain extends SubsystemBase {
                     goalPose = new Pose2d(new Translation2d(14.65, 7.02), new Rotation2d(Units.degreesToRadians(180)));
                 }
             }
+
+            // Math for goal offset
+            double distanceToTarget = drivetrain.getPose().getTranslation().getDistance(goalPose.getTranslation());
+            double timeToTarget = noteSpeed / distanceToTarget;
+            Translation2d offSetTarget = new Translation2d(goalPose.getX() - (timeToTarget * avgVelocity), 
+                goalPose.getY() - (timeToTarget * avgVelocity));
+            goalPose.getTranslation().minus(offSetTarget).getAngle().getDegrees();
+
             final var startingAngle = robotPose.getRotation();
             final var endAngle = goalPose.getTranslation().minus(robotPose.getTranslation()).getAngle().plus(Rotation2d.fromDegrees(180.0));
             deltaTheta = endAngle.minus(startingAngle);

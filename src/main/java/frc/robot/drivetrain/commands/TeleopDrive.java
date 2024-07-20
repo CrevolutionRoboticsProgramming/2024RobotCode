@@ -26,7 +26,7 @@ public class TeleopDrive extends Command {
      * @param rotationOffset offset for the robot's center of rotation
      */
     public TeleopDrive(Supplier<Translation2d> translationSupplier, Supplier<Rotation2d> rotationSupplier, boolean isFieldRelative,
-                       Translation2d rotationOffset) {
+                       Translation2d rotationOffset, boolean modeS, boolean modeA) {
         drivetrain = Drivetrain.getInstance();
         this.translationSupplier = translationSupplier;
         this.rotationSupplier = rotationSupplier;

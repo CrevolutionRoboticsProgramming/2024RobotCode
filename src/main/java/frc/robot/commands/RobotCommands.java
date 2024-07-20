@@ -40,12 +40,12 @@ import com.revrobotics.CANSparkBase;
 public class RobotCommands {
     // public static Command switchModeAmp(boolean currentMode) {
     //     Drivetrain.ampMode = currentMode;
-    //     return null;
+    //     return new WaitCommand(10);
     // }
 
     // public static Command switchModeSpeaker(boolean currentMode) {
     //     Drivetrain.speakerMode = currentMode;
-    //     return null;
+    //     return new WaitCommand(10);
     // }
 
     public static Command handOffNote() {

@@ -20,12 +20,14 @@ import frc.robot.vision.Vision;
 
 public class DrivetrainCommands {
     public static Command drive(Supplier<Translation2d> translationSupplier, DoubleSupplier rotationSupplier, double translationModifier,
-                                 double rotationModifier, boolean isFieldOriented, Translation2d rotationOffset) {
+                                 double rotationModifier, boolean isFieldOriented, Translation2d rotationOffset, boolean modeS, boolean modeA) {
         return new TeleopDrive(
             () -> translationSupplier.get().times(DriveConstants.MAX_SPEED).times(translationModifier),
             () -> Rotation2d.fromRadians(rotationSupplier.getAsDouble()).times(DriveConstants.MAX_ANGULAR_VELOCITY).times(rotationModifier),
             isFieldOriented,
-            rotationOffset
+            rotationOffset,
+            modeS,
+            modeA
         );
     }
 
@@ -36,7 +38,9 @@ public class DrivetrainCommands {
             1.0,
             1.0,
             true,
-            new Translation2d(0, 0)
+            new Translation2d(0, 0),
+            false,
+            false
         );
     }
 
@@ -90,17 +94,27 @@ public class DrivetrainCommands {
     }
 
     public static Command drive(Supplier<Translation2d> translationSupplier, DoubleSupplier rotation) {
-        return drive(translationSupplier, rotation, 1.0, 1.0, true, new Translation2d(0, 0));
+        return drive(translationSupplier, rotation, 1.0, 1.0, true, new Translation2d(0, 0), false, false);
     }
 
-    public static Command driveSlowMode(Supplier<Translation2d> translationSupplier, DoubleSupplier rotation) {
+    public static Command shootAmpMode(Supplier<Translation2d> translationSupplier, DoubleSupplier rotation, boolean modeS, boolean modeA) {
+        return drive(translationSupplier, rotation, 1.0, 1.0, true, new Translation2d(0, 0), modeS, modeA);
+    }
+
+    public static Command shootSpeakerMode(Supplier<Translation2d> translationSupplier, DoubleSupplier rotation, boolean modeS, boolean modeA) {
+        return drive(translationSupplier, rotation, 1.0, 1.0, true, new Translation2d(0, 0), modeS, modeA);
+    }
+
+    public static Command driveSlowMode(Supplier<Translation2d> translationSupplier, DoubleSupplier rotation, boolean modeS, boolean modeA) {
         return drive(
             translationSupplier,
             rotation,
             DriveConstants.kSlowModeTranslationModifier,
             DriveConstants.kSlowModeRotationModifier,
             true,
-            new Translation2d(0, 0)
+            new Translation2d(0, 0),
+            modeS,
+            modeA
         );
     }
 
