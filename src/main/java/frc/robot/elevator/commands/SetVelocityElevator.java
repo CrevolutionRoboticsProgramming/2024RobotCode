@@ -1,5 +1,6 @@
 package frc.robot.elevator.commands;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.elevator.Elevator;
 
@@ -23,7 +24,7 @@ public class SetVelocityElevator extends Command {
     @Override
     public void execute() {
         var vel = velocitySupplier.getAsDouble();
-        if (elevator.getUpperLimitState() && vel > 0) {
+        if (elevator.getPosition() > Units.inchesToMeters(28) && vel > 0) {
             vel = 0;
         } else if (elevator.getLowerLimitState() && vel < 0) {
             vel = 0;

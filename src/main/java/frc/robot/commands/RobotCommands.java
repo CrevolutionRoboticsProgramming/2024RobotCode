@@ -38,15 +38,15 @@ import java.util.concurrent.ConcurrentMap;
 import com.revrobotics.CANSparkBase;
 
 public class RobotCommands {
-    public static Command switchModeAmp(boolean currentMode) {
-        Drivetrain.ampMode = currentMode;
-        return null;
-    }
+    // public static Command switchModeAmp(boolean currentMode) {
+    //     Drivetrain.ampMode = currentMode;
+    //     return null;
+    // }
 
-    public static Command switchModeSpeaker(boolean currentMode) {
-        Drivetrain.speakerMode = currentMode;
-        return null;
-    }
+    // public static Command switchModeSpeaker(boolean currentMode) {
+    //     Drivetrain.speakerMode = currentMode;
+    //     return null;
+    // }
 
     public static Command handOffNote() {
         //ShooterPivot.getInstance().setShooterPivotIdleMode(CANSparkBase.IdleMode.kBrake);

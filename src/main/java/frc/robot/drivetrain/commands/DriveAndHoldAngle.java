@@ -79,7 +79,7 @@ public class DriveAndHoldAngle extends Command {
             -Settings.kMaxAngularVelocity.getDegrees(),
             Settings.kMaxAngularVelocity.getDegrees()
         ));
-        drivetrain.drive(translationSupplier.get(), requestedAngularVelocity.getRadians(), false, false);
+        drivetrain.drive(translationSupplier.get(), requestedAngularVelocity.getRadians(), false, false, false, false);
         // DrivetrainCommands.drive(translationSupplier, 
         //     () -> {return requestedAngularVelocity.getRadians();},
         //     1.0,

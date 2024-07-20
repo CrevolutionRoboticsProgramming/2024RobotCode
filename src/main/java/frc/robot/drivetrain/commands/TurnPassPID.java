@@ -71,7 +71,7 @@ public class TurnPassPID extends Command{
             -Settings.kMaxAngularVelocity.getDegrees(),
             Settings.kMaxAngularVelocity.getDegrees()
         ));
-        drivetrain.drive(new Translation2d(0, 0), requestedAngularVelocity.getRadians(), false, false);
+        drivetrain.drive(new Translation2d(0, 0), requestedAngularVelocity.getRadians(), false, false, false, false);
 
         SmartDashboard.putNumber("[TurnAnglePID] Target Angle", targetAngle.getDegrees());
         SmartDashboard.putNumber("[TurnAnglePID] Current Angle", currentAngle.getDegrees());

@@ -18,7 +18,7 @@ public class ShooterFlywheel extends SubsystemBase {
                 .withKP(0.0);
 
         // 5800 RPM at motor; 11600 RPM at wheels
-        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromRotations(5800.0 / 60.0);
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromRotations(6000.0 / 60.0);
 
         public static final double kCurrentLimit = 60.0;
     }

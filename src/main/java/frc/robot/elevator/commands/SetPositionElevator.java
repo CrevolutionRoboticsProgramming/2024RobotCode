@@ -92,10 +92,10 @@ public class SetPositionElevator extends Command {
                 changeState(State.kProfile);
                 break;
             case kProfile:
-                if (profileDirection == ProfileDirection.kUp && elevator.getUpperLimitState()) {
-                    changeState(State.kDone, "hit upper limit");
-                    break;
-                }
+                // if (profileDirection == ProfileDirection.kUp && elevator.getUpperLimitState()) {
+                //     changeState(State.kDone, "hit upper limit");
+                //     break;
+                // }
                 if (profileDirection == ProfileDirection.kDown && elevator.getLowerLimitState()) {
                     changeState(State.kDone, "hit lower limit");
                 }

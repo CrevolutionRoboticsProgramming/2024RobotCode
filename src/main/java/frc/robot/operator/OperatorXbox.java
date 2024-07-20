@@ -124,11 +124,11 @@ public class OperatorXbox extends XboxGamepad {
         // );
 
         // //Shooter Pivot Manual Override
-        // controller.leftTrigger().whileTrue(
-        //     ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-        //             shooterPivotManualCurve.calculate(controller.getRightX())),
-        //         false)
-        // );
+        controller.leftTrigger().whileTrue(
+            ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
+                    shooterPivotManualCurve.calculate(controller.getRightX())),
+                false)
+        );
     }
 
     @Override

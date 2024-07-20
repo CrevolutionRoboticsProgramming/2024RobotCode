@@ -59,8 +59,9 @@ public class Drivetrain extends SubsystemBase {
     }
 
     //MASTER DRIVE METHOD
-    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-
+    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop, boolean modeS, boolean modeA) {
+        ampMode = modeA;
+        speakerMode = modeS;
         if (speakerMode) {
             final Drivetrain drivetrain = Drivetrain.getInstance();
 
@@ -176,7 +177,7 @@ public class Drivetrain extends SubsystemBase {
 
     public void stopSwerve() {
         Translation2d stop = new Translation2d(0, 0);
-        drive(stop, 0, true, true);
+        drive(stop, 0, true, true, false, false);
     }
 
     //USE FOR AUTONOMOUS COMMANDS

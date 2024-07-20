@@ -19,7 +19,7 @@ public class TurnInPlaceCommand extends Command{
     @Override
     public void execute() {
         //TODO: test if the angle is deg or radians
-        mSwerveDrivetrain.drive(new Translation2d(0,0), Units.degreesToRadians(angle), true, true);
+        mSwerveDrivetrain.drive(new Translation2d(0,0), Units.degreesToRadians(angle), true, true, false, false);
     }
 
 

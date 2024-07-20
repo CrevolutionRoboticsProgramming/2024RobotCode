@@ -48,7 +48,7 @@ public class Elevator extends SubsystemBase {
 
     private CANSparkMax mSparkFollower;
     private final RelativeEncoder mEncoder;
-    private final DigitalInput mLowerLimitSwitch, mUpperLimitSwitch;
+    private final DigitalInput mLowerLimitSwitch;
 
     private final ElevatorFeedforward mFFController;
     private final PIDController mPIDController;
@@ -65,7 +65,7 @@ public class Elevator extends SubsystemBase {
             follow(mSparkLeader, true);
         }};
         mLowerLimitSwitch = new DigitalInput(Settings.kLowerLimitSwitch);
-        mUpperLimitSwitch = new DigitalInput(Settings.kUpperLimitSwitch);
+        // mUpperLimitSwitch = new DigitalInput(Settings.kUpperLimitSwitch);
         mEncoder = mSparkLeader.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192);
 
         mFFController = new ElevatorFeedforward(Settings.kS, Settings.kG, Settings.kV, Settings.kA);
@@ -89,9 +89,9 @@ public class Elevator extends SubsystemBase {
         return mLowerLimitSwitch.get();
     }
 
-    public boolean getUpperLimitState() {
-        return mUpperLimitSwitch.get();
-    }
+    // public boolean getUpperLimitState() {
+    //     return mUpperLimitSwitch.get();
+    // }
 
     public double getPosition() {
         return rotationsToMeters(mEncoder.getPosition());

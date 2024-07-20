@@ -80,7 +80,7 @@ public class TurnAnglePID extends Command {
             -Settings.kMaxAngularVelocity.getDegrees(),
             Settings.kMaxAngularVelocity.getDegrees()
         ));
-        drivetrain.drive(new Translation2d(0, 0), requestedAngularVelocity.getRadians(), false, false);
+        drivetrain.drive(new Translation2d(0, 0), requestedAngularVelocity.getRadians(), false, false, false, false);
 
         // Supplier<SwerveRequest> regRequestSupplier =  () -> drivetrain.withVelocityX(
         //     DriverXbox.translationStickCurve.calculate(-DriverXbox.getInstance().controller.getLeftX()) * MaxSpeed).withVelocityY(
