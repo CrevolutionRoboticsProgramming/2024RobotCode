@@ -55,7 +55,7 @@ public class LoadNote extends Command {
 
     @Override
     public boolean isFinished() {
-        return state == State.kDone;
+        return state == State.kStop;
     }
 
     private void transitionState() {

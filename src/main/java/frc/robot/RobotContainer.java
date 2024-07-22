@@ -81,7 +81,7 @@ public class RobotContainer {
             driver::getDriveRotation
         ));        
 
-        ShooterPivot.getInstance().setDefaultCommand(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRotations(0), true));
+        // ShooterPivot.getInstance().setDefaultCommand(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRotations(0), true));
         IntakePivot.getInstance().setDefaultCommand(IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRotations(0), false));
     }
 }

@@ -16,6 +16,7 @@ import frc.robot.operator.Operator;
 import frc.robot.operator.OperatorXbox;
 import frc.robot.shooterflywheel.ShooterFlywheel;
 import frc.robot.shooterflywheel.commands.ShooterFlywheelCommands;
+import frc.robot.shooterpivot.ShooterPivot;
 import frc.robot.vision.Vision;
 
 import org.littletonrobotics.junction.LoggedRobot;
@@ -128,6 +129,7 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void disabledPeriodic() {
+        ShooterPivot.getInstance().resetAngle();
     }
 
     /**

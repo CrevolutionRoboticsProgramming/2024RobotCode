@@ -136,7 +136,7 @@ public class AutonMaster {
         NamedCommands.registerCommand("autoRunIntake", Commands.parallel(
             IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed),
             IntakeRollerCommands.setOutput(() -> -1.0),
-            ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kHandoff)
+            ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kHandoff)
         ));
         
         NamedCommands.registerCommand("PerpetualRPM", RobotCommands.autoConstantlyRPM());

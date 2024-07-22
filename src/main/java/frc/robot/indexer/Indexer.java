@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Indexer extends SubsystemBase{
     public static class Settings {
-        static final int kSparkId = 25;
+        static final int kSparkId = 24;
         static final int kInitialBeamBreakerId = 1;
         static final int kFinalBreamBreakerID = 2;
         static final double kMaxVoltage = 12.0;
@@ -20,7 +20,7 @@ public class Indexer extends SubsystemBase{
 
     public Indexer() {
         mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushed) {{
-            setInverted(false);
+            setInverted(true);
         }};
         mInitialBeamBreaker = new DigitalInput(Settings.kInitialBeamBreakerId);
         mFinalBeamBreaker = new DigitalInput(Settings.kFinalBreamBreakerID);

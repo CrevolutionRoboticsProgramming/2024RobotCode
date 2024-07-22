@@ -64,10 +64,10 @@ public class Operator extends Gamepad {
     @Override
     public void setupTeleopButtons() {
         // Shooter Commands
-        controller.cross().whileTrue(RobotCommands.handOffNote());
+        // controller.cross().whileTrue(RobotCommands.handOffNote());
 
-        controller.square().whileTrue(RobotCommands.pass());
-        controller.circle().whileTrue(RobotCommands.amp());
+        // controller.square().whileTrue(RobotCommands.pass());
+        // controller.circle().whileTrue(RobotCommands.amp());
 
         controller.triangle().whileTrue(new SequentialCommandGroup(
             IndexerCommands.unJamNote(),
@@ -82,7 +82,7 @@ public class Operator extends Gamepad {
         controller.R1().whileTrue(IndexerCommands.setOutput(() -> 1.0));
         controller.L2().and(controller.R1()).whileTrue(RobotCommands.shootCleanUp());
 
-        controller.R3().onTrue(RobotCommands.zero());
+        // controller.R3().onTrue(RobotCommands.zero());
 
         // ONlY For Testing
         controller.L3().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
@@ -94,21 +94,21 @@ public class Operator extends Gamepad {
         controller.L1().whileTrue(IndexerCommands.setOutput(() -> -1.0));
         controller.L1().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(75)));
 
-        controller.povUp().whileTrue(RobotCommands.primeClimb());
-        controller.povDown().whileTrue(RobotCommands.climb());
-        controller.povRight().whileTrue(RobotCommands.primeTrap());
-        controller.povLeft().whileTrue(RobotCommands.trap());
+        // controller.povUp().whileTrue(RobotCommands.primeClimb());
+        // controller.povDown().whileTrue(RobotCommands.climb());
+        // controller.povRight().whileTrue(RobotCommands.primeTrap());
+        // controller.povLeft().whileTrue(RobotCommands.trap());
 
         //Elevator Manual Override
-        controller.R2().whileTrue( Commands.sequence(
-            // Ensure manual override doesn't overextend height extension
-            new ConditionalCommand(
-                ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kClimb),
-                Commands.none(),
-                () -> elevatorCurve.calculate(-controller.getRightY()) > 0 && ShooterPivot.getInstance().getAngle().getDegrees() > SetAngleShooterPivot.Preset.kClimb.getDegrees()
-            ),
-            ElevatorCommands.setVelocity(() -> elevatorCurve.calculate(-controller.getRightY()))
-        ));
+        // controller.R2().whileTrue( Commands.sequence(
+        //     // Ensure manual override doesn't overextend height extension
+        //     new ConditionalCommand(
+        //         ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kClimb),
+        //         Commands.none(),
+        //         () -> elevatorCurve.calculate(-controller.getRightY()) > 0 && ShooterPivot.getInstance().getAngle().getDegrees() > SetAngleShooterPivot.Preset.kClimb.getDegrees()
+        //     ),
+        //     ElevatorCommands.setVelocity(() -> elevatorCurve.calculate(-controller.getRightY()))
+        // ));
 
         
         /*TESTING ONLY */

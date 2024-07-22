@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -18,28 +19,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.elevator.ElevatorConfig;
 import frc.robot.vision.Vision;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
 public class ShooterPivot extends SubsystemBase {
     public static class Settings {
-        static final int kSparkId = 24;
+        static final int kSparkId = 25;
 
-        static final double kG = 0.38; // V
+        static final double kG = 0.42; // V
         static final double kS = 0.0;  // V / rad
-        static final double kV = 2.65; // V * sec / rad
-        static final double kA = 0.01; // V * sec^2 / rad
+        static final double kV = 1.6; // V * sec / rad
+        static final double kA = 0.0; // V * sec^2 / rad
 
-        static final double kPosP = 8.0; // V / rad
-        static final double kPosI = 0.0;
-        static final double kPosD = 0.0;
+        static final double kP = 7.0;
+        static final double kI = 0.0;
+        static final double kD = 0.0;
 
-        static final double kVelP = 0.0;//1.5;//0.5;
-        static final double kVelI = 0.0;
-        static final double kVelD = 0.0;
+        // static final double kPosP = 16.0; // V / rad
+        // static final double kPosI = 0.0;
+        // static final double kPosD = 0.0;
 
-        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(320); //120
+        // static final double kVelP = 0.0;//1.5;//0.5;
+        // static final double kVelI = 0.0;
+        // static final double kVelD = 0.0;
+
+        public static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(200); //120
         public static final Rotation2d kMaxAngularAcceleration = Rotation2d.fromDegrees(300);
         public static final Rotation2d kMaxAngle = Rotation2d.fromDegrees(180);
-        public static final Rotation2d kMaxAnglePhysical = Rotation2d.fromDegrees(270);
+        public static final Rotation2d kMaxAnglePhysical = Rotation2d.fromDegrees(175);
 
         public static final int KMaxVoltage = 30;
 
@@ -52,7 +58,9 @@ public class ShooterPivot extends SubsystemBase {
     private CANSparkMax mSpark;
     private final SparkAbsoluteEncoder mPosEncoder;
     private final RelativeEncoder mVelEncoder;
-    private final PIDController mPositionPIDController, mVelocityPIDController;
+    // private final PIDController mPositionPIDController, mVelocityPIDController;
+    private Constraints mConstraints;
+    private final ProfiledPIDController mPPIDController;
     private final ArmFeedforward mFFController;
 
     private Rotation2d lastRequestedVelocity;
@@ -68,9 +76,12 @@ public class ShooterPivot extends SubsystemBase {
 
         mPosEncoder = mSpark.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         mPosEncoder.setInverted(false);
+        mConstraints = new Constraints( Settings.kMaxAngularVelocity.getRadians(), Settings.kMaxAngularAcceleration.getRadians());
+        mPPIDController = new ProfiledPIDController(Settings.kP, Settings.kI, Settings.kD, mConstraints);
+        
 
-        mPositionPIDController = new PIDController(Settings.kPosP, Settings.kPosI, Settings.kPosD);
-        mVelocityPIDController= new PIDController(Settings.kVelP, Settings.kVelI, Settings.kVelD);
+        // mPositionPIDController = new PIDController(Settings.kPosP, Settings.kPosI, Settings.kPosD);
+        // mVelocityPIDController= new PIDController(Settings.kVelP, Settings.kVelI, Settings.kVelD);
         mFFController = new ArmFeedforward(Settings.kS, Settings.kG, Settings.kV, Settings.kA);
     }
 
@@ -81,6 +92,10 @@ public class ShooterPivot extends SubsystemBase {
         return mInstance;
     }
 
+    public void setTargetAngle(Rotation2d angle) {
+        mPPIDController.setGoal(angle.getRadians());
+    }
+
     // public void setShooterPivotIdleMode(CANSparkBase.IdleMode kIdleMode) {
     //     mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushless) {{
     //         setIdleMode(kIdleMode);
@@ -89,19 +104,19 @@ public class ShooterPivot extends SubsystemBase {
     //     }};
     // }
 
-    public void setAngularVelocity(Rotation2d velocity, boolean openLoop) {
-        lastRequestedVelocity = velocity;
-        final var currentAngle = getAngle();
-        final var currentVelocity = getAngularVelocity();
-        final var ffComponent = mFFController.calculate(currentAngle.getRadians() - Settings.kFFAngleOffset.getRadians(), velocity.getRadians());
-        final var pidComponent = (openLoop) ? 0.0 : mVelocityPIDController.calculate(currentVelocity.getRadians(), velocity.getRadians());
-        // System.out.println("ff: " + ffComponent + ", pid: " + pidComponent);
-        mSpark.setVoltage(ffComponent + pidComponent);
-    }
+    // public void setAngularVelocity(Rotation2d velocity, boolean openLoop) {
+    //     lastRequestedVelocity = velocity;
+    //     final var currentAngle = getAngle();
+    //     final var currentVelocity = getAngularVelocity();
+    //     final var ffComponent = mFFController.calculate(currentAngle.getRadians() - Settings.kFFAngleOffset.getRadians(), velocity.getRadians());
+    //     final var pidComponent = (openLoop) ? 0.0 : mVelocityPIDController.calculate(currentVelocity.getRadians(), velocity.getRadians());
+    //     // System.out.println("ff: " + ffComponent + ", pid: " + pidComponent);
+    //     mSpark.setVoltage(ffComponent + pidComponent);
+    // }
 
-    public void setAngularVelocity(Rotation2d velocity) {
-        setAngularVelocity(velocity, false);
-    }
+    // public void setAngularVelocity(Rotation2d velocity) {
+    //     setAngularVelocity(velocity, false);
+    // }
 
     public double getDistanceFromSpeaker() {
         Pose2d goalPose = new Pose2d();
@@ -122,35 +137,52 @@ public class ShooterPivot extends SubsystemBase {
         return diff;
     }
 
-    public void setAngle(Rotation2d angle) {
-        // Our target velocity should always be zero when holding an angle, use positional PID to compensate for error
-        final var currentAngle = getAngle();
-        final var ffComponent = mFFController.calculate(currentAngle.getRadians() - Settings.kFFAngleOffset.getRadians(), 0);
-        final var pidComponent = mPositionPIDController.calculate(currentAngle.getRadians(), angle.getRadians());
-        mSpark.setVoltage(ffComponent + pidComponent);
-    }
+    // public void setAngle(Rotation2d angle) {
+    //     // Our target velocity should always be zero when holding an angle, use positional PID to compensate for error
+    //     final var currentAngle = getAngle();
+    //     final var ffComponent = mFFController.calculate(currentAngle.getRadians() - Settings.kFFAngleOffset.getRadians(), 0);
+    //     final var pidComponent = mPositionPIDController.calculate(currentAngle.getRadians(), angle.getRadians());
+    //     mSpark.setVoltage(ffComponent + pidComponent);
+    // }
 
     public Rotation2d getAngularVelocity() {
 //        return Rotation2d.fromRotations(mPosEncoder.getVelocity());
-        return Rotation2d.fromRotations(mVelEncoder.getVelocity()).div(126.0 * 60.0);
+        return Rotation2d.fromRotations(mVelEncoder.getVelocity()).div(140.0 * 60.0);
     }
 
     // TODO: Clamp to zero to prevent loop around reading, issue with cumulative error?
     public Rotation2d getAngle() {
         var pos = mPosEncoder.getPosition();
+
+        // Accounts for encoder gear ratio
+        pos /= 2.0;
         if (pos > Settings.kMaxAnglePhysical.getRotations()) {
             pos = 0;
         }
         return Rotation2d.fromRotations(pos);
     }
 
+    public void resetAngle() {
+        mPPIDController.setGoal(getAngle().getRadians());
+    }
+
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("Shooter Pivot Angle (radians)", getAngle().getRadians());
+        SmartDashboard.putNumber("Shooter Pivot Angular Velocity (radians / sec)", getAngularVelocity().getRadians());
         SmartDashboard.putNumber("Shooter Pivot Angle (degrees)", getAngle().getDegrees());
         SmartDashboard.putNumber("Shooter Pivot Angular Velocity (degrees / sec)", getAngularVelocity().getDegrees());
-        if (lastRequestedVelocity != null) {
-            SmartDashboard.putNumber("Shooter Pivot Angular Velocity Requested (degrees / sec)", lastRequestedVelocity.getDegrees());
-        }
+        // if (lastRequestedVelocity != null) {
+        //     SmartDashboard.putNumber("Shooter Pivot Angular Velocity Requested (degrees / sec)", lastRequestedVelocity.getDegrees());
+        // }
         SmartDashboard.putNumber("Estimated Disp. Speaker-Robot", getDistanceFromSpeaker());
+        SmartDashboard.putNumber("Profilled PID Controller Vel", mPPIDController.getSetpoint().velocity);
+
+        double speed = mPPIDController.calculate(getAngle().getRadians());
+        speed += mFFController.calculate(getAngle().getRadians() - Settings.kFFAngleOffset.getRadians(), mPPIDController.getSetpoint().velocity);
+
+        SmartDashboard.putNumber("mPPIDC + mFFC Output", speed);
+
+        mSpark.setVoltage(speed);
     }
 }
