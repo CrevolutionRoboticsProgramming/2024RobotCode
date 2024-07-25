@@ -12,6 +12,7 @@ public class Indexer extends SubsystemBase{
         static final int kInitialBeamBreakerId = 1;
         static final int kFinalBreamBreakerID = 2;
         static final double kMaxVoltage = 12.0;
+        static final int kCurrentLimit = 200;
     }
 
     private static Indexer mInstance;
@@ -22,6 +23,7 @@ public class Indexer extends SubsystemBase{
         mSpark = new CANSparkMax(Settings.kSparkId, CANSparkLowLevel.MotorType.kBrushed) {{
             setInverted(true);
         }};
+        mSpark.setSmartCurrentLimit(Settings.kCurrentLimit);
         mInitialBeamBreaker = new DigitalInput(Settings.kInitialBeamBreakerId);
         mFinalBeamBreaker = new DigitalInput(Settings.kFinalBreamBreakerID);
 
@@ -48,7 +50,7 @@ public class Indexer extends SubsystemBase{
 
    @Override
    public void periodic() {
-       SmartDashboard.putBoolean("Indexer Has Note", hasInitialNote());
-       SmartDashboard.putBoolean("Indexer Has Note", hasFinalNote());
+       SmartDashboard.putBoolean("Indexer Has Initial Note", hasInitialNote());
+       SmartDashboard.putBoolean("Indexer Has Final Note", hasFinalNote());
    }
 }

@@ -22,7 +22,7 @@ public class Elevator extends SubsystemBase {
         static final int kLowerLimitSwitch = 0;
         static final int kUpperLimitSwitch = 2;
 
-        static final CANSparkBase.IdleMode kIdleMode = CANSparkBase.IdleMode.kBrake;
+        static final CANSparkBase.IdleMode kIdleMode = CANSparkBase.IdleMode.kCoast;
 
         public static final double kG = 0.01;
         public static final double kS = 0.0;
@@ -116,6 +116,7 @@ public class Elevator extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Elevator Position (m)", getPosition());
         SmartDashboard.putNumber("Elevator Velocity (ms^-1): ", getVelocity());
+        SmartDashboard.putBoolean("Elevator Lover lImit Switch Hit?", getLowerLimitState());
 
         if (getLowerLimitState()) {
             resetEncoder();

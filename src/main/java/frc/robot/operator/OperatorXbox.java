@@ -68,8 +68,10 @@ public class OperatorXbox extends XboxGamepad {
         // Shooter Commands
         controller.a().whileTrue(RobotCommands.handOffNote());
 
-        controller.x().whileTrue(RobotCommands.pass());
+        // controller.x().whileTrue(RobotCommands.pass());
         controller.b().whileTrue(RobotCommands.amp());
+
+        controller.x().whileTrue(RobotCommands.shootCleanUp());
 
         controller.y().whileTrue(new SequentialCommandGroup(
             IndexerCommands.unJamNote(),
@@ -87,8 +89,8 @@ public class OperatorXbox extends XboxGamepad {
 
         controller.rightStick().onTrue(RobotCommands.zero());
         controller.leftStick().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
-            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.85),
-            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.75)
+            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.80),
+            () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0)
         ));
 
         // Trap Command
@@ -103,16 +105,20 @@ public class OperatorXbox extends XboxGamepad {
         controller.povRight().whileTrue(ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kAmp));
         controller.povLeft().whileTrue(ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kTrap));
 
-        //Elevator Manual Override
+        // Elevator Manual Override
         // controller.rightTrigger().whileTrue( Commands.sequence(
         //     // Ensure manual override doesn't overextend height extension
         //     new ConditionalCommand(
-        //         ShooterPivotCommands.setState(SetAngleShooterPivot.Preset.kClimb),
+        //         ShooterPivotCommands.setSt(SetAngleShooterPivot.Preset.kClimb),
         //         Commands.none(),
         //         () -> elevatorCurve.calculate(-controller.getRightY()) > 0 && ShooterPivot.getInstance().getAngle().getDegrees() > SetAngleShooterPivot.Preset.kClimb.getDegrees()
         //     ),
         //     ElevatorCommands.setVelocity(() -> elevatorCurve.calculate(-controller.getRightY()))
         // ));
+
+        // controller.rightTrigger().whileTrue(
+        //     ElevatorCommands.setVelocity(() -> elevatorCurve.calculate(-controller.getRightY()))
+        // );
 
                 // ONlY For Testing
         // controller.square().whileTrue(ShooterFlywheelCommands.setAngularVelocity(
@@ -129,11 +135,11 @@ public class OperatorXbox extends XboxGamepad {
         // );
 
         // //Shooter Pivot Manual Override
-        // controller.leftTrigger().whileTrue(
-        //     ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
-        //             shooterPivotManualCurve.calculate(controller.getRightX())),
-        //         false)
-        // );
+        controller.leftTrigger().whileTrue(
+            ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRadians(
+                shooterPivotManualCurve.calculate(controller.getRightX())),
+                false)
+        );
     }
 
     @Override

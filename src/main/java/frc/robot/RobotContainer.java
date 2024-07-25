@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.LEDs.commands.LEDCommands;
 import frc.robot.auton.AutonMaster;
 import frc.robot.auton.commands.TurnInPlaceCommand;
 import frc.robot.driver.Driver;
@@ -79,9 +80,10 @@ public class RobotContainer {
         Drivetrain.getInstance().setDefaultCommand(DrivetrainCommands.drive(
             driver::getDriveTranslation,
             driver::getDriveRotation
-        ));        
+        ));
 
         // ShooterPivot.getInstance().setDefaultCommand(ShooterPivotCommands.setAngularVelocity(() -> Rotation2d.fromRotations(0), true));
+        
         IntakePivot.getInstance().setDefaultCommand(IntakePivotCommands.setAngularVelocity(() -> Rotation2d.fromRotations(0), false));
     }
 }

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.crevolib.util.ExpCurve;
 import frc.crevolib.util.XboxGamepad;
 import frc.robot.Robot;
+import frc.robot.LEDs.commands.LEDCommands;
 import frc.robot.commands.RobotCommands;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.commands.DrivetrainCommands;
@@ -67,19 +68,21 @@ public class DriverXbox extends XboxGamepad {
 
         controller.b().whileTrue(IntakeRollerCommands.setOutput(() -> -1));
 
+        controller.rightStick().toggleOnTrue(LEDCommands.setLEDColor());
+
 
         // Future notice: A = speaker and x = amp wil be amp and speaker shoot on move
-        controller.a().whileTrue(DrivetrainCommands.shootSpeakerMode(() -> mInstance.getDriveTranslation(), () -> mInstance.getDriveRotation(), true, false));
-        controller.a().whileFalse(DrivetrainCommands.shootSpeakerMode(() -> mInstance.getDriveTranslation(), () -> mInstance.getDriveRotation(), false, false));
+        // controller.a().whileTrue(DrivetrainCommands.shootSpeakerMode(() -> mInstance.getDriveTranslation(), () -> mInstance.getDriveRotation(), true, false));
+        // controller.a().whileFalse(DrivetrainCommands.shootSpeakerMode(() -> mInstance.getDriveTranslation(), () -> mInstance.getDriveRotation(), false, false));
 
-        controller.x().whileFalse(DrivetrainCommands.shootAmpMode(() -> mInstance.getDriveTranslation(), () -> mInstance.getDriveRotation(), false, true));
-        controller.x().whileFalse(DrivetrainCommands.shootAmpMode(() -> mInstance.getDriveTranslation(), () -> mInstance.getDriveRotation(), false, false));
+        // controller.x().whileFalse(DrivetrainCommands.shootAmpMode(() -> mInstance.getDriveTranslation(), () -> mInstance.getDriveRotation(), false, true));
+        // controller.x().whileFalse(DrivetrainCommands.shootAmpMode(() -> mInstance.getDriveTranslation(), () -> mInstance.getDriveRotation(), false, false));
 
 
-        // controller.x().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
-        // controller.a().whileTrue(RobotCommands.prime());
+        controller.x().whileTrue(RobotCommands.primeSpeaker(SetAngleShooterPivot.Preset.kShooterNear));
 
-        //controller.a().whileFalse(RobotCommands.stopPrime());
+        controller.a().whileTrue(RobotCommands.prime());
+        
         //controller.circle().whileTrue(DrivetrainCommands.driveAndLockTarget(this::getDriveTranslation));
         //controller.povDown().whileTrue(ShooterPivotCommands.tuneLockSpeaker(() -> Rotation2d.fromDegrees(45)));
 
@@ -115,6 +118,7 @@ public class DriverXbox extends XboxGamepad {
         final var xComponent = translationStickCurve.calculate(-controller.getLeftX());
         final var yComponent = translationStickCurve.calculate(-controller.getLeftY());
         // Components are reversed because field coordinates are opposite of joystick coordinates
+        // System.out.println("Colin Is GAY!!! " + new Translation2d(yComponent, xComponent).toString());
         return new Translation2d(yComponent, xComponent);
     }
 

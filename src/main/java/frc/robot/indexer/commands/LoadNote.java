@@ -40,8 +40,8 @@ public class LoadNote extends Command {
     @Override
     public void execute() {
         indexer.setOutput(switch (state) {
-            case kLoading -> 1.00;
-            case kSlowDown -> 0.50;
+            case kLoading -> 0.3;
+            case kSlowDown -> 0.15;
             case kStop -> 0.00;
             default -> 0.0;
         });

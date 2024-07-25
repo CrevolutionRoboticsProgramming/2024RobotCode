@@ -25,17 +25,17 @@ public class VisionConfig{
 
     //Pose-Cam1 constants
     //TODO: verify Transform3d values
-    public static final Transform3d leftCamToRobot = new Transform3d(
-        new Translation3d(Units.inchesToMeters(7.6),-Units.inchesToMeters(7.6),0), 
-        new Rotation3d(0,Units.degreesToRadians(20),0)
+    public static final Transform3d robotToLeftCam = new Transform3d(
+        new Translation3d(Units.inchesToMeters(-12.25),Units.inchesToMeters(-11.25), Units.inchesToMeters(7.5)), 
+        new Rotation3d(0,Units.degreesToRadians(-20),Units.degreesToRadians(180))
     );
-    public static final Transform3d robotToLeftCam = leftCamToRobot.inverse();
+    //public static final Transform3d robotToLeftCam = leftCamToRobot.inverse();
 
     //Pose-Cam2 constants
-    public static final Transform3d rightCamToRobot = 
-        new Transform3d(new Translation3d(-Units.inchesToMeters(7.6), -Units.inchesToMeters(7.6), 0), 
-        new Rotation3d(0,Units.degreesToRadians(20),0));
-    public static final Transform3d robotToRightCam = rightCamToRobot.inverse();
+    public static final Transform3d robotToRightCam = 
+        new Transform3d(new Translation3d(Units.inchesToMeters(-12.25), Units.inchesToMeters(11.25), Units.inchesToMeters(7.5)), 
+        new Rotation3d(0,Units.degreesToRadians(-20),Units.degreesToRadians(180)));
+    //public static final Transform3d robotToRightCam = rightCamToRobot.inverse();
         
 
     //PID Values for Vision

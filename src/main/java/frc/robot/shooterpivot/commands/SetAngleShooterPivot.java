@@ -1,5 +1,9 @@
 package frc.robot.shooterpivot.commands;
 
+import java.util.function.Supplier;
+
+import com.fasterxml.jackson.databind.cfg.ConstructorDetector.SingleArgConstructor;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.shooterpivot.ShooterPivot;
@@ -216,16 +220,17 @@ import frc.robot.shooterpivot.ShooterPivot;
 
 public class SetAngleShooterPivot extends Command {
     ShooterPivot mShooterPivot;
-    Rotation2d targetAngle;
+    Supplier<Rotation2d> targetSupplier;
+    boolean singleShot =  true;
 
         public enum Preset {
         kZero(Rotation2d.fromDegrees(2)),
         kHandoff(Rotation2d.fromDegrees(0)),
-        kHandoffClear(Rotation2d.fromDegrees(10)),
-        kShooterNear(Rotation2d.fromDegrees(5)),
+        kHandoffClear(Rotation2d.fromDegrees(5)),
+        kShooterNear(Rotation2d.fromDegrees(0)),
         kShooterMid(Rotation2d.fromDegrees(22.25)),
         kShooterFarAuton(Rotation2d.fromDegrees(26)),
-        kShooterFar(Rotation2d.fromDegrees(30.5)),
+        kShooterFar(Rotation2d.fromDegrees(25.5)),
         kTrap(Rotation2d.fromDegrees(153.15)),
         kClimb(Rotation2d.fromDegrees(45)),
         kPass(Rotation2d.fromDegrees(10)),
@@ -248,23 +253,34 @@ public class SetAngleShooterPivot extends Command {
 
     public SetAngleShooterPivot(Rotation2d angleIn) {
         mShooterPivot = ShooterPivot.getInstance();   
-        targetAngle =  angleIn;
+        targetSupplier = ()-> angleIn;
+    }
+    public SetAngleShooterPivot(Supplier<Rotation2d> angleIn) {
+        mShooterPivot = ShooterPivot.getInstance();  
+        targetSupplier = angleIn; 
+    }
+
+    public SetAngleShooterPivot(Supplier<Rotation2d> angleIn, boolean singleSet) {
+        mShooterPivot = ShooterPivot.getInstance();  
+        targetSupplier = angleIn;
+        singleShot = singleSet; 
     }
 
     @Override
     public void initialize() {
-        mShooterPivot.setTargetAngle(targetAngle);
+        
+
     }
 
-    // @Override
-    // public void execute() {
-
-    // }
+    @Override
+    public void execute() {
+        mShooterPivot.setTargetAngle(targetSupplier.get());
+    }
 
 
     @Override
     public boolean isFinished() {
-        return true;
+        return singleShot;
     }
 
     @Override

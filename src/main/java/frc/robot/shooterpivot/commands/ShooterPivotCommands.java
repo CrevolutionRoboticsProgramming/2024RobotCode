@@ -14,17 +14,21 @@ public class ShooterPivotCommands {
         return new SetAngleShooterPivot(angle);
     }
 
-    // public static Command setAngularVelocity(Supplier<Rotation2d> velocitySupplier, boolean openLoop) {
-    //     return new SetVelocityShooterPivot(velocitySupplier, openLoop);
-    // }
+    public static Command setAngularVelocity(Supplier<Rotation2d> velocitySupplier, boolean openLoop) {
+        return new SetVelocityShooterPivot(velocitySupplier, openLoop);
+    }
 
     // public static Command setState(SetAngleShooterPivot.Preset state) {
     //     return new SetAngleShooterPivot(state, false);
     // }
 
-    // public static Command setSpeakerAngle(Supplier<Rotation2d> targetSupplier) {
-    //     return new SetAngleConstantPivot(targetSupplier, false);
-    // }
+    public static Command setSpeakerAngle(Supplier<Rotation2d> targetSupplier) {
+        return new SetAngleShooterPivot(targetSupplier);
+    }
+
+    public static Command setSpeakerAngle(Supplier<Rotation2d> targetSupplier, boolean single) {
+        return new SetAngleShooterPivot(targetSupplier, single);
+    }
 
     // public static Command tuneLockSpeaker(Supplier<Rotation2d> targetSupplier) {
     //     return new LockSpeaker(targetSupplier);

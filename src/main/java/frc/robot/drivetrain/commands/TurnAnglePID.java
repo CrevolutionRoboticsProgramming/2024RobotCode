@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.driver.Driver;
 import frc.robot.driver.DriverXbox;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.DrivetrainConfig.DriveConstants;
@@ -28,7 +29,7 @@ public class TurnAnglePID extends Command {
     private static class Settings {
         static final double kP = 8.0;
         static final double kI = 0.0;
-        static final double kD = 1.0;
+        static final double kD = 0.0;
         
         static final Rotation2d kMaxAngularVelocity = Rotation2d.fromDegrees(360.0);
 
@@ -53,6 +54,11 @@ public class TurnAnglePID extends Command {
 
     @Override
     public void initialize() {
+
+    }
+
+    @Override
+    public void execute() {
         Pose2d goalPose = null;
         final var mPoseEstimator = Vision.PoseEstimator.getInstance();
         final var robotPose = mPoseEstimator.getCurrentPose();
@@ -70,17 +76,14 @@ public class TurnAnglePID extends Command {
         deltaTheta = endAngle.minus(startingAngle);
 
         targetAngle = Rotation2d.fromDegrees(drivetrain.getGyroYaw().getDegrees() + deltaTheta.getDegrees());
-    }
 
-    @Override
-    public void execute() {
         final var currentAngle = drivetrain.getGyroYaw();
         final var requestedAngularVelocity = Rotation2d.fromDegrees(MathUtil.clamp(
             pidController.calculate(currentAngle.getDegrees(), targetAngle.getDegrees()),
             -Settings.kMaxAngularVelocity.getDegrees(),
             Settings.kMaxAngularVelocity.getDegrees()
         ));
-        drivetrain.drive(new Translation2d(0, 0), requestedAngularVelocity.getRadians(), false, false, false, false);
+        drivetrain.drive(DriverXbox.getInstance().getDriveTranslation().times(DriveConstants.MAX_SPEED), requestedAngularVelocity.getRadians(), false, false, false, false);
 
         // Supplier<SwerveRequest> regRequestSupplier =  () -> drivetrain.withVelocityX(
         //     DriverXbox.translationStickCurve.calculate(-DriverXbox.getInstance().controller.getLeftX()) * MaxSpeed).withVelocityY(
@@ -89,12 +92,14 @@ public class TurnAnglePID extends Command {
 
         SmartDashboard.putNumber("[TurnAnglePID] Target Angle", targetAngle.getDegrees());
         SmartDashboard.putNumber("[TurnAnglePID] Current Angle", currentAngle.getDegrees());
+        SmartDashboard.putString("Driver Translation", DriverXbox.getInstance().getDriveTranslation().toString());
     }
 
     @Override
     public boolean isFinished() {
-        final var error = Math.abs(drivetrain.getGyroYaw().getDegrees() - targetAngle.getDegrees());
-        return error < Settings.kAllowedError.getDegrees();
+        // final var error = Math.abs(drivetrain.getGyroYaw().getDegrees() - targetAngle.getDegrees());
+        // return error < Settings.kAllowedError.getDegrees();
+        return false;
     }
 
     @Override

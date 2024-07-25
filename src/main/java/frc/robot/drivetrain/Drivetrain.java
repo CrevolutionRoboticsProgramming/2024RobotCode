@@ -264,6 +264,7 @@ public class Drivetrain extends SubsystemBase {
 
     public void zeroHeading() {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+        Vision.PoseEstimator.getInstance().setCurrentPose(new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
     public Rotation2d getGyroYaw() {

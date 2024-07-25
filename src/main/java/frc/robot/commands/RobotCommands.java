@@ -51,7 +51,7 @@ public class RobotCommands {
                 IndexerCommands.grabNote(),
                 new SequentialCommandGroup(
                     new WaitCommand(0.25),
-                    IntakeRollerCommands.setOutput(() -> 1)
+                    IntakeRollerCommands.setOutput(() -> 0.5)
                 )
             ),
             new InstantCommand(() -> System.out.println("handoff complete"))
@@ -96,15 +96,18 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), handOffNote(), Indexer.getInstance()::hasFinalNote),
             new ParallelRaceGroup(
                 Commands.parallel(
-                    ShooterPivotCommands.setSpeakerAngle(
-                        Rotation2d.fromDegrees(
+                    ShooterPivotCommands.setSpeakerAngle(() ->
+                    {
+                        System.out.println("RUN");
+                        return Rotation2d.fromDegrees(
                             ShooterInterpolation.getInstance().getInterpolatedAngle(
                                 ShooterPivot.getInstance().getDistanceFromSpeaker()
                             )
-                        )
+                        );
+                    }, false
                     ),
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7),
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0)
                     )
                 )
@@ -126,12 +129,13 @@ public class RobotCommands {
         return new DriveAndStopAim();
     }
 
+    // Change to Shoot near !!!!!
     public static Command primeCleanUp() {
         return new ParallelCommandGroup(
             ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kShooterNear),
             ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95),
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.95)
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0)
             )
         );
     }
@@ -140,8 +144,8 @@ public class RobotCommands {
         return new SequentialCommandGroup(
             IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kStowed),
             new ParallelCommandGroup(
-                IntakeRollerCommands.setOutput(() -> 1.0),
-                IndexerCommands.setOutput(() -> 1.0)
+                IndexerCommands.setOutput(() -> 1.0),
+                IntakeRollerCommands.setOutput(() -> 1.0)
             )
         );
     }

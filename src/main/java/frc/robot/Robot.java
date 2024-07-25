@@ -8,6 +8,7 @@ package frc.robot;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import frc.robot.LEDs.LEDs;
 import frc.robot.driver.Driver;
 import frc.robot.driver.DriverXbox;
 import frc.robot.drivetrain.Drivetrain;

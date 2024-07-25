@@ -40,10 +40,10 @@ public class GrabNote extends Command {
     @Override
     public void execute() {
         indexer.setOutput(switch (state) {
-            case kLoading -> 1.00;
-            case kReverse -> -0.40;
-            case kReLoad -> 1.0;
-            case kSlowDown -> 0.5;
+            case kLoading -> 0.3;
+            case kReverse -> -0.25;
+            case kReLoad -> 0.3;
+            case kSlowDown -> 0.15;
             case kStop -> 0.00;
             default -> 0.0;
         });
