@@ -100,7 +100,7 @@ public class AutonMaster {
 
 
         /////////////////////////////////////////////////////
-        //////////////// NEW AUTONS TO TEST ////////////////0
+        //////////////// AUTONS FOR COMP ////////////////0
 
         ///////////////////////////////////////////////////
         autonChooser.setDefaultOption("NEW-center-speaker-close-4p", AutoBuilder.buildAuto("New-center-speaker-4-piece"));

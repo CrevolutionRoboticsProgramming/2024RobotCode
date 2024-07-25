@@ -122,6 +122,10 @@ public class DrivetrainCommands {
         return new TurnAnglePID();
     }
 
+    public static Command autonAutoLineUp() {
+        return new AutonTurnAnglePID();
+    }
+
     public static Command autoLineUp() {
         // Pose2d goalPose;
         // var mPoseEstimator = Vision.PoseEstimator.getInstance();

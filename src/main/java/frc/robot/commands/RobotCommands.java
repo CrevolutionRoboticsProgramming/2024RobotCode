@@ -276,10 +276,10 @@ public class RobotCommands {
             new ConditionalCommand(Commands.none(), autoHandOffNote(), Indexer.getInstance()::hasFinalNote),
             Commands.parallel(
                // IntakePivotCommands.setPivotState(SetStateIntakePivot.State.kDeployed), Do this in path planner
-                DrivetrainCommands.autoLineUp(),
+                DrivetrainCommands.autonAutoLineUp(),
                 Commands.race(
                     ShooterFlywheelCommands.setAngularVelocity(
-                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0),
+                        () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(0.7),
                         () -> ShooterFlywheel.Settings.kMaxAngularVelocity.times(1.0)
                     ),
                     Commands.sequence(
@@ -291,8 +291,8 @@ public class RobotCommands {
                             )
                         ),
                         new WaitUntilCommand(() -> {
-                            final var currentRPS = ShooterFlywheel.getInstance().getLeftFlywheelVelocity().getRotations();
-                            final var error = Math.abs(currentRPS - (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.95));
+                            final var currentRPS = ShooterFlywheel.getInstance().getRightFlywheelVelocity().getRotations();
+                            final var error = Math.abs(currentRPS - (ShooterFlywheel.Settings.kMaxAngularVelocity.getRotations() * 0.9));
                             // System.out.printf("current: %d, setpoint: %d, err: %d%n", currentRPS, targetRPS, error);
                             return error < 5;
                         }),
