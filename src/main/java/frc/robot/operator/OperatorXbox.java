@@ -78,6 +78,8 @@ public class OperatorXbox extends XboxGamepad {
             IndexerCommands.grabNote())
         );
 
+        controller.povUp().whileTrue(RobotCommands.primeClimb());
+        controller.povDown().whileTrue(RobotCommands.climb());
 
         // controller.triangle().whileTrue(new SequentialCommandGroup(
         //     IndexerCommands.unJamNote(),
@@ -96,14 +98,6 @@ public class OperatorXbox extends XboxGamepad {
         // Trap Command
         // controller.leftBumper().whileTrue(IndexerCommands.setOutput(() -> -1.0));
         // controller.leftBumper().whileTrue(ShooterFlywheelCommands.setAngularVelocity(() -> Rotation2d.fromRotations(75)));
-
-
-
-
-        controller.povUp().whileTrue(ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kClimb));
-        controller.povDown().whileTrue(ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kZero));
-        controller.povRight().whileTrue(ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kAmp));
-        controller.povLeft().whileTrue(ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kTrap));
 
         // Elevator Manual Override
         // controller.rightTrigger().whileTrue( Commands.sequence(

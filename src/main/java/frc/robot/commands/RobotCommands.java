@@ -235,10 +235,7 @@ public class RobotCommands {
 
     public static Command climb() {
         return Commands.parallel(
-            new SequentialCommandGroup(
-                ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kTrap),
-                new WaitCommand(0.5)
-            ),
+            ShooterPivotCommands.setSpeakerAngle(SetAngleShooterPivot.Preset.kClimb),
             ElevatorCommands.setPosition(SetPositionElevator.Preset.kZero)
         );
     }
